@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopMate AI</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4F46E5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ShopMate">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="shortcut icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #4F46E5; --primary-dark: #4338CA;
+  --secondary: #10B981; --danger: #EF4444;
+  --warning: #F59E0B; --info: #3B82F6;
+  --bg: #F9FAFB; --bg-alt: #F3F4F6;
+  --card: #FFFFFF; --card-hover: #F9FAFB;
+  --text: #111827; --text-soft: #374151;
+  --muted: #6B7280; --border: #E5E7EB;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-hover: 0 8px 24px rgba(79,70,229,0.15);
+  --gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --gradient-soft: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(124,58,237,0.08));
+}
+body.dark {
+  --bg: #0F172A; --bg-alt: #1E293B;
+  --card: #1E293B; --card-hover: #334155;
+  --text: #F1F5F9; --text-soft: #CBD5E1;
+  --muted: #94A3B8; --border: #334155;
+  --gradient-soft: linear-gradient(135deg, rgba(79,70,229,0.2), rgba(124,58,237,0.2));
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter','Noto Sans Bengali',sans-serif;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; padding-bottom: 80px; overflow-x: hidden;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+body.bn { font-family: 'Noto Sans Bengali','Inter',sans-serif; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+
+.auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--gradient); }
+.auth-card { background: var(--card); border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.6s; }
+.auth-logo { text-align: center; margin-bottom: 28px; }
+.auth-logo .icon { font-size: 52px; margin-bottom: 10px; display: block; }
+.auth-logo h1 { font-size: 26px; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.auth-logo p { font-size: 13px; color: var(--muted); margin-top: 6px; }
+.auth-card h2 { font-size: 20px; font-weight: 600; margin-bottom: 22px; text-align: center; color: var(--text); }
+
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-soft); }
+.input-wrap { position: relative; }
+.input-wrap .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.6; pointer-events: none; }
+input, select, textarea { width: 100%; padding: 13px 16px 13px 44px; border: 1.5px solid var(--border); border-radius: 12px; font-size: 15px; font-family: inherit; background: var(--card); color: var(--text); outline: none; transition: all 0.25s; }
+select { padding-left: 16px; cursor: pointer; }
+input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.12); }
+
+.btn { width: 100%; padding: 14px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; font-family: inherit; cursor: pointer; transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary { background: var(--gradient); color: white; box-shadow: 0 4px 14px rgba(79,70,229,0.35); }
+.btn-primary:hover { box-shadow: 0 6px 20px rgba(79,70,229,0.5); transform: translateY(-1px); }
+.btn-primary:active { transform: scale(0.98); }
+.btn-secondary { background: var(--bg-alt); color: var(--text); border: 1.5px solid var(--border); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.btn-sm { padding: 8px 14px; font-size: 13px; width: auto; }
+
+.alert { padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-bottom: 16px; display: none; }
+.alert.show { display: block; }
+.alert.error { background: #FEE2E2; color: #991B1B; }
+.alert.success { background: #D1FAE5; color: #065F46; }
+.auth-card.shake { animation: shake 0.4s; }
+
+.spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+.spinner-dark { width: 28px; height: 28px; border: 3px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 12px; }
+
+.auth-link { text-align: center; margin-top: 18px; font-size: 14px; color: var(--muted); }
+.auth-link a { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
+
+.app-header { position: sticky; top: 0; z-index: 100; background: var(--gradient); color: white; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+.app-header .left { display: flex; align-items: center; gap: 12px; }
+.app-header .logo-icon { font-size: 26px; }
+.app-header .shop-info h1 { font-size: 16px; font-weight: 700; }
+.app-header .shop-info p { font-size: 11px; opacity: 0.85; margin-top: 2px; }
+.icon-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: white; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+.container { max-width: 600px; margin: 0 auto; padding: 16px; }
+.page { display: none; }
+.page.active { display: block; animation: fadeIn 0.35s; }
+.page-title { font-size: 22px; font-weight: 700; margin-bottom: 18px; }
+
+.card { background: var(--card); border-radius: 16px; padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid var(--border); }
+.card-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+.card-title .title-text { display: flex; align-items: center; gap: 8px; }
+
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.stat-card { background: var(--card); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid var(--border); }
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.stat-card .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+.stat-card .value { font-size: 24px; font-weight: 700; line-height: 1.15; }
+.stat-card.green .value { color: var(--secondary); }
+.stat-card.blue .value { color: var(--primary); }
+.stat-card.orange .value { color: var(--warning); }
+.stat-card.red .value { color: var(--danger); }
+.stat-card.info .value { color: var(--info); }
+
+.quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.qa-btn { background: var(--card); border: 1.5px solid var(--border); border-radius: 14px; padding: 16px 14px; text-align: left; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 12px; font-family: inherit; color: var(--text); }
+.qa-btn:hover { border-color: var(--primary); transform: translateY(-2px); background: var(--card-hover); }
+.qa-btn .qa-icon { font-size: 24px; width: 46px; height: 46px; background: var(--gradient-soft); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.qa-btn .qa-text { font-size: 13px; font-weight: 600; }
+.qa-btn .qa-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+.list-item { display: flex; justify-content: space-between; align-items: center; padding: 14px; border-radius: 12px; background: var(--card); margin-bottom: 8px; transition: all 0.25s; border: 1px solid var(--border); }
+.list-item:hover { background: var(--bg-alt); }
+.list-item .left-side { flex: 1; min-width: 0; }
+.list-item .item-title { font-size: 14px; font-weight: 600; color: var(--text); }
+.list-item .item-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.list-item .item-value { font-size: 16px; font-weight: 700; color: var(--secondary); margin-left: 10px; }
+.list-item .item-value.red { color: var(--danger); }
+.list-item .item-value.warn { color: var(--warning); }
+.list-item.warn-item { background: #FEF3C7; border-color: #FCD34D; }
+.list-item.due-item { background: #FEE2E2; border-color: #FCA5A5; }
+.list-item.sale-item { background: #ECFDF5; border-left: 3px solid var(--secondary); }
+body.dark .list-item.warn-item { background: rgba(245,158,11,0.15); }
+body.dark .list-item.due-item { background: rgba(239,68,68,0.15); }
+body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
+.list-item.clickable { cursor: pointer; }
+
+.empty-state { text-align: center; padding: 32px 20px; color: var(--muted); font-size: 14px; }
+.empty-state .icon { font-size: 48px; display: block; margin-bottom: 12px; opacity: 0.4; }
+
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; justify-content: space-around; padding: 8px 0 max(8px, env(safe-area-inset-bottom)); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 100; border-top: 1px solid var(--border); }
+.bottom-nav a { flex: 1; text-decoration: none; color: var(--muted); text-align: center; padding: 6px 4px; cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.bottom-nav a.active { color: var(--primary); }
+.bottom-nav a .nav-icon { font-size: 21px; }
+.bottom-nav a .nav-label { font-size: 10px; font-weight: 500; }
+
+.loading-wrap { text-align: center; padding: 28px; color: var(--muted); font-size: 14px; }
+
+.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--text); color: var(--bg); padding: 14px 20px; border-radius: 14px; font-size: 14px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.4s; max-width: 90%; text-align: center; }
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+.toast.success { background: var(--secondary); color: white; }
+.toast.error { background: var(--danger); color: white; }
+
+.profile-header { text-align: center; padding: 28px 20px; background: var(--gradient); color: white; border-radius: 20px; margin-bottom: 16px; }
+.profile-avatar { width: 84px; height: 84px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; margin: 0 auto 12px; border: 4px solid rgba(255,255,255,0.4); }
+.profile-header h2 { font-size: 22px; font-weight: 700; }
+.profile-header p { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+
+.setting-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+.setting-item:last-child { border-bottom: none; }
+.setting-item .si-left { display: flex; align-items: center; gap: 14px; }
+.setting-item .si-icon { font-size: 20px; width: 40px; height: 40px; background: var(--bg-alt); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+.setting-item .si-text { font-size: 14px; font-weight: 600; }
+.setting-item .si-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.lang-switch, .theme-toggle { display: flex; background: var(--bg-alt); border-radius: 10px; padding: 4px; }
+.lang-switch button, .theme-toggle button { padding: 7px 16px; border: none; background: transparent; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); font-family: inherit; }
+.lang-switch button.active, .theme-toggle button.active { background: var(--card); color: var(--primary); }
+
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 500; display: none; align-items: flex-end; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--card); color: var(--text); width: 100%; max-width: 600px; margin: 0 auto; border-radius: 24px 24px 0 0; padding: 24px 18px; max-height: 90vh; overflow-y: auto; }
+
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.report-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; }
+.report-tabs button { padding: 9px 18px; border: 1.5px solid var(--border); background: var(--card); border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; color: var(--muted); }
+.report-tabs button.active { background: var(--gradient); color: white; border-color: transparent; }
+.report-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.report-summary .item { background: var(--bg-alt); border-radius: 12px; padding: 14px; }
+.report-summary .item .lbl { font-size: 11px; color: var(--muted); }
+.report-summary .item .val { font-size: 18px; font-weight: 700; margin-top: 6px; }
+.top-product { display: flex; justify-content: space-between; padding: 12px; background: var(--bg-alt); border-radius: 10px; margin-bottom: 8px; font-size: 13px; }
+.payment-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+.badge-cash { background: #D1FAE5; color: #065F46; }
+.badge-bkash { background: #FCE7F3; color: #9D174D; }
+.badge-nagad { background: #FEF3C7; color: #92400E; }
+.badge-due { background: #FEE2E2; color: #991B1B; }
+.badge-partial { background: #DBEAFE; color: #1E40AF; }
+
+.report-header { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: white; padding: 20px 18px; border-radius: 16px; margin-bottom: 16px; position: relative; overflow: hidden; }
+.report-header .rh-shop { font-size: 20px; font-weight: 700; position: relative; z-index: 1; }
+.report-header .rh-owner { font-size: 12px; opacity: 0.9; margin-top: 4px; position: relative; z-index: 1; }
+.report-header .rh-title { font-size: 13px; font-weight: 600; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.25); position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; }
+.report-header .rh-badge { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+
+.report-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.kpi-card { background: white; border-radius: 14px; padding: 14px; position: relative; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+.kpi-card.green::before { background: linear-gradient(90deg, #10B981, #34D399); }
+.kpi-card.blue::before { background: linear-gradient(90deg, #4F46E5, #7C3AED); }
+.kpi-card.info::before { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
+.kpi-card.red::before { background: linear-gradient(90deg, #EF4444, #F87171); }
+.kpi-card .kpi-icon { font-size: 20px; margin-bottom: 6px; }
+.kpi-card .kpi-label { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
+.kpi-card .kpi-value { font-size: 22px; font-weight: 700; margin-top: 4px; letter-spacing: -0.5px; }
+.kpi-card.green .kpi-value { color: #10B981; }
+.kpi-card.blue .kpi-value { color: #4F46E5; }
+.kpi-card.info .kpi-value { color: #3B82F6; }
+.kpi-card.red .kpi-value { color: #EF4444; }
+
+.report-section { background: white; border-radius: 14px; margin-bottom: 16px; border: 1px solid var(--border); overflow: hidden; }
+.report-section .rs-header { background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%); padding: 14px 16px; border-bottom: 2px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.report-section .rs-title { font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+.report-section .rs-title::before { content: ''; width: 4px; height: 18px; background: linear-gradient(180deg, #4F46E5, #7C3AED); border-radius: 2px; }
+.report-section .rs-count { font-size: 11px; color: var(--muted); background: white; padding: 3px 10px; border-radius: 12px; border: 1px solid var(--border); }
+
+.prof-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.prof-table thead th { background: #4F46E5; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.3px; }
+.prof-table thead th:first-child { padding-left: 14px; }
+.prof-table thead th:last-child { padding-right: 14px; text-align: right; }
+.prof-table tbody td { padding: 11px 8px; border-bottom: 1px solid #F3F4F6; }
+.prof-table tbody td:first-child { padding-left: 14px; font-weight: 600; }
+.prof-table tbody td:last-child { padding-right: 14px; text-align: right; font-weight: 600; }
+.prof-table tbody tr:nth-child(even) { background: #FAFAFB; }
+.prof-table tbody tr:last-child td { border-bottom: none; }
+.prof-table .num { text-align: right; font-weight: 600; }
+.prof-table .num-green { color: #10B981; }
+.prof-table .num-blue { color: #4F46E5; }
+.prof-table .num-info { color: #3B82F6; }
+.prof-table .num-red { color: #EF4444; }
+.prof-table tfoot td { background: #F9FAFB; padding: 12px 14px; font-weight: 700; font-size: 13px; border-top: 2px solid #E5E7EB; }
+
+.report-footer { text-align: center; padding: 16px; color: var(--muted); font-size: 11px; border-top: 1px dashed var(--border); margin-top: 16px; }
+
+.search-box { position: relative; margin-bottom: 14px; }
+.search-box input { padding-left: 44px; background: var(--card); }
+.search-box .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.6; }
+.action-btns { display: flex; gap: 6px; margin-left: 8px; }
+.mini-btn { width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
+.mini-btn.edit { background: #DBEAFE; color: #1E40AF; }
+.mini-btn.edit:hover { background: #BFDBFE; transform: scale(1.1); }
+.mini-btn.delete { background: #FEE2E2; color: #991B1B; }
+.mini-btn.delete:hover { background: #FECACA; transform: scale(1.1); }
+body.dark .mini-btn.edit { background: rgba(59,130,246,0.2); color: #93C5FD; }
+body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
+.cancel-btn { background: var(--bg-alt); color: var(--text); border: 1.5px solid var(--border); }
+.cancel-btn:hover { background: var(--card-hover); }
+.hidden { display: none !important; }
+.mb-8 { margin-bottom: 8px; }
+.mb-12 { margin-bottom: 12px; }
+</style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authScreen">
+  <div id="loginPage" class="auth-wrap">
+    <div class="auth-card" id="loginCard">
+      <div class="auth-logo"><span class="icon">🏪</span><h1>ShopMate AI</h1><p data-i18n="tagline">দোকানের হিসাব, সহজে</p></div>
+      <h2 data-i18n="loginTitle">লগইন</h2>
+      <div class="alert error" id="loginError"></div>
+      <div class="form-group"><label data-i18n="phone">ফোন নম্বর</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="loginPhone" maxlength="11" autocomplete="off"></div></div>
+      <div class="form-group"><label data-i18n="password">পাসওয়ার্ড</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="loginPassword" autocomplete="new-password"></div></div>
+      <button class="btn btn-primary" id="loginBtn" data-i18n="loginBtn">লগইন</button>
+      <div class="auth-link"><a data-i18n="forgotPassword" onclick="gotoAuth('forgotPage')">পাসওয়ার্ড ভুলে গেছি?</a></div>
+      <div class="auth-link"><span data-i18n="noAccount">Account নেই?</span> <a data-i18n="signup" onclick="gotoAuth('signupPage')">সাইনআপ</a></div>
+    </div>
+  </div>
+
+  <div id="signupPage" class="auth-wrap hidden">
+    <div class="auth-card" id="signupCard">
+      <div class="auth-logo"><span class="icon">🏪</span><h1>ShopMate AI</h1><p data-i18n="createAccount">নতুন Account</p></div>
+      <h2 data-i18n="signupTitle">সাইনআপ</h2>
+      <div class="alert error" id="signupError"></div>
+      <div class="form-group"><label data-i18n="yourName">আপনার নাম</label><div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="signupName" autocomplete="off"></div></div>
+      <div class="form-group"><label data-i18n="shopName">দোকানের নাম</label><div class="input-wrap"><span class="input-icon">🏬</span><input type="text" id="signupShopName" autocomplete="off"></div></div>
+      <div class="form-group"><label data-i18n="phone">ফোন নম্বর</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="signupPhone" maxlength="11" autocomplete="off"></div></div>
+      <div class="form-group"><label data-i18n="password">পাসওয়ার্ড</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signupPassword" autocomplete="new-password"></div></div>
+      <div class="form-group"><label data-i18n="confirmPassword">পাসওয়ার্ড আবার</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signupConfirm" autocomplete="new-password"></div></div>
+      <div class="form-group"><label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label>
+        <select id="signupSecurityQ">
+          <option value="তোমার প্রিয় রঙ?">তোমার প্রিয় রঙ?</option>
+          <option value="তোমার প্রথম স্কুলের নাম?">তোমার প্রথম স্কুলের নাম?</option>
+          <option value="তোমার মায়ের নাম?">তোমার মায়ের নাম?</option>
+          <option value="তোমার প্রিয় খাবার?">তোমার প্রিয় খাবার?</option>
+          <option value="তোমার জন্মস্থান?">তোমার জন্মস্থান?</option>
+        </select>
+      </div>
+      <div class="form-group"><label data-i18n="securityA">উত্তর</label><div class="input-wrap"><span class="input-icon">💡</span><input type="text" id="signupSecurityA" autocomplete="off"></div></div>
+      <button class="btn btn-primary" id="signupBtn" data-i18n="signupBtn">সাইনআপ</button>
+      <div class="auth-link"><span data-i18n="hasAccount">Account আছে?</span> <a data-i18n="login" onclick="gotoAuth('loginPage')">লগইন</a></div>
+    </div>
+  </div>
+
+  <div id="forgotPage" class="auth-wrap hidden">
+    <div class="auth-card">
+      <div class="auth-logo"><span class="icon">🔑</span><h1 data-i18n="recoveryTitle">রিকভারি</h1></div>
+      <div class="alert error" id="forgotError"></div>
+      <div id="forgotStep1">
+        <div class="form-group"><label data-i18n="phone">ফোন নম্বর</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="forgotPhone" maxlength="11" autocomplete="off"></div></div>
+        <button class="btn btn-primary" id="forgotNextBtn" data-i18n="next">পরবর্তী</button>
+      </div>
+      <div id="forgotStep2" class="hidden">
+        <div class="form-group"><label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label><div class="input-wrap"><span class="input-icon">❓</span><input type="text" id="forgotQuestion" readonly></div></div>
+        <div class="form-group"><label data-i18n="securityA">উত্তর</label><div class="input-wrap"><span class="input-icon">💡</span><input type="text" id="forgotAnswer" autocomplete="off"></div></div>
+        <div class="form-group"><label data-i18n="newPassword">নতুন পাসওয়ার্ড</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="forgotNewPass" autocomplete="new-password"></div></div>
+        <button class="btn btn-primary" id="forgotResetBtn" data-i18n="resetPassword">পাসওয়ার্ড পরিবর্তন</button>
+      </div>
+      <div class="auth-link"><a data-i18n="backToLogin" onclick="gotoAuth('loginPage')">← লগইনে ফিরে যান</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" class="hidden">
+  <header class="app-header">
+    <div class="left">
+      <span class="logo-icon">🏪</span>
+      <div class="shop-info">
+        <h1 id="headerShopName">Shop</h1>
+        <p id="headerUserName">User</p>
+      </div>
+    </div>
+    <div class="right">
+      <button class="icon-btn" onclick="gotoPage('profile')">👤</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- DASHBOARD -->
+    <div id="page-dashboard" class="page active">
+      <h2 class="page-title" data-i18n="dashboard">ড্যাশবোর্ড</h2>
+      <div class="stats-grid">
+        <div class="stat-card green"><div class="label">💰 <span data-i18n="todaySales">আজকের বিক্রয়</span></div><div class="value" id="statTodaySales">৳0</div></div>
+        <div class="stat-card blue"><div class="label">📈 <span data-i18n="todayProfit">আজকের লাভ</span></div><div class="value" id="statTodayProfit">৳0</div></div>
+        <div class="stat-card info"><div class="label">💵 <span data-i18n="todayPaid">আজকের নগদ</span></div><div class="value" id="statTodayPaid">৳0</div></div>
+        <div class="stat-card red"><div class="label">📝 <span data-i18n="todayDue">আজকের বাকি</span></div><div class="value" id="statTodayDue">৳0</div></div>
+        <div class="stat-card orange"><div class="label">📦 <span data-i18n="totalProducts">মোট পণ্য</span></div><div class="value" id="statTotalProducts">0</div></div>
+        <div class="stat-card red"><div class="label">⚠️ <span data-i18n="lowStock">স্টক কম</span></div><div class="value" id="statLowStock">0</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="title-text">⚡ <span data-i18n="quickActions">দ্রুত কাজ</span></div></div>
+        <div class="quick-actions">
+          <button class="qa-btn" onclick="gotoPage('sales')"><div class="qa-icon">🛒</div><div><div class="qa-text" data-i18n="newSale">নতুন বিক্রয়</div><div class="qa-sub" data-i18n="newSaleSub">বিক্রয় করুন</div></div></button>
+          <button class="qa-btn" onclick="gotoPage('products')"><div class="qa-icon">📦</div><div><div class="qa-text" data-i18n="newProduct">নতুন পণ্য</div><div class="qa-sub" data-i18n="newProductSub">পণ্য যোগ</div></div></button>
+          <button class="qa-btn" onclick="gotoPage('customers')"><div class="qa-icon">👥</div><div><div class="qa-text" data-i18n="customers">কাস্টমার</div><div class="qa-sub" data-i18n="customersSub">বাকির হিসাব</div></div></button>
+          <button class="qa-btn" onclick="gotoPage('reports')"><div class="qa-icon">📊</div><div><div class="qa-text" data-i18n="reports">রিপোর্ট</div><div class="qa-sub" data-i18n="reportsSub">বিবরণ</div></div></button>
+        </div>
+      </div>
+      <div class="card" style="cursor:pointer;" onclick="gotoPage('lowstock')">
+        <div class="card-title"><div class="title-text">⚠️ <span data-i18n="lowStockItems">কম স্টক</span></div><span style="color:var(--muted);font-size:12px;" data-i18n="seeAll">সব দেখুন →</span></div>
+        <div id="lowStockList"><div class="empty-state"><span class="icon">✅</span><span data-i18n="allGood">সব ঠিক আছে</span></div></div>
+      </div>
+    </div>
+
+    <!-- LOW STOCK PAGE -->
+    <div id="page-lowstock" class="page">
+      <h2 class="page-title">⚠️ <span data-i18n="lowStockItems">কম স্টক</span></h2>
+      <div class="card">
+        <div class="card-title"><div class="title-text">📦 <span data-i18n="lowStockTitle">স্টক কম পণ্যের তালিকা</span></div><button class="btn btn-secondary btn-sm" onclick="gotoPage('dashboard')">← <span data-i18n="back">ফিরে যান</span></button></div>
+        <div id="lowStockFullList"></div>
+      </div>
+    </div>
+
+    <!-- SALES -->
+    <div id="page-sales" class="page">
+      <h2 class="page-title" data-i18n="sales">বিক্রয়</h2>
+      <div class="card">
+        <div class="card-title"><div class="title-text">🛒 <span data-i18n="newSaleTitle">নতুন বিক্রয়</span></div></div>
+        <div class="form-group"><label data-i18n="selectProduct">পণ্য নির্বাচন</label><select id="saleProductId" onchange="onProductSelect()"></select></div>
+        <div class="row-2 mb-12">
+          <div><label data-i18n="quantity">পরিমাণ</label><input type="number" id="saleQty" value="1" min="1" style="padding-left:14px;margin-top:6px" oninput="updateSalePreview()"></div>
+          <div><label data-i18n="paymentMethod">পেমেন্ট</label><select id="salePayment" style="margin-top:6px" onchange="onPaymentChange()"><option value="Cash">💵 Cash</option><option value="Bkash">📱 Bkash</option><option value="Nagad">📱 Nagad</option><option value="Due">📝 Due</option></select></div>
+        </div>
+        <div id="salePreview" class="hidden" style="background:var(--gradient-soft);border:1.5px solid rgba(79,70,229,0.25);border-radius:14px;padding:16px;margin-bottom:14px;">
+          <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(79,70,229,0.3);"><span style="color:var(--muted);font-weight:500;" data-i18n="totalBill">মোট বিল:</span><b id="previewTotal" style="color:var(--primary);font-size:18px;">৳0</b></div>
+          <div id="dueFields" class="hidden">
+            <div class="form-group" style="margin-bottom:12px;"><label data-i18n="customerName">কাস্টমারের নাম</label><div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="saleCustomerName" autocomplete="off"></div></div>
+            <div class="form-group" style="margin-bottom:12px;"><label data-i18n="customerPhone">📱 ফোন নম্বর (ঐচ্ছিক)</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="saleCustomerPhone" maxlength="11" autocomplete="off"></div></div>
+            <div class="form-group" style="margin-bottom:12px;"><label data-i18n="customerAddress">📍 ঠিকানা (ঐচ্ছিক)</label><div class="input-wrap"><span class="input-icon">📍</span><input type="text" id="saleCustomerAddress" autocomplete="off"></div></div>
+            <div class="form-group" style="margin-bottom:12px;"><label style="color:var(--info);font-weight:600;" data-i18n="howMuchNow">💵 এখন কত টাকা দিচ্ছে?</label><div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="salePaidAmount" placeholder="0" oninput="updateSalePreview()"></div></div>
+            <div style="display:flex;justify-content:space-between;font-size:15px;padding-top:10px;border-top:1px dashed rgba(239,68,68,0.3);"><span style="color:var(--muted);font-weight:500;" data-i18n="remainingDue">বাকি থাকবে:</span><b id="previewDue" style="color:var(--danger);font-size:18px;">৳0</b></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" id="saveSaleBtn" data-i18n="saveSale">💾 বিক্রয় সেভ</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="title-text">📋 <span data-i18n="todaySalesList">আজকের বিক্রয়</span></div></div>
+        <div id="todaySalesList"></div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div id="page-products" class="page">
+      <h2 class="page-title" data-i18n="products">পণ্য</h2>
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="productSearch" placeholder="পণ্য খুঁজুন..." oninput="filterProducts()" autocomplete="off">
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="title-text">📦 <span data-i18n="newProductTitle">নতুন পণ্য</span></div></div>
+        <div class="form-group"><label data-i18n="productName">পণ্যের নাম</label><div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="pName" autocomplete="off"></div></div>
+        <div class="form-group"><label data-i18n="category">ক্যাটাগরি</label><div class="input-wrap"><span class="input-icon">🏷️</span><input type="text" id="pCategory" autocomplete="off"></div></div>
+        <div class="row-2 mb-12">
+          <div><label data-i18n="purchasePrice">ক্রয়মূল্য</label><input type="number" id="pPurchasePrice" style="padding-left:14px;margin-top:6px"></div>
+          <div><label data-i18n="sellingPrice">বিক্রয়মূল্য</label><input type="number" id="pSellingPrice" style="padding-left:14px;margin-top:6px"></div>
+        </div>
+        <div class="row-2 mb-12">
+          <div><label data-i18n="stock">স্টক</label><input type="number" id="pStock" style="padding-left:14px;margin-top:6px"></div>
+          <div><label data-i18n="lowStockAlert">Low Alert</label><input type="number" id="pLowStock" value="5" style="padding-left:14px;margin-top:6px"></div>
+        </div>
+        <button class="btn btn-primary" id="saveProductBtn" data-i18n="saveProduct">💾 পণ্য সেভ</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="title-text">📋 <span data-i18n="allProducts">সব পণ্য</span></div></div>
+        <div id="productList"></div>
+      </div>
+    </div>
+
+    <!-- CUSTOMERS -->
+    <div id="page-customers" class="page">
+      <h2 class="page-title" data-i18n="customers">কাস্টমার</h2>
+      <div class="card">
+        <div class="card-title"><div class="title-text">👥 <span data-i18n="dueCustomers">বাকি কাস্টমার</span></div></div>
+        <div id="customerList"></div>
+      </div>
+      <div class="card" id="customerDetailCard" style="display:none;">
+        <div class="card-title"><div class="title-text">👤 <span id="detailCustomerName"></span></div><button class="btn btn-secondary btn-sm" onclick="closeCustomerDetail()">✕</button></div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><span data-i18n="phoneLabel">📞 ফোন:</span><b id="detailPhone">-</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><span data-i18n="totalDue">💸 মোট বাকি:</span><b id="detailDue" style="color:var(--danger);">৳0</b></div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;"><span data-i18n="totalPaid">✅ মোট পরিশোধ:</span><b id="detailPaid" style="color:var(--secondary);">৳0</b></div>
+        </div>
+        <div class="form-group"><label data-i18n="takePayment">💵 কত টাকা নিচ্ছেন?</label><div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="duePaymentAmount" placeholder="0"></div></div>
+        <div class="form-group"><label data-i18n="note">📝 নোট (ঐচ্ছিক)</label><div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="duePaymentNote" autocomplete="off"></div></div>
+        <button class="btn btn-primary" onclick="saveDuePayment()" data-i18n="savePayment">💾 Payment সেভ</button>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="title-text">📜 <span data-i18n="paymentHistory">Payment History</span></div></div>
+        <div id="paymentList"></div>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div id="page-reports" class="page">
+      <h2 class="page-title" data-i18n="reports">রিপোর্ট</h2>
+      <div class="card">
+        <div class="report-tabs">
+          <button class="active" data-range="today" onclick="switchReport('today')" data-i18n="todayTab">আজ</button>
+          <button data-range="week" onclick="switchReport('week')" data-i18n="weekTab">৭ দিন</button>
+          <button data-range="month" onclick="switchReport('month')" data-i18n="monthTab">৩০ দিন</button>
+          <button data-range="year" onclick="switchReport('year')" data-i18n="yearTab">১ বছর</button>
+          <button data-range="custom" onclick="switchReport('custom')" data-i18n="customTab">📅 তারিখ</button>
+        </div>
+        <div id="customDateRange" class="hidden" style="background:var(--bg-alt);border-radius:12px;padding:14px;margin-bottom:14px;">
+          <div class="row-2 mb-12">
+            <div><label style="font-size:12px;color:var(--muted);">শুরুর তারিখ</label><input type="date" id="reportFromDate" style="padding-left:14px;margin-top:6px;"></div>
+            <div><label style="font-size:12px;color:var(--muted);">শেষ তারিখ</label><input type="date" id="reportToDate" style="padding-left:14px;margin-top:6px;"></div>
+          </div>
+          <button class="btn btn-primary btn-sm" style="width:100%;" onclick="loadCustomReport()">📊 রিপোর্ট দেখাও</button>
+        </div>
+        <div id="reportContent"><div class="loading-wrap"><div class="spinner-dark"></div><span data-i18n="loading">লোড হচ্ছে...</span></div></div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="page-profile" class="page">
+      <h2 class="page-title" data-i18n="profile">প্রোফাইল</h2>
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">U</div>
+        <h2 id="profileName">User</h2>
+        <p id="profileShop">Shop</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.8" id="profilePhone"></p>
+      </div>
+      <div class="card">
+        <div class="card-title"><div class="title-text">⚙️ <span data-i18n="settings">সেটিংস</span></div></div>
+        <div class="setting-item">
+          <div class="si-left"><span class="si-icon">🌐</span><div><div class="si-text" data-i18n="language">ভাষা</div><div class="si-sub" data-i18n="languageSub">Language</div></div></div>
+          <div class="lang-switch"><button id="langBn" onclick="setLang('bn')">বাংলা</button><button id="langEn" onclick="setLang('en')">English</button></div>
+        </div>
+        <div class="setting-item">
+          <div class="si-left"><span class="si-icon">🎨</span><div><div class="si-text" data-i18n="theme">থিম</div><div class="si-sub">Appearance</div></div></div>
+          <div class="theme-toggle"><button id="themeLight" onclick="setTheme('light')">☀️</button><button id="themeDark" onclick="setTheme('dark')">🌙</button></div>
+        </div>
+        <div class="setting-item" onclick="logout()">
+          <div class="si-left"><span class="si-icon">🚪</span><div><div class="si-text" data-i18n="logout">লগআউট</div><div class="si-sub" data-i18n="logoutSub">Logout</div></div></div>
+          <span style="color:var(--danger);font-size:18px">→</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <nav class="bottom-nav">
+    <a onclick="gotoPage('dashboard')" data-page="dashboard" class="active"><span class="nav-icon">🏠</span><span class="nav-label" data-i18n="navHome">হোম</span></a>
+    <a onclick="gotoPage('sales')" data-page="sales"><span class="nav-icon">🛒</span><span class="nav-label" data-i18n="navSales">বিক্রয়</span></a>
+    <a onclick="gotoPage('products')" data-page="products"><span class="nav-icon">📦</span><span class="nav-label" data-i18n="navProducts">পণ্য</span></a>
+    <a onclick="gotoPage('customers')" data-page="customers"><span class="nav-icon">👥</span><span class="nav-label" data-i18n="navCustomers">কাস্টমার</span></a>
+    <a onclick="gotoPage('reports')" data-page="reports"><span class="nav-icon">📊</span><span class="nav-label" data-i18n="navReports">রিপোর্ট</span></a>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbyGPzFkamwJckDcHrYoA4AqY6PFvoQvI9_tAURjdCA3SV_cq2WoMJdmrbfiZasHs_MFjw/exec";
+
+let currentUser = null;
+let currentLang = "bn";
+let currentCustomer = null;
+let currentReportRange = "today";
+let cache = { products: [] };
+let allProductsCache = [];
+
+const I18N = {
+  bn: {
+    tagline:"দোকানের হিসাব, সহজে",loginTitle:"লগইন",signupTitle:"সাইনআপ",recoveryTitle:"পাসওয়ার্ড রিকভারি",createAccount:"নতুন Account",
+    phone:"ফোন নম্বর",password:"পাসওয়ার্ড",confirmPassword:"পাসওয়ার্ড আবার",newPassword:"নতুন পাসওয়ার্ড",yourName:"আপনার নাম",shopName:"দোকানের নাম",
+    securityQ:"সিকিউরিটি প্রশ্ন",securityA:"উত্তর",loginBtn:"লগইন",signupBtn:"সাইনআপ",next:"পরবর্তী",resetPassword:"পাসওয়ার্ড পরিবর্তন",
+    forgotPassword:"পাসওয়ার্ড ভুলে গেছি?",noAccount:"Account নেই?",hasAccount:"Account আছে?",signup:"সাইনআপ",login:"লগইন",backToLogin:"← লগইনে ফিরে যান",
+    dashboard:"ড্যাশবোর্ড",todaySales:"আজকের বিক্রয়",todayProfit:"আজকের লাভ",totalProducts:"মোট পণ্য",lowStock:"স্টক কম",quickActions:"দ্রুত কাজ",
+    newSale:"নতুন বিক্রয়",newSaleSub:"বিক্রয় করুন",newProduct:"নতুন পণ্য",newProductSub:"পণ্য যোগ",customers:"কাস্টমার",customersSub:"বাকির হিসাব",
+    reports:"রিপোর্ট",reportsSub:"বিবরণ",lowStockItems:"কম স্টক",allGood:"সব ঠিক আছে",sales:"বিক্রয়",newSaleTitle:"নতুন বিক্রয়",
+    selectProduct:"পণ্য নির্বাচন",quantity:"পরিমাণ",paymentMethod:"পেমেন্ট",customerName:"কাস্টমারের নাম",dueAmount:"বাকির পরিমাণ",
+    saveSale:"💾 বিক্রয় সেভ",todaySalesList:"আজকের বিক্রয়",products:"পণ্য",newProductTitle:"নতুন পণ্য",productName:"পণ্যের নাম",
+    category:"ক্যাটাগরি",purchasePrice:"ক্রয়মূল্য",sellingPrice:"বিক্রয়মূল্য",stock:"স্টক",lowStockAlert:"Low Alert",saveProduct:"💾 পণ্য সেভ",
+    allProducts:"সব পণ্য",dueCustomers:"বাকি কাস্টমার",paymentHistory:"Payment History",profile:"প্রোফাইল",settings:"সেটিংস",language:"ভাষা",
+    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",
+    todayPaid:"আজকের নগদ",todayDue:"আজকের বাকি",pcs:"পিস",buy:"ক্রয়",sell:"বিক্রয়",profit:"লাভ",due:"বাকি",noPhone:"ফোন নেই",
+    noProducts:"কোনো পণ্য নেই",noSales:"আজ কোনো বিক্রয় নেই",noCustomers:"কোনো কাস্টমার নেই",allPaid:"সব পরিশোধ করেছে",
+    totalDue:"মোট বাকি",totalPaid:"মোট পরিশোধ",phoneLabel:"ফোন",takePayment:"কত টাকা নিচ্ছেন?",note:"নোট (ঐচ্ছিক)",savePayment:"💾 Payment সেভ",
+    customerPhone:"📱 ফোন নম্বর (ঐচ্ছিক)",customerAddress:"📍 ঠিকানা (ঐচ্ছিক)",seeAll:"সব দেখুন →",back:"ফিরে যান",
+    lowStockTitle:"স্টক কম পণ্যের তালিকা",totalBill:"মোট বিল:",howMuchNow:"💵 এখন কত টাকা দিচ্ছে?",remainingDue:"বাকি থাকবে:",
+    todayTab:"আজ",weekTab:"৭ দিন",monthTab:"৩০ দিন",yearTab:"১ বছর",customTab:"📅 তারিখ",theme:"থিম",
+    fillAll:"সব তথ্য পূরণ করুন",passwordShort:"পাসওয়ার্ড কমপক্ষে ৬ অক্ষর",passwordMismatch:"পাসওয়ার্ড মিলছে না",
+    phoneInvalid:"ফোন ১১ digit",saving:"সেভ হচ্ছে...",saved:"সেভ হয়েছে",selectProductWarn:"পণ্য বাছাই করুন",
+    customerNameWarn:"কাস্টমারের নাম দিন",loading:"লোড হচ্ছে..."
+  },
+  en: {
+    tagline:"Shop accounting, simple",loginTitle:"Login",signupTitle:"Sign Up",recoveryTitle:"Password Recovery",createAccount:"New Account",
+    phone:"Phone",password:"Password",confirmPassword:"Confirm Password",newPassword:"New Password",yourName:"Your Name",shopName:"Shop Name",
+    securityQ:"Security Question",securityA:"Answer",loginBtn:"Login",signupBtn:"Sign Up",next:"Next",resetPassword:"Reset Password",
+    forgotPassword:"Forgot Password?",noAccount:"No account?",hasAccount:"Have account?",signup:"Sign Up",login:"Login",backToLogin:"← Back to Login",
+    dashboard:"Dashboard",todaySales:"Today's Sales",todayProfit:"Today's Profit",totalProducts:"Total Products",lowStock:"Low Stock",quickActions:"Quick Actions",
+    newSale:"New Sale",newSaleSub:"Make sale",newProduct:"New Product",newProductSub:"Add product",customers:"Customers",customersSub:"Due accounts",
+    reports:"Reports",reportsSub:"Details",lowStockItems:"Low Stock Items",allGood:"All good",sales:"Sales",newSaleTitle:"New Sale",
+    selectProduct:"Select Product",quantity:"Quantity",paymentMethod:"Payment",customerName:"Customer Name",dueAmount:"Due Amount",
+    saveSale:"💾 Save Sale",todaySalesList:"Today's Sales",products:"Products",newProductTitle:"New Product",productName:"Product Name",
+    category:"Category",purchasePrice:"Purchase Price",sellingPrice:"Selling Price",stock:"Stock",lowStockAlert:"Low Alert",saveProduct:"💾 Save Product",
+    allProducts:"All Products",dueCustomers:"Due Customers",paymentHistory:"Payment History",profile:"Profile",settings:"Settings",language:"Language",
+    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",
+    todayPaid:"Today's Cash",todayDue:"Today's Due",pcs:"pcs",buy:"Buy",sell:"Sell",profit:"Profit",due:"Due",noPhone:"No phone",
+    noProducts:"No products",noSales:"No sales today",noCustomers:"No customers",allPaid:"All paid",
+    totalDue:"Total Due",totalPaid:"Total Paid",phoneLabel:"Phone",takePayment:"How much to take?",note:"Note (optional)",savePayment:"💾 Save Payment",
+    customerPhone:"📱 Phone (optional)",customerAddress:"📍 Address (optional)",seeAll:"See all →",back:"Back",
+    lowStockTitle:"Low Stock Products",totalBill:"Total Bill:",howMuchNow:"💵 How much now?",remainingDue:"Remaining Due:",
+    todayTab:"Today",weekTab:"7 Days",monthTab:"30 Days",yearTab:"1 Year",customTab:"📅 Date",theme:"Theme",
+    fillAll:"Please fill all fields",passwordShort:"Password must be 6+ chars",passwordMismatch:"Passwords don't match",
+    phoneInvalid:"Phone must be 11 digits",saving:"Saving...",saved:"Saved",selectProductWarn:"Select a product",
+    customerNameWarn:"Enter customer name",loading:"Loading..."
+  }
+};
+
+function t(key) { return I18N[currentLang][key] || key; }
+
+function applyLanguage() {
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (I18N[currentLang][key]) el.textContent = I18N[currentLang][key];
+  });
+  document.body.classList.toggle("bn", currentLang === "bn");
+  const bn = document.getElementById("langBn"), en = document.getElementById("langEn");
+  if (bn) bn.classList.toggle("active", currentLang === "bn");
+  if (en) en.classList.toggle("active", currentLang === "en");
+}
+function setLang(lang) { currentLang = lang; localStorage.setItem("shopmate_lang", lang); applyLanguage(); }
+
+function setTheme(theme) {
+  if (theme === "dark") document.body.classList.add("dark");
+  else document.body.classList.remove("dark");
+  localStorage.setItem("shopmate_theme", theme);
+  updateThemeUI();
+}
+function updateThemeUI() {
+  const isDark = document.body.classList.contains("dark");
+  const lb = document.getElementById("themeLight"), db = document.getElementById("themeDark");
+  if (lb) lb.classList.toggle("active", !isDark);
+  if (db) db.classList.toggle("active", isDark);
+}
+function loadTheme() {
+  const saved = localStorage.getItem("shopmate_theme") || "light";
+  if (saved === "dark") document.body.classList.add("dark");
+  updateThemeUI();
+}
+
+const apiCache = {};
+const CACHE_DURATION = 8000;
+async function apiGet(action, extra = {}) {
+  const key = action + JSON.stringify(extra) + (currentUser ? currentUser.shopId : "");
+  if (action !== "getSales" && action !== "getPayments" && apiCache[key]) {
+    const age = Date.now() - apiCache[key].time;
+    if (age < CACHE_DURATION) return apiCache[key].data;
+  }
+  let url = API_URL + "?action=" + action;
+  if (currentUser) url += "&shopId=" + encodeURIComponent(currentUser.shopId);
+  for (const k in extra) url += "&" + k + "=" + encodeURIComponent(extra[k]);
+  const res = await fetch(url);
+  const data = await res.json();
+  apiCache[key] = { data: data, time: Date.now() };
+  return data;
+}
+async function apiPost(body) {
+  if (currentUser && !body.shopId) body.shopId = currentUser.shopId;
+  const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(body) });
+  return res.json();
+}
+
+function showToast(msg, type = "success") {
+  const toast = document.getElementById("toast");
+  toast.textContent = msg;
+  toast.className = "toast " + type + " show";
+  setTimeout(() => toast.classList.remove("show"), 2500);
+}
+function showAlert(id, message, type = "error") {
+  const el = document.getElementById(id);
+  el.textContent = message;
+  el.className = "alert " + type + " show";
+}
+function fmt(num) { return "৳" + (Number(num) || 0).toLocaleString("en-IN"); }
+function fmtDate(d) {
+  const dt = new Date(d);
+  return String(dt.getDate()).padStart(2,"0") + "/" + String(dt.getMonth()+1).padStart(2,"0") + "/" + dt.getFullYear();
+}
+function animateNumber(el, target, prefix = "৳") {
+  if (!el) return;
+  const duration = 500;
+  const startTime = performance.now();
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(target * eased);
+    el.textContent = prefix + current.toLocaleString("en-IN");
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = prefix + target.toLocaleString("en-IN");
+  }
+  requestAnimationFrame(step);
+}
+function animateStat(id, value, prefix) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  animateNumber(el, Number(value) || 0, prefix !== undefined ? prefix : "৳");
+}
+
+function gotoAuth(name) {
+  document.querySelectorAll(".auth-wrap").forEach(el => el.classList.add("hidden"));
+  const page = document.getElementById(name);
+  if (page) page.classList.remove("hidden");
+  if (name === "forgotPage") {
+    document.getElementById("forgotStep1").classList.remove("hidden");
+    document.getElementById("forgotStep2").classList.add("hidden");
+  }
+  document.querySelectorAll(".alert").forEach(el => el.classList.remove("show"));
+}
+
+function gotoPage(name) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".bottom-nav a").forEach(a => a.classList.remove("active"));
+  const page = document.getElementById("page-" + name);
+  if (page) page.classList.add("active");
+  const nav = document.querySelector('.bottom-nav a[data-page="' + name + '"]');
+  if (nav) nav.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (name === "dashboard") loadDashboard();
+  if (name === "sales") { loadProductsForSale(); loadTodaySales(); }
+  if (name === "products") loadProductList();
+  if (name === "customers") { loadCustomerList(); loadPaymentList(); closeCustomerDetail(); }
+  if (name === "reports") loadReport();
+  if (name === "lowstock") loadLowStockFull();
+}
+
+document.getElementById("signupBtn").addEventListener("click", async function() {
+  const name = document.getElementById("signupName").value.trim();
+  const shopName = document.getElementById("signupShopName").value.trim();
+  const phone = document.getElementById("signupPhone").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById("signupConfirm").value;
+  const securityQ = document.getElementById("signupSecurityQ").value;
+  const securityA = document.getElementById("signupSecurityA").value.trim();
+  if (!name || !shopName || !phone || !password || !securityA) return showAlert("signupError", t("fillAll"));
+  if (phone.length !== 11) return showAlert("signupError", t("phoneInvalid"));
+  if (password.length < 6) return showAlert("signupError", t("passwordShort"));
+  if (password !== confirm) return showAlert("signupError", t("passwordMismatch"));
+  this.disabled = true; this.innerHTML = '<span class="spinner"></span> ' + t("saving");
+  try {
+    const r = await apiPost({ action: "register", name, shopName, phone, password, securityQ, securityA });
+    if (r.success) { showAlert("signupError", r.message, "success"); setTimeout(() => loginUser(r.user), 800); }
+    else { showAlert("signupError", r.message); document.getElementById("signupCard").classList.add("shake"); setTimeout(() => document.getElementById("signupCard").classList.remove("shake"), 500); }
+  } catch (e) { showAlert("signupError", "Network error"); }
+  finally { this.disabled = false; this.textContent = t("signupBtn"); }
+});
+
+document.getElementById("loginBtn").addEventListener("click", async function() {
+  const phone = document.getElementById("loginPhone").value.trim();
+  const password = document.getElementById("loginPassword").value;
+  if (!phone || !password) return showAlert("loginError", t("fillAll"));
+  this.disabled = true; this.innerHTML = '<span class="spinner"></span> ' + t("loading");
+  try {
+    const r = await apiPost({ action: "login", phone, password });
+    if (r.success) loginUser(r.user);
+    else { showAlert("loginError", r.message); document.getElementById("loginCard").classList.add("shake"); setTimeout(() => document.getElementById("loginCard").classList.remove("shake"), 500); }
+  } catch (e) { showAlert("loginError", "Network error"); }
+  finally { this.disabled = false; this.textContent = t("loginBtn"); }
+});
+
+function loginUser(user) {
+  currentUser = user;
+  localStorage.setItem("shopmate_user", JSON.stringify(user));
+  showMainApp();
+}
+function logout() {
+  showConfirm("লগআউট করবেন?", "আপনার data নিরাপদ থাকবে", () => {
+    currentUser = null;
+    localStorage.removeItem("shopmate_user");
+    document.getElementById("mainApp").classList.add("hidden");
+    document.getElementById("authScreen").classList.remove("hidden");
+    gotoAuth("loginPage");
+  });
+}
+function showConfirm(title, message, onConfirm) {
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay show";
+  overlay.style.zIndex = "2000";
+  overlay.innerHTML = '<div class="modal" style="border-radius:20px;max-width:400px;margin:auto;"><div style="text-align:center;padding:10px 0 20px;"><div style="font-size:48px;margin-bottom:12px;">⚠️</div><h3 style="font-size:18px;margin-bottom:8px;color:var(--text);">' + title + '</h3><p style="color:var(--muted);font-size:14px;margin-bottom:20px;">' + message + '</p><div style="display:flex;gap:10px;"><button class="btn btn-secondary" id="confirmCancel">বাতিল</button><button class="btn btn-primary" id="confirmOk">হ্যাঁ</button></div></div></div>';
+  document.body.appendChild(overlay);
+  overlay.querySelector("#confirmCancel").onclick = () => overlay.remove();
+  overlay.querySelector("#confirmOk").onclick = () => { overlay.remove(); onConfirm(); };
+  overlay.onclick = (e) => { if (e.target === overlay) overlay.remove(); };
+}
+function showMainApp() {
+  document.getElementById("authScreen").classList.add("hidden");
+  document.getElementById("mainApp").classList.remove("hidden");
+  document.getElementById("headerShopName").textContent = currentUser.shopName;
+  document.getElementById("headerUserName").textContent = currentUser.name;
+  document.getElementById("profileAvatar").textContent = currentUser.name.charAt(0).toUpperCase();
+  document.getElementById("profileName").textContent = currentUser.name;
+  document.getElementById("profileShop").textContent = currentUser.shopName;
+  document.getElementById("profilePhone").textContent = currentUser.phone;
+  gotoPage("dashboard");
+}
+
+document.getElementById("forgotNextBtn").addEventListener("click", async function() {
+  const phone = document.getElementById("forgotPhone").value.trim();
+  if (phone.length !== 11) return showAlert("forgotError", t("phoneInvalid"));
+  this.disabled = true;
+  try {
+    const r = await apiGet("getSecurityQuestion", { phone });
+    if (r.success) {
+      document.getElementById("forgotQuestion").value = r.question;
+      document.getElementById("forgotStep1").classList.add("hidden");
+      document.getElementById("forgotStep2").classList.remove("hidden");
+    } else showAlert("forgotError", r.message);
+  } catch (e) { showAlert("forgotError", "Network error"); }
+  finally { this.disabled = false; }
+});
+document.getElementById("forgotResetBtn").addEventListener("click", async function() {
+  const phone = document.getElementById("forgotPhone").value.trim();
+  const answer = document.getElementById("forgotAnswer").value.trim();
+  const newPass = document.getElementById("forgotNewPass").value;
+  if (!answer || !newPass) return showAlert("forgotError", t("fillAll"));
+  if (newPass.length < 6) return showAlert("forgotError", t("passwordShort"));
+  this.disabled = true;
+  try {
+    const r = await apiPost({ action: "recover", phone, securityA: answer, newPassword: newPass });
+    if (r.success) { showAlert("forgotError", r.message, "success"); setTimeout(() => gotoAuth("loginPage"), 1500); }
+    else showAlert("forgotError", r.message);
+  } catch (e) { showAlert("forgotError", "Network error"); }
+  finally { this.disabled = false; }
+});
+
+async function loadDashboard() {
+  try {
+    const r = await apiGet("getDashboard");
+    if (!r.success) return;
+    animateStat("statTodaySales", r.data.todaySales || 0);
+    animateStat("statTodayProfit", r.data.todayProfit || 0);
+    animateStat("statTodayPaid", r.data.todayPaid || 0);
+    animateStat("statTodayDue", r.data.todayDue || 0);
+    animateStat("statTotalProducts", r.data.totalProducts || 0, "");
+    animateStat("statLowStock", r.data.lowStockCount || 0, "");
+    const list = document.getElementById("lowStockList");
+    if (!r.data.lowStockItems || r.data.lowStockItems.length === 0) {
+      list.innerHTML = '<div class="empty-state"><span class="icon">✅</span>' + t("allGood") + '</div>';
+    } else {
+      list.innerHTML = r.data.lowStockItems.slice(0, 3).map(p =>
+        '<div class="list-item warn-item"><div class="left-side"><div class="item-title">' + p.ProductName + '</div><div class="item-sub">' + t("stock") + ': ' + p.Stock + ' ' + t("pcs") + '</div></div><div class="item-value warn">' + p.Stock + '</div></div>'
+      ).join("");
+    }
+  } catch (e) { console.error(e); }
+}
+
+async function loadLowStockFull() {
+  const list = document.getElementById("lowStockFullList");
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  try {
+    const r = await apiGet("getProducts");
+    if (!r.success || !r.data) { list.innerHTML = '<div class="empty-state"><span class="icon">📦</span>' + t("noProducts") + '</div>'; return; }
+    const lowStock = r.data.filter(p => Number(p.Stock) <= Number(p.LowStockAlert));
+    if (lowStock.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">✅</span>' + t("allGood") + '</div>'; return; }
+    list.innerHTML = lowStock.map(p =>
+      '<div class="list-item warn-item"><div class="left-side"><div class="item-title">' + p.ProductName + '</div><div class="item-sub">' + (p.Category || '') + ' | ' + t("stock") + ': ' + p.Stock + ' | Low: ' + p.LowStockAlert + '</div></div><div class="item-value warn">' + p.Stock + ' ' + t("pcs") + '</div></div>'
+    ).join("");
+  } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+}
+
+async function loadProductList() {
+  const list = document.getElementById("productList");
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  try {
+    const r = await apiGet("getProducts");
+    if (!r.success || !r.data || r.data.length === 0) {
+      allProductsCache = [];
+      list.innerHTML = '<div class="empty-state"><span class="icon">📦</span>' + t("noProducts") + '</div>';
+      return;
+    }
+    allProductsCache = r.data;
+    cache.products = r.data;
+    renderProductList(r.data);
+  } catch (e) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>';
+  }
+}
+
+function renderProductList(products) {
+  const list = document.getElementById("productList");
+  if (products.length === 0) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">🔍</span>কিছু পাওয়া যায়নি</div>';
+    return;
+  }
+  list.innerHTML = products.map(p => {
+    const isLow = Number(p.Stock) <= Number(p.LowStockAlert);
+    return '<div class="list-item">' +
+      '<div class="left-side">' +
+        '<div class="item-title">' + p.ProductName + '</div>' +
+        '<div class="item-sub">' + t("buy") + ': ৳' + p.PurchasePrice + ' | ' + t("sell") + ': ৳' + p.SellingPrice + '</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;">' +
+        '<div class="item-value' + (isLow ? ' warn' : '') + '">' + p.Stock + '</div>' +
+        '<div class="action-btns">' +
+          '<button class="mini-btn edit" onclick="editProduct(\'' + p.ProductID + '\')" title="Edit">✏️</button>' +
+          '<button class="mini-btn delete" onclick="confirmDeleteProduct(\'' + p.ProductID + '\', \'' + (p.ProductName || '').replace(/'/g, "\\'") + '\')" title="Delete">🗑️</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+function filterProducts() {
+  const q = document.getElementById("productSearch").value.trim().toLowerCase();
+  if (!q) {
+    renderProductList(allProductsCache);
+    return;
+  }
+  const filtered = allProductsCache.filter(p =>
+    (p.ProductName || "").toLowerCase().includes(q) ||
+    (p.Category || "").toLowerCase().includes(q)
+  );
+  renderProductList(filtered);
+}
+
+function editProduct(productId) {
+  const p = allProductsCache.find(x => x.ProductID === productId);
+  if (!p) return;
+  document.getElementById("pName").value = p.ProductName || "";
+  document.getElementById("pCategory").value = p.Category || "";
+  document.getElementById("pPurchasePrice").value = p.PurchasePrice || "";
+  document.getElementById("pSellingPrice").value = p.SellingPrice || "";
+  document.getElementById("pStock").value = p.Stock || "";
+  document.getElementById("pLowStock").value = p.LowStockAlert || 5;
+
+  const btn = document.getElementById("saveProductBtn");
+  btn.textContent = "✏️ পণ্য আপডেট করো";
+  btn.setAttribute("data-edit-id", productId);
+
+  if (!document.getElementById("cancelEditBtn")) {
+    const cancelBtn = document.createElement("button");
+    cancelBtn.id = "cancelEditBtn";
+    cancelBtn.className = "btn cancel-btn";
+    cancelBtn.style.marginTop = "8px";
+    cancelBtn.textContent = "❌ বাতিল";
+    cancelBtn.onclick = cancelProductEdit;
+    btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+  }
+  document.getElementById("pName").scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("pName").focus();
+}
+
+function cancelProductEdit() {
+  document.getElementById("pName").value = "";
+  document.getElementById("pCategory").value = "";
+  document.getElementById("pPurchasePrice").value = "";
+  document.getElementById("pSellingPrice").value = "";
+  document.getElementById("pStock").value = "";
+  document.getElementById("pLowStock").value = 5;
+  const btn = document.getElementById("saveProductBtn");
+  btn.textContent = t("saveProduct");
+  btn.removeAttribute("data-edit-id");
+  const cancelBtn = document.getElementById("cancelEditBtn");
+  if (cancelBtn) cancelBtn.remove();
+}
+
+function confirmDeleteProduct(productId, productName) {
+  showConfirm(
+    "পণ্য মুছে ফেলবেন?",
+    "'" + productName + "' স্থায়ীভাবে মুছে যাবে। এটা ফেরানো যাবে না।",
+    async () => {
+      try {
+        const r = await apiPost({ action: "deleteProduct", productId: productId });
+        if (r.success) {
+          showToast("✅ পণ্য মুছে ফেলা হয়েছে");
+          loadProductList();
+          loadDashboard();
+        } else showToast(r.message || "Error", "error");
+      } catch (e) { showToast("Network error", "error"); }
+    }
+  );
+}
+
+document.getElementById("saveProductBtn").addEventListener("click", async function() {
+  const editId = this.getAttribute("data-edit-id");
+  const body = {
+    productName: document.getElementById("pName").value.trim(),
+    category: document.getElementById("pCategory").value.trim(),
+    purchasePrice: document.getElementById("pPurchasePrice").value,
+    sellingPrice: document.getElementById("pSellingPrice").value,
+    stock: document.getElementById("pStock").value,
+    lowStockAlert: document.getElementById("pLowStock").value || 5
+  };
+  if (!body.productName || !body.purchasePrice || !body.sellingPrice || !body.stock) {
+    return showToast(t("fillAll"), "error");
+  }
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> ' + t("saving");
+  try {
+    let r;
+    if (editId) {
+      body.action = "updateProduct";
+      body.productId = editId;
+      r = await apiPost(body);
+    } else {
+      body.action = "addProduct";
+      r = await apiPost(body);
+    }
+    if (r.success) {
+      showToast("✅ " + (editId ? "আপডেট হয়েছে" : t("saved")));
+      cancelProductEdit();
+      loadProductList();
+      loadDashboard();
+    } else {
+      showToast(r.message || "Error", "error");
+    }
+  } catch (e) {
+    showToast("Network error", "error");
+  } finally {
+    this.disabled = false;
+    if (editId) this.textContent = "✏️ পণ্য আপডেট করো";
+    else this.textContent = t("saveProduct");
+  }
+});
+
+async function loadProductsForSale() {
+  const sel = document.getElementById("saleProductId");
+  sel.innerHTML = '<option value="">' + t("loading") + '</option>';
+  try {
+    const r = await apiGet("getProducts");
+    if (r.success && r.data && r.data.length > 0) {
+      cache.products = r.data;
+      sel.innerHTML = '<option value="">-- ' + t("selectProduct") + ' --</option>';
+      r.data.forEach(p => {
+        sel.innerHTML += '<option value="' + p.ProductID + '">' + p.ProductName + ' (' + t("stock") + ': ' + p.Stock + ') - ৳' + p.SellingPrice + '</option>';
+      });
+    } else sel.innerHTML = '<option value="">-- ' + t("noProducts") + ' --</option>';
+  } catch (e) { sel.innerHTML = '<option value="">-- Error --</option>'; }
+}
+
+function onProductSelect() { updateSalePreview(); }
+function onPaymentChange() {
+  const method = document.getElementById("salePayment").value;
+  const preview = document.getElementById("salePreview");
+  const dueFields = document.getElementById("dueFields");
+  preview.classList.remove("hidden");
+  if (method === "Due") { dueFields.classList.remove("hidden"); document.getElementById("salePaidAmount").value = 0; }
+  else dueFields.classList.add("hidden");
+  updateSalePreview();
+}
+function updateSalePreview() {
+  const productId = document.getElementById("saleProductId").value;
+  const qty = Number(document.getElementById("saleQty").value) || 0;
+  const method = document.getElementById("salePayment").value;
+  const preview = document.getElementById("salePreview");
+  if (!productId || qty <= 0) { preview.classList.add("hidden"); return; }
+  preview.classList.remove("hidden");
+  const product = cache.products.find(p => p.ProductID === productId);
+  if (!product) return;
+  const total = qty * Number(product.SellingPrice);
+  document.getElementById("previewTotal").textContent = fmt(total);
+  if (method === "Due") {
+    const paid = Number(document.getElementById("salePaidAmount").value) || 0;
+    document.getElementById("previewDue").textContent = fmt(Math.max(0, total - paid));
+  }
+}
+
+document.getElementById("saveSaleBtn").addEventListener("click", async function() {
+  const productId = document.getElementById("saleProductId").value;
+  const qty = document.getElementById("saleQty").value;
+  const paymentMethod = document.getElementById("salePayment").value;
+  const customerName = document.getElementById("saleCustomerName").value.trim();
+  const customerPhone = document.getElementById("saleCustomerPhone").value.trim();
+  const customerAddress = document.getElementById("saleCustomerAddress").value.trim();
+  const paidAmount = document.getElementById("salePaidAmount").value || 0;
+  if (!productId) return showToast(t("selectProductWarn"), "error");
+  if (paymentMethod === "Due" && !customerName) return showToast(t("customerNameWarn"), "error");
+  this.disabled = true; this.innerHTML = '<span class="spinner"></span> ' + t("saving");
+  try {
+    const r = await apiPost({
+      action: "addSale", productId, quantity: qty,
+      paymentMethod, customerName,
+      phone: customerPhone, address: customerAddress,
+      paidAmount: paymentMethod === "Due" ? paidAmount : null
+    });
+    if (r.success) {
+      let msg = "✅ ৳" + r.totalSale + " | " + t("profit") + ": ৳" + r.profit;
+      if (r.dueAmount > 0) msg += " | " + t("due") + ": ৳" + r.dueAmount;
+      showToast(msg);
+      document.getElementById("saleQty").value = 1;
+      document.getElementById("saleCustomerName").value = "";
+      document.getElementById("saleCustomerPhone").value = "";
+      document.getElementById("saleCustomerAddress").value = "";
+      document.getElementById("salePaidAmount").value = 0;
+      document.getElementById("salePreview").classList.add("hidden");
+      loadProductsForSale(); loadTodaySales(); loadDashboard();
+    } else showToast(r.message || "Error", "error");
+  } catch (e) { showToast("Network error", "error"); }
+  finally { this.disabled = false; this.textContent = t("saveSale"); }
+});
+
+async function loadTodaySales() {
+  const list = document.getElementById("todaySalesList");
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  try {
+    const r = await apiGet("getSales");
+    if (!r.success || !r.data || r.data.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>'; return; }
+    const today = new Date().toDateString();
+    const todaySales = r.data.filter(s => new Date(s.Date).toDateString() === today);
+    if (todaySales.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>'; return; }
+    list.innerHTML = todaySales.reverse().map(s => {
+      const badge = getBadge(s.PaymentMethod);
+      return '<div class="list-item sale-item"><div class="left-side"><div class="item-title">' + s.ProductName + ' × ' + s.Quantity + '</div><div class="item-sub">' + badge + ' | ' + t("profit") + ': ৳' + s.Profit + (Number(s.DueAmount) > 0 ? ' | ' + t("due") + ': ৳' + s.DueAmount : '') + '</div></div><div class="item-value">৳' + s.TotalSale + '</div></div>';
+    }).join("");
+  } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+}
+
+function getBadge(method) {
+  const map = {
+    "Cash": '<span class="payment-badge badge-cash">💵 Cash</span>',
+    "Bkash": '<span class="payment-badge badge-bkash">📱 Bkash</span>',
+    "Nagad": '<span class="payment-badge badge-nagad">📱 Nagad</span>',
+    "Due": '<span class="payment-badge badge-due">📝 Due</span>',
+    "Partial": '<span class="payment-badge badge-partial">💰 Partial</span>'
+  };
+  return map[method] || method;
+}
+
+async function loadCustomerList() {
+  const list = document.getElementById("customerList");
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  try {
+    const r = await apiGet("getCustomers");
+    if (!r.success || !r.data || r.data.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">👥</span>' + t("noCustomers") + '</div>'; return; }
+    const withDue = r.data.filter(c => Number(c.TotalDue) > 0);
+    if (withDue.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">✅</span>' + t("allPaid") + '</div>'; return; }
+    window._customers = r.data;
+    list.innerHTML = withDue.map(c =>
+      '<div class="list-item due-item clickable" onclick="openCustomerDetail(\'' + c.CustomerID + '\')"><div class="left-side"><div class="item-title">' + c.Name + '</div><div class="item-sub">' + (c.Phone || t("noPhone")) + '</div></div><div class="item-value red">৳' + c.TotalDue + '</div></div>'
+    ).join("");
+  } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+}
+
+function openCustomerDetail(customerId) {
+  const c = (window._customers || []).find(x => x.CustomerID === customerId);
+  if (!c) return;
+  currentCustomer = c;
+  document.getElementById("customerDetailCard").style.display = "block";
+  document.getElementById("detailCustomerName").textContent = c.Name;
+  document.getElementById("detailPhone").textContent = c.Phone || "-";
+  document.getElementById("detailDue").textContent = fmt(c.TotalDue);
+  document.getElementById("detailPaid").textContent = fmt(c.TotalPaid);
+  document.getElementById("duePaymentAmount").value = "";
+  document.getElementById("duePaymentNote").value = "";
+  document.getElementById("customerDetailCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function closeCustomerDetail() {
+  document.getElementById("customerDetailCard").style.display = "none";
+  currentCustomer = null;
+}
+async function saveDuePayment() {
+  if (!currentCustomer) return showToast("কাস্টমার select করুন", "error");
+  const btn = event.target;
+  if (btn.disabled) return;
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Processing...';
+  const amount = Number(document.getElementById("duePaymentAmount").value);
+  const note = document.getElementById("duePaymentNote").value.trim();
+  if (!amount || amount <= 0) { btn.disabled = false; btn.textContent = t("savePayment"); return showToast("টাকার পরিমাণ দিন", "error"); }
+  if (amount > Number(currentCustomer.TotalDue)) { btn.disabled = false; btn.textContent = t("savePayment"); return showToast(t("due") + " ৳" + currentCustomer.TotalDue + " — বেশি নেওয়া যাবে না", "error"); }
+  try {
+    const r = await apiPost({
+      action: "addDuePayment", customerName: currentCustomer.Name,
+      phone: currentCustomer.Phone || "", amount: amount, note: note, type: "Due Payment"
+    });
+    if (r.success) {
+      showToast("✅ ৳" + amount + " | " + t("due") + ": ৳" + r.newDue);
+      document.getElementById("duePaymentAmount").value = "";
+      document.getElementById("duePaymentNote").value = "";
+      closeCustomerDetail();
+      await loadCustomerList(); await loadPaymentList(); await loadDashboard();
+    } else showToast(r.message || "Error", "error");
+  } catch (e) { showToast("Network error", "error"); }
+  finally { btn.disabled = false; btn.textContent = t("savePayment"); }
+}
+
+async function loadPaymentList() {
+  const list = document.getElementById("paymentList");
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  try {
+    const r = await apiGet("getPayments");
+    if (!r.success || !r.data || r.data.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">📜</span>No payments</div>'; return; }
+    const recent = r.data.slice(-10).reverse();
+    list.innerHTML = recent.map(p =>
+      '<div class="list-item"><div class="left-side"><div class="item-title">' + p.CustomerName + '</div><div class="item-sub">' + fmtDate(p.Date) + ' | ' + (p.Type || "Due Payment") + '</div></div><div class="item-value">৳' + p.Amount + '</div></div>'
+    ).join("");
+  } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+}
+
+function switchReport(range) {
+  currentReportRange = range;
+  document.querySelectorAll(".report-tabs button").forEach(b => b.classList.toggle("active", b.dataset.range === range));
+  const customDiv = document.getElementById("customDateRange");
+  if (range === "custom") {
+    customDiv.classList.remove("hidden");
+    const today = new Date();
+    const week = new Date();
+    week.setDate(today.getDate() - 7);
+    document.getElementById("reportFromDate").value = week.toISOString().split("T")[0];
+    document.getElementById("reportToDate").value = today.toISOString().split("T")[0];
+  } else {
+    customDiv.classList.add("hidden");
+    loadReport();
+  }
+}
+async function loadCustomReport() {
+  const from = document.getElementById("reportFromDate").value;
+  const to = document.getElementById("reportToDate").value;
+  if (!from || !to) return showToast("দুইটা তারিখই দাও", "error");
+  loadReport();
+}
+
+async function loadReport() {
+  const content = document.getElementById("reportContent");
+  content.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  try {
+    const params = { range: currentReportRange };
+    if (currentReportRange === "custom") {
+      params.fromDate = document.getElementById("reportFromDate").value;
+      params.toDate = document.getElementById("reportToDate").value;
+    }
+    const r = await apiGet("getReports", params);
+    if (!r.success) { content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>Error</div>'; return; }
+    const d = r.data;
+    let rangeLabel = {
+      "today": "আজকের রিপোর্ট",
+      "week": "সাপ্তাহিক রিপোর্ট",
+      "month": "মাসিক রিপোর্ট",
+      "year": "বাৎসরিক রিপোর্ট",
+      "custom": "কাস্টম রিপোর্ট"
+    }[currentReportRange] || "রিপোর্ট";
+    let html = '';
+    html += '<div class="report-header">';
+    html += '<div class="rh-shop">🏪 ' + currentUser.shopName + '</div>';
+    html += '<div class="rh-owner">Owner: ' + currentUser.name + '</div>';
+    html += '<div class="rh-title"><span>📊 ' + rangeLabel + '</span><span class="rh-badge">' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</span></div>';
+    html += '</div>';
+    html += '<div class="report-kpi">';
+    html += '<div class="kpi-card green"><div class="kpi-icon">💰</div><div class="kpi-label">মোট বিক্রয়</div><div class="kpi-value">' + fmt(d.totalSale) + '</div></div>';
+    html += '<div class="kpi-card blue"><div class="kpi-icon">📈</div><div class="kpi-label">মোট লাভ</div><div class="kpi-value">' + fmt(d.totalProfit) + '</div></div>';
+    html += '<div class="kpi-card info"><div class="kpi-icon">💵</div><div class="kpi-label">নগদ পেয়েছি</div><div class="kpi-value">' + fmt(d.totalPaid) + '</div></div>';
+    html += '<div class="kpi-card red"><div class="kpi-icon">📝</div><div class="kpi-label">মোট বাকি</div><div class="kpi-value">' + fmt(d.totalDue) + '</div></div>';
+    html += '</div>';
+    if (d.dayWise && d.dayWise.length > 0) {
+      html += '<div class="report-section">';
+      html += '<div class="rs-header"><div class="rs-title">📅 দিন-ভিত্তিক স্টেটমেন্ট</div><div class="rs-count">' + d.dayWise.length + ' দিন</div></div>';
+      html += '<div style="overflow-x:auto;"><table class="prof-table">';
+      html += '<thead><tr><th>তারিখ</th><th class="num">বিক্রয়</th><th class="num">লাভ</th><th class="num">নগদ</th><th class="num">বাকি</th></tr></thead><tbody>';
+      d.dayWise.forEach(day => {
+        const parts = day.date.split("-");
+        const dateStr = parts[2] + "/" + parts[1] + "/" + parts[0];
+        html += '<tr>';
+        html += '<td>' + dateStr + '<div style="font-size:10px;color:var(--muted);font-weight:400;margin-top:2px;">' + day.count + ' লেনদেন</div></td>';
+        html += '<td class="num num-green">৳' + day.sale.toLocaleString() + '</td>';
+        html += '<td class="num num-blue">৳' + day.profit.toLocaleString() + '</td>';
+        html += '<td class="num num-info">৳' + day.paid.toLocaleString() + '</td>';
+        html += '<td class="num num-red">৳' + day.due.toLocaleString() + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody><tfoot><tr><td>মোট</td>';
+      html += '<td class="num" style="color:#10B981;">৳' + d.totalSale.toLocaleString() + '</td>';
+      html += '<td class="num" style="color:#4F46E5;">৳' + d.totalProfit.toLocaleString() + '</td>';
+      html += '<td class="num" style="color:#3B82F6;">৳' + d.totalPaid.toLocaleString() + '</td>';
+      html += '<td class="num" style="color:#EF4444;">৳' + d.totalDue.toLocaleString() + '</td>';
+      html += '</tr></tfoot></table></div></div>';
+    }
+    if (d.topProducts && d.topProducts.length > 0) {
+      html += '<div class="report-section">';
+      html += '<div class="rs-header"><div class="rs-title">🔥 বেশি বিক্রি হওয়া পণ্য</div><div class="rs-count">Top ' + d.topProducts.length + '</div></div>';
+      html += '<div style="overflow-x:auto;"><table class="prof-table">';
+      html += '<thead><tr><th>পণ্য</th><th class="num">সংখ্যা</th><th class="num">বিক্রয়</th><th class="num">লাভ</th></tr></thead><tbody>';
+      d.topProducts.forEach(p => {
+        html += '<tr><td>' + p.name + '</td><td class="num">' + p.qty + '</td><td class="num num-green">৳' + p.amount.toLocaleString() + '</td><td class="num num-blue">৳' + p.profit.toLocaleString() + '</td></tr>';
+      });
+      html += '</tbody></table></div></div>';
+    }
+    if (d.paymentBreakdown && d.paymentBreakdown.length > 0) {
+      html += '<div class="report-section">';
+      html += '<div class="rs-header"><div class="rs-title">💳 পেমেন্ট পদ্ধতি</div><div class="rs-count">' + d.paymentBreakdown.length + ' ধরন</div></div>';
+      html += '<div style="overflow-x:auto;"><table class="prof-table">';
+      html += '<thead><tr><th>পদ্ধতি</th><th class="num">লেনদেন</th><th class="num">মোট</th></tr></thead><tbody>';
+      d.paymentBreakdown.forEach(p => {
+        html += '<tr><td>' + getBadge(p.method) + '</td><td class="num">' + p.count + '</td><td class="num num-green">৳' + p.amount.toLocaleString() + '</td></tr>';
+      });
+      html += '</tbody></table></div></div>';
+    }
+    if (d.sales && d.sales.length > 0) {
+      html += '<div class="report-section">';
+      html += '<div class="rs-header"><div class="rs-title">📋 সব লেনদেন (বিস্তারিত)</div><div class="rs-count">' + d.sales.length + 'টি</div></div>';
+      html += '<div style="overflow-x:auto;"><table class="prof-table" style="font-size:11.5px;">';
+      html += '<thead><tr><th>তারিখ</th><th>পণ্য</th><th class="num">সংখ্যা</th><th class="num">মোট</th><th class="num">নগদ</th><th class="num">বাকি</th></tr></thead><tbody>';
+      d.sales.slice(0, 100).forEach(s => {
+        html += '<tr><td>' + fmtDate(s.Date) + '</td><td>' + s.ProductName + '</td><td class="num">' + s.Quantity + '</td><td class="num">৳' + s.TotalSale + '</td><td class="num num-info">৳' + (s.PaidAmount || 0) + '</td><td class="num num-red">৳' + (s.DueAmount || 0) + '</td></tr>';
+      });
+      html += '</tbody></table></div></div>';
+    }
+    html += '<div class="report-footer">✨ Generated by ShopMate AI | ' + new Date().toLocaleString() + '</div>';
+    html += '<button class="btn btn-primary" style="margin-top:16px;" onclick="printReport()">🖨️ Print / PDF Download</button>';
+    html += '<div id="printArea" style="display:none;">' + buildPrintArea(d) + '</div>';
+    content.innerHTML = html;
+  } catch (e) { content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+}
+
+function buildPrintArea(d) {
+  let rangeLabel = {
+    "today": "Daily Report",
+    "week": "Weekly Report",
+    "month": "Monthly Report",
+    "year": "Yearly Report",
+    "custom": "Custom Report"
+  }[currentReportRange] || "Report";
+  let html = '<div style="padding:0;font-family:Arial,sans-serif;color:#000;max-width:800px;margin:0 auto;">';
+  html += '<div style="background:linear-gradient(135deg,#4F46E5,#7C3AED);color:white;padding:24px;border-radius:8px;margin-bottom:20px;">';
+  html += '<h1 style="margin:0;font-size:24px;">🏪 ' + currentUser.shopName + '</h1>';
+  html += '<p style="margin:6px 0 0 0;font-size:13px;opacity:0.9;">Owner: ' + currentUser.name + '</p>';
+  html += '<div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.3);display:flex;justify-content:space-between;font-size:13px;">';
+  html += '<span><b>' + rangeLabel + '</b></span><span>' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</span>';
+  html += '</div></div>';
+  html += '<table style="width:100%;border-collapse:separate;border-spacing:8px;margin-bottom:20px;"><tr>';
+  html += '<td style="background:#ECFDF5;padding:14px;border-radius:8px;border-left:4px solid #10B981;"><div style="font-size:10px;color:#666;text-transform:uppercase;">Total Sale</div><div style="font-size:18px;font-weight:700;color:#10B981;margin-top:4px;">৳' + d.totalSale.toLocaleString() + '</div></td>';
+  html += '<td style="background:#EEF2FF;padding:14px;border-radius:8px;border-left:4px solid #4F46E5;"><div style="font-size:10px;color:#666;text-transform:uppercase;">Total Profit</div><div style="font-size:18px;font-weight:700;color:#4F46E5;margin-top:4px;">৳' + d.totalProfit.toLocaleString() + '</div></td>';
+  html += '<td style="background:#EFF6FF;padding:14px;border-radius:8px;border-left:4px solid #3B82F6;"><div style="font-size:10px;color:#666;text-transform:uppercase;">Paid</div><div style="font-size:18px;font-weight:700;color:#3B82F6;margin-top:4px;">৳' + d.totalPaid.toLocaleString() + '</div></td>';
+  html += '<td style="background:#FEF2F2;padding:14px;border-radius:8px;border-left:4px solid #EF4444;"><div style="font-size:10px;color:#666;text-transform:uppercase;">Due</div><div style="font-size:18px;font-weight:700;color:#EF4444;margin-top:4px;">৳' + d.totalDue.toLocaleString() + '</div></td>';
+  html += '</tr></table>';
+  if (d.dayWise && d.dayWise.length > 0) {
+    html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">📅 Day-wise Statement</h3>';
+    html += '<table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:20px;">';
+    html += '<thead><tr style="background:#4F46E5;color:white;"><th style="padding:10px;text-align:left;">Date</th><th style="padding:10px;text-align:right;">Sale</th><th style="padding:10px;text-align:right;">Profit</th><th style="padding:10px;text-align:right;">Paid</th><th style="padding:10px;text-align:right;">Due</th></tr></thead><tbody>';
+    d.dayWise.forEach((day, idx) => {
+      const parts = day.date.split("-");
+      const dateStr = parts[2] + "/" + parts[1] + "/" + parts[0];
+      const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
+      html += '<tr style="background:' + bg + ';">';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;"><b>' + dateStr + '</b></td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#10B981;font-weight:600;">৳' + day.sale.toLocaleString() + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#4F46E5;font-weight:600;">৳' + day.profit.toLocaleString() + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#3B82F6;">৳' + day.paid.toLocaleString() + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">৳' + day.due.toLocaleString() + '</td>';
+      html += '</tr>';
+    });
+    html += '<tr style="background:#F3F4F6;font-weight:700;">';
+    html += '<td style="padding:11px;border-top:2px solid #111;">TOTAL</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#10B981;">৳' + d.totalSale.toLocaleString() + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#4F46E5;">৳' + d.totalProfit.toLocaleString() + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#3B82F6;">৳' + d.totalPaid.toLocaleString() + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#EF4444;">৳' + d.totalDue.toLocaleString() + '</td>';
+    html += '</tr></tbody></table>';
+  }
+  if (d.topProducts && d.topProducts.length > 0) {
+    html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">🔥 Top Products</h3>';
+    html += '<table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:20px;">';
+    html += '<thead><tr style="background:#4F46E5;color:white;"><th style="padding:10px;text-align:left;">Product</th><th style="padding:10px;text-align:right;">Qty</th><th style="padding:10px;text-align:right;">Sale</th><th style="padding:10px;text-align:right;">Profit</th></tr></thead><tbody>';
+    d.topProducts.forEach((p, idx) => {
+      const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
+      html += '<tr style="background:' + bg + ';">';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;">' + p.name + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;">' + p.qty + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#10B981;font-weight:600;">৳' + p.amount.toLocaleString() + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#4F46E5;font-weight:600;">৳' + p.profit.toLocaleString() + '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+  if (d.sales && d.sales.length > 0) {
+    html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">📋 Sales Details</h3>';
+    html += '<table style="width:100%;font-size:11px;border-collapse:collapse;">';
+    html += '<thead><tr style="background:#4F46E5;color:white;"><th style="padding:8px;text-align:left;">Date</th><th style="padding:8px;text-align:left;">Product</th><th style="padding:8px;text-align:right;">Qty</th><th style="padding:8px;text-align:right;">Total</th><th style="padding:8px;text-align:right;">Paid</th><th style="padding:8px;text-align:right;">Due</th></tr></thead><tbody>';
+    d.sales.slice(0, 100).forEach((s, idx) => {
+      const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
+      html += '<tr style="background:' + bg + ';">';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;">' + fmtDate(s.Date) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;">' + s.ProductName + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;">' + s.Quantity + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;font-weight:600;">৳' + s.TotalSale + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;color:#3B82F6;">৳' + (s.PaidAmount || 0) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">৳' + (s.DueAmount || 0) + '</td>';
+      html += '</tr>';
+    });
+    html += '</tbody></table>';
+  }
+  html += '<div style="margin-top:50px;padding-top:20px;border-top:2px dashed #ccc;text-align:center;font-size:11px;color:#666;">';
+  html += '<p style="margin:0 0 30px 0;text-align:right;">Signature: ______________________</p>';
+  html += '<p style="margin:0;">Generated by <b>ShopMate AI</b> | ' + new Date().toLocaleString() + '</p>';
+  html += '</div></div>';
+  return html;
+}
+
+function printReport() {
+  const printArea = document.getElementById("printArea");
+  if (!printArea) return;
+  const w = window.open("", "_blank");
+  w.document.write('<html><head><title>Report - ' + currentUser.shopName + '</title>');
+  w.document.write('<style>@page{size:A4;margin:15mm;}body{font-family:sans-serif;padding:20px;}</style>');
+  w.document.write('</head><body>' + printArea.innerHTML + '</body></html>');
+  w.document.close();
+  setTimeout(() => w.print(), 300);
+}
+
+function init() {
+  currentLang = localStorage.getItem("shopmate_lang") || "bn";
+  applyLanguage();
+  loadTheme();
+  const saved = localStorage.getItem("shopmate_user");
+  if (saved) {
+    try { currentUser = JSON.parse(saved); showMainApp(); }
+    catch (e) { localStorage.removeItem("shopmate_user"); gotoAuth("loginPage"); }
+  } else gotoAuth("loginPage");
+}
+init();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(reg => console.log("✅ PWA ready"))
+      .catch(err => console.log("SW error:", err));
+  });
+}
+</script>
+</body>
+</html>
