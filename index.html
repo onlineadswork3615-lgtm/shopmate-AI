@@ -53,6 +53,7 @@ body.bn { font-family: 'Noto Sans Bengali','Inter',sans-serif; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
 
+/* ============ AUTH ============ */
 .auth-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; background: var(--gradient); }
 .auth-card { background: var(--card); border-radius: 24px; padding: 36px 28px; width: 100%; max-width: 420px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.6s; }
 .auth-logo { text-align: center; margin-bottom: 28px; }
@@ -89,6 +90,7 @@ input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px 
 .auth-link { text-align: center; margin-top: 18px; font-size: 14px; color: var(--muted); }
 .auth-link a { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
 
+/* ============ APP HEADER ============ */
 .app-header { position: sticky; top: 0; z-index: 100; background: var(--gradient); color: white; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
 .app-header .left { display: flex; align-items: center; gap: 12px; }
 .app-header .logo-icon { font-size: 26px; }
@@ -96,15 +98,18 @@ input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px 
 .app-header .shop-info p { font-size: 11px; opacity: 0.85; margin-top: 2px; }
 .icon-btn { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: white; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
+/* ============ CONTAINER ============ */
 .container { max-width: 600px; margin: 0 auto; padding: 16px; }
 .page { display: none; }
 .page.active { display: block; animation: fadeIn 0.35s; }
 .page-title { font-size: 22px; font-weight: 700; margin-bottom: 18px; }
 
+/* ============ CARDS ============ */
 .card { background: var(--card); border-radius: 16px; padding: 18px; margin-bottom: 16px; box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid var(--border); }
 .card-title { font-size: 15px; font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
 .card-title .title-text { display: flex; align-items: center; gap: 8px; }
 
+/* ============ STATS ============ */
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
 .stat-card { background: var(--card); border-radius: 16px; padding: 18px; box-shadow: var(--shadow); transition: all 0.3s; border: 1px solid var(--border); }
 .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
@@ -116,6 +121,7 @@ input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px 
 .stat-card.red .value { color: var(--danger); }
 .stat-card.info .value { color: var(--info); }
 
+/* ============ QUICK ACTIONS ============ */
 .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .qa-btn { background: var(--card); border: 1.5px solid var(--border); border-radius: 14px; padding: 16px 14px; text-align: left; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 12px; font-family: inherit; color: var(--text); }
 .qa-btn:hover { border-color: var(--primary); transform: translateY(-2px); background: var(--card-hover); }
@@ -123,6 +129,7 @@ input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px 
 .qa-btn .qa-text { font-size: 13px; font-weight: 600; }
 .qa-btn .qa-sub { font-size: 11px; color: var(--muted); margin-top: 3px; }
 
+/* ============ LISTS ============ */
 .list-item { display: flex; justify-content: space-between; align-items: center; padding: 14px; border-radius: 12px; background: var(--card); margin-bottom: 8px; transition: all 0.25s; border: 1px solid var(--border); }
 .list-item:hover { background: var(--bg-alt); }
 .list-item .left-side { flex: 1; min-width: 0; }
@@ -142,6 +149,7 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .empty-state { text-align: center; padding: 32px 20px; color: var(--muted); font-size: 14px; }
 .empty-state .icon { font-size: 48px; display: block; margin-bottom: 12px; opacity: 0.4; }
 
+/* ============ BOTTOM NAV ============ */
 .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; justify-content: space-around; padding: 8px 0 max(8px, env(safe-area-inset-bottom)); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 100; border-top: 1px solid var(--border); }
 .bottom-nav a { flex: 1; text-decoration: none; color: var(--muted); text-align: center; padding: 6px 4px; cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .bottom-nav a.active { color: var(--primary); }
@@ -150,11 +158,13 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 
 .loading-wrap { text-align: center; padding: 28px; color: var(--muted); font-size: 14px; }
 
+/* ============ TOAST ============ */
 .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--text); color: var(--bg); padding: 14px 20px; border-radius: 14px; font-size: 14px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.4s; max-width: 90%; text-align: center; }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 .toast.success { background: var(--secondary); color: white; }
 .toast.error { background: var(--danger); color: white; }
 
+/* ============ PROFILE ============ */
 .profile-header { text-align: center; padding: 28px 20px; background: var(--gradient); color: white; border-radius: 20px; margin-bottom: 16px; }
 .profile-avatar { width: 84px; height: 84px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 700; margin: 0 auto 12px; border: 4px solid rgba(255,255,255,0.4); }
 .profile-header h2 { font-size: 22px; font-weight: 700; }
@@ -171,12 +181,14 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .lang-switch button, .theme-toggle button { padding: 7px 16px; border: none; background: transparent; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); font-family: inherit; }
 .lang-switch button.active, .theme-toggle button.active { background: var(--card); color: var(--primary); }
 
+/* ============ MODAL ============ */
 .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 500; display: none; align-items: flex-end; }
 .modal-overlay.show { display: flex; }
 .modal { background: var(--card); color: var(--text); width: 100%; max-width: 600px; margin: 0 auto; border-radius: 24px 24px 0 0; padding: 24px 18px; max-height: 90vh; overflow-y: auto; }
 
 .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
+/* ============ REPORT ============ */
 .report-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; }
 .report-tabs button { padding: 9px 18px; border: 1.5px solid var(--border); background: var(--card); border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; color: var(--muted); }
 .report-tabs button.active { background: var(--gradient); color: white; border-color: transparent; }
@@ -192,6 +204,7 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .badge-due { background: #FEE2E2; color: #991B1B; }
 .badge-partial { background: #DBEAFE; color: #1E40AF; }
 
+/* ============ PROFESSIONAL REPORT ============ */
 .report-header { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: white; padding: 20px 18px; border-radius: 16px; margin-bottom: 16px; position: relative; overflow: hidden; }
 .report-header .rh-shop { font-size: 20px; font-weight: 700; position: relative; z-index: 1; }
 .report-header .rh-owner { font-size: 12px; opacity: 0.9; margin-top: 4px; position: relative; z-index: 1; }
@@ -206,8 +219,8 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .kpi-card.info::before { background: linear-gradient(90deg, #3B82F6, #60A5FA); }
 .kpi-card.red::before { background: linear-gradient(90deg, #EF4444, #F87171); }
 .kpi-card .kpi-icon { font-size: 20px; margin-bottom: 6px; }
-.kpi-card .kpi-label { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; }
-.kpi-card .kpi-value { font-size: 22px; font-weight: 700; margin-top: 4px; letter-spacing: -0.5px; }
+.kpi-card .kpi-label { font-size: 11px; color: var(--muted); font-weight: 500; text-transform: uppercase; }
+.kpi-card .kpi-value { font-size: 22px; font-weight: 700; margin-top: 4px; }
 .kpi-card.green .kpi-value { color: #10B981; }
 .kpi-card.blue .kpi-value { color: #4F46E5; }
 .kpi-card.info .kpi-value { color: #3B82F6; }
@@ -220,7 +233,7 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .report-section .rs-count { font-size: 11px; color: var(--muted); background: white; padding: 3px 10px; border-radius: 12px; border: 1px solid var(--border); }
 
 .prof-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-.prof-table thead th { background: #4F46E5; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.3px; }
+.prof-table thead th { background: #4F46E5; color: white; padding: 10px 8px; text-align: left; font-weight: 600; font-size: 11.5px; text-transform: uppercase; }
 .prof-table thead th:first-child { padding-left: 14px; }
 .prof-table thead th:last-child { padding-right: 14px; text-align: right; }
 .prof-table tbody td { padding: 11px 8px; border-bottom: 1px solid #F3F4F6; }
@@ -237,19 +250,67 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 
 .report-footer { text-align: center; padding: 16px; color: var(--muted); font-size: 11px; border-top: 1px dashed var(--border); margin-top: 16px; }
 
+/* ============ SEARCH & ACTION ============ */
 .search-box { position: relative; margin-bottom: 14px; }
 .search-box input { padding-left: 44px; background: var(--card); }
 .search-box .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; opacity: 0.6; }
+
 .action-btns { display: flex; gap: 6px; margin-left: 8px; }
 .mini-btn { width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
 .mini-btn.edit { background: #DBEAFE; color: #1E40AF; }
 .mini-btn.edit:hover { background: #BFDBFE; transform: scale(1.1); }
 .mini-btn.delete { background: #FEE2E2; color: #991B1B; }
 .mini-btn.delete:hover { background: #FECACA; transform: scale(1.1); }
+.mini-btn.print { background: #FEF3C7; color: #92400E; }
+.mini-btn.print:hover { background: #FDE68A; transform: scale(1.1); }
 body.dark .mini-btn.edit { background: rgba(59,130,246,0.2); color: #93C5FD; }
 body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
+body.dark .mini-btn.print { background: rgba(245,158,11,0.2); color: #FCD34D; }
+
 .cancel-btn { background: var(--bg-alt); color: var(--text); border: 1.5px solid var(--border); }
 .cancel-btn:hover { background: var(--card-hover); }
+
+/* ============ SALES TABS ============ */
+.sales-tabs { display: flex; gap: 8px; margin-bottom: 16px; background: var(--bg-alt); padding: 5px; border-radius: 12px; }
+.sales-tabs button { flex: 1; padding: 10px 12px; border: none; background: transparent; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; color: var(--muted); transition: all 0.25s; }
+.sales-tabs button.active { background: var(--card); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+/* ============ DATE FILTER ============ */
+.date-filter { display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 4px; }
+.date-filter::-webkit-scrollbar { display: none; }
+.date-filter button { padding: 7px 14px; border: 1.5px solid var(--border); background: var(--card); border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; white-space: nowrap; color: var(--muted); transition: all 0.2s; }
+.date-filter button.active { background: var(--gradient); color: white; border-color: transparent; }
+
+/* ============ SALE HISTORY ITEM ============ */
+.sale-history-item { padding: 14px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); margin-bottom: 8px; transition: all 0.25s; }
+.sale-history-item:hover { background: var(--bg-alt); border-color: var(--primary); }
+.sale-history-item .top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 8px; }
+.sale-history-item .sale-info { flex: 1; min-width: 0; }
+.sale-history-item .sale-prod { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.sale-history-item .sale-meta { font-size: 11px; color: var(--muted); }
+.sale-history-item .sale-amt { font-size: 16px; font-weight: 700; color: var(--secondary); white-space: nowrap; }
+.sale-history-item .bottom-row { display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px dashed var(--border); flex-wrap: wrap; gap: 8px; }
+.sale-history-item .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.sale-actions { display: flex; gap: 6px; }
+.sale-actions .mini-btn { width: 32px; height: 32px; font-size: 13px; }
+
+/* ============ INVOICE MODAL ============ */
+.invoice-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 3000; display: none; align-items: center; justify-content: center; padding: 16px; overflow-y: auto; }
+.invoice-modal.show { display: flex; }
+.invoice-box { background: white; color: #000; width: 100%; max-width: 500px; border-radius: 12px; padding: 24px; max-height: 90vh; overflow-y: auto; }
+.invoice-header { text-align: center; padding-bottom: 14px; border-bottom: 2px solid #4F46E5; margin-bottom: 16px; }
+.invoice-header h2 { font-size: 22px; color: #4F46E5; margin-bottom: 4px; }
+.invoice-header p { font-size: 12px; color: #666; }
+.invoice-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 1px dashed #E5E7EB; }
+.invoice-row:last-child { border-bottom: none; }
+.invoice-row .lbl { color: #666; }
+.invoice-row .val { font-weight: 600; }
+.invoice-total { background: #F3F4F6; padding: 12px; border-radius: 8px; margin: 14px 0; display: flex; justify-content: space-between; font-weight: 700; font-size: 16px; }
+.invoice-footer { text-align: center; margin-top: 20px; padding-top: 14px; border-top: 1px dashed #ccc; font-size: 11px; color: #666; }
+.invoice-actions { display: flex; gap: 8px; margin-top: 16px; }
+.invoice-actions .btn { flex: 1; }
+
+/* ============ UTILITY ============ */
 .hidden { display: none !important; }
 .mb-8 { margin-bottom: 8px; }
 .mb-12 { margin-bottom: 12px; }
@@ -257,32 +318,65 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
 </head>
 <body>
 
-<!-- AUTH -->
+<!-- ==================== AUTH SCREENS ==================== -->
 <div id="authScreen">
+
+  <!-- LOGIN -->
   <div id="loginPage" class="auth-wrap">
     <div class="auth-card" id="loginCard">
-      <div class="auth-logo"><span class="icon">🏪</span><h1>ShopMate AI</h1><p data-i18n="tagline">দোকানের হিসাব, সহজে</p></div>
+      <div class="auth-logo">
+        <span class="icon">🏪</span>
+        <h1>ShopMate AI</h1>
+        <p data-i18n="tagline">দোকানের হিসাব, সহজে</p>
+      </div>
       <h2 data-i18n="loginTitle">লগইন</h2>
       <div class="alert error" id="loginError"></div>
-      <div class="form-group"><label data-i18n="phone">ফোন নম্বর</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="loginPhone" maxlength="11" autocomplete="off"></div></div>
-      <div class="form-group"><label data-i18n="password">পাসওয়ার্ড</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="loginPassword" autocomplete="new-password"></div></div>
+      <div class="form-group">
+        <label data-i18n="phone">ফোন নম্বর</label>
+        <div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="loginPhone" maxlength="11" autocomplete="off"></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="password">পাসওয়ার্ড</label>
+        <div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="loginPassword" autocomplete="new-password"></div>
+      </div>
       <button class="btn btn-primary" id="loginBtn" data-i18n="loginBtn">লগইন</button>
       <div class="auth-link"><a data-i18n="forgotPassword" onclick="gotoAuth('forgotPage')">পাসওয়ার্ড ভুলে গেছি?</a></div>
       <div class="auth-link"><span data-i18n="noAccount">Account নেই?</span> <a data-i18n="signup" onclick="gotoAuth('signupPage')">সাইনআপ</a></div>
     </div>
   </div>
 
+  <!-- SIGNUP -->
   <div id="signupPage" class="auth-wrap hidden">
     <div class="auth-card" id="signupCard">
-      <div class="auth-logo"><span class="icon">🏪</span><h1>ShopMate AI</h1><p data-i18n="createAccount">নতুন Account</p></div>
+      <div class="auth-logo">
+        <span class="icon">🏪</span>
+        <h1>ShopMate AI</h1>
+        <p data-i18n="createAccount">নতুন Account</p>
+      </div>
       <h2 data-i18n="signupTitle">সাইনআপ</h2>
       <div class="alert error" id="signupError"></div>
-      <div class="form-group"><label data-i18n="yourName">আপনার নাম</label><div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="signupName" autocomplete="off"></div></div>
-      <div class="form-group"><label data-i18n="shopName">দোকানের নাম</label><div class="input-wrap"><span class="input-icon">🏬</span><input type="text" id="signupShopName" autocomplete="off"></div></div>
-      <div class="form-group"><label data-i18n="phone">ফোন নম্বর</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="signupPhone" maxlength="11" autocomplete="off"></div></div>
-      <div class="form-group"><label data-i18n="password">পাসওয়ার্ড</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signupPassword" autocomplete="new-password"></div></div>
-      <div class="form-group"><label data-i18n="confirmPassword">পাসওয়ার্ড আবার</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signupConfirm" autocomplete="new-password"></div></div>
-      <div class="form-group"><label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label>
+      <div class="form-group">
+        <label data-i18n="yourName">আপনার নাম</label>
+        <div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="signupName" autocomplete="off"></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="shopName">দোকানের নাম</label>
+        <div class="input-wrap"><span class="input-icon">🏬</span><input type="text" id="signupShopName" autocomplete="off"></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="phone">ফোন নম্বর</label>
+        <div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="signupPhone" maxlength="11" autocomplete="off"></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="password">পাসওয়ার্ড</label>
+        <div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signupPassword" autocomplete="new-password"></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="confirmPassword">পাসওয়ার্ড আবার</label>
+        <div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="signupConfirm" autocomplete="new-password"></div>
+      </div>
+      <div class="form-group">
+        <label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label>
         <select id="signupSecurityQ">
           <option value="তোমার প্রিয় রঙ?">তোমার প্রিয় রঙ?</option>
           <option value="তোমার প্রথম স্কুলের নাম?">তোমার প্রথম স্কুলের নাম?</option>
@@ -291,32 +385,49 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
           <option value="তোমার জন্মস্থান?">তোমার জন্মস্থান?</option>
         </select>
       </div>
-      <div class="form-group"><label data-i18n="securityA">উত্তর</label><div class="input-wrap"><span class="input-icon">💡</span><input type="text" id="signupSecurityA" autocomplete="off"></div></div>
+      <div class="form-group">
+        <label data-i18n="securityA">উত্তর</label>
+        <div class="input-wrap"><span class="input-icon">💡</span><input type="text" id="signupSecurityA" autocomplete="off"></div>
+      </div>
       <button class="btn btn-primary" id="signupBtn" data-i18n="signupBtn">সাইনআপ</button>
       <div class="auth-link"><span data-i18n="hasAccount">Account আছে?</span> <a data-i18n="login" onclick="gotoAuth('loginPage')">লগইন</a></div>
     </div>
   </div>
 
+  <!-- FORGOT -->
   <div id="forgotPage" class="auth-wrap hidden">
     <div class="auth-card">
       <div class="auth-logo"><span class="icon">🔑</span><h1 data-i18n="recoveryTitle">রিকভারি</h1></div>
       <div class="alert error" id="forgotError"></div>
       <div id="forgotStep1">
-        <div class="form-group"><label data-i18n="phone">ফোন নম্বর</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="forgotPhone" maxlength="11" autocomplete="off"></div></div>
+        <div class="form-group">
+          <label data-i18n="phone">ফোন নম্বর</label>
+          <div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="forgotPhone" maxlength="11" autocomplete="off"></div>
+        </div>
         <button class="btn btn-primary" id="forgotNextBtn" data-i18n="next">পরবর্তী</button>
       </div>
       <div id="forgotStep2" class="hidden">
-        <div class="form-group"><label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label><div class="input-wrap"><span class="input-icon">❓</span><input type="text" id="forgotQuestion" readonly></div></div>
-        <div class="form-group"><label data-i18n="securityA">উত্তর</label><div class="input-wrap"><span class="input-icon">💡</span><input type="text" id="forgotAnswer" autocomplete="off"></div></div>
-        <div class="form-group"><label data-i18n="newPassword">নতুন পাসওয়ার্ড</label><div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="forgotNewPass" autocomplete="new-password"></div></div>
+        <div class="form-group">
+          <label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label>
+          <div class="input-wrap"><span class="input-icon">❓</span><input type="text" id="forgotQuestion" readonly></div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="securityA">উত্তর</label>
+          <div class="input-wrap"><span class="input-icon">💡</span><input type="text" id="forgotAnswer" autocomplete="off"></div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="newPassword">নতুন পাসওয়ার্ড</label>
+          <div class="input-wrap"><span class="input-icon">🔒</span><input type="password" id="forgotNewPass" autocomplete="new-password"></div>
+        </div>
         <button class="btn btn-primary" id="forgotResetBtn" data-i18n="resetPassword">পাসওয়ার্ড পরিবর্তন</button>
       </div>
       <div class="auth-link"><a data-i18n="backToLogin" onclick="gotoAuth('loginPage')">← লগইনে ফিরে যান</a></div>
     </div>
   </div>
+
 </div>
 
-<!-- MAIN APP -->
+<!-- ==================== MAIN APP ==================== -->
 <div id="mainApp" class="hidden">
   <header class="app-header">
     <div class="left">
@@ -333,70 +444,165 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
 
   <div class="container">
 
-    <!-- DASHBOARD -->
+    <!-- ============ DASHBOARD ============ -->
     <div id="page-dashboard" class="page active">
       <h2 class="page-title" data-i18n="dashboard">ড্যাশবোর্ড</h2>
       <div class="stats-grid">
-        <div class="stat-card green"><div class="label">💰 <span data-i18n="todaySales">আজকের বিক্রয়</span></div><div class="value" id="statTodaySales">৳0</div></div>
-        <div class="stat-card blue"><div class="label">📈 <span data-i18n="todayProfit">আজকের লাভ</span></div><div class="value" id="statTodayProfit">৳0</div></div>
-        <div class="stat-card info"><div class="label">💵 <span data-i18n="todayPaid">আজকের নগদ</span></div><div class="value" id="statTodayPaid">৳0</div></div>
-        <div class="stat-card red"><div class="label">📝 <span data-i18n="todayDue">আজকের বাকি</span></div><div class="value" id="statTodayDue">৳0</div></div>
-        <div class="stat-card orange"><div class="label">📦 <span data-i18n="totalProducts">মোট পণ্য</span></div><div class="value" id="statTotalProducts">0</div></div>
-        <div class="stat-card red"><div class="label">⚠️ <span data-i18n="lowStock">স্টক কম</span></div><div class="value" id="statLowStock">0</div></div>
+        <div class="stat-card green">
+          <div class="label">💰 <span data-i18n="todaySales">আজকের বিক্রয়</span></div>
+          <div class="value" id="statTodaySales">৳0</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="label">📈 <span data-i18n="todayProfit">আজকের লাভ</span></div>
+          <div class="value" id="statTodayProfit">৳0</div>
+        </div>
+        <div class="stat-card info">
+          <div class="label">💵 <span data-i18n="todayPaid">আজকের নগদ</span></div>
+          <div class="value" id="statTodayPaid">৳0</div>
+        </div>
+        <div class="stat-card red">
+          <div class="label">📝 <span data-i18n="todayDue">আজকের বাকি</span></div>
+          <div class="value" id="statTodayDue">৳0</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="label">📦 <span data-i18n="totalProducts">মোট পণ্য</span></div>
+          <div class="value" id="statTotalProducts">0</div>
+        </div>
+        <div class="stat-card red">
+          <div class="label">⚠️ <span data-i18n="lowStock">স্টক কম</span></div>
+          <div class="value" id="statLowStock">0</div>
+        </div>
       </div>
       <div class="card">
         <div class="card-title"><div class="title-text">⚡ <span data-i18n="quickActions">দ্রুত কাজ</span></div></div>
         <div class="quick-actions">
-          <button class="qa-btn" onclick="gotoPage('sales')"><div class="qa-icon">🛒</div><div><div class="qa-text" data-i18n="newSale">নতুন বিক্রয়</div><div class="qa-sub" data-i18n="newSaleSub">বিক্রয় করুন</div></div></button>
-          <button class="qa-btn" onclick="gotoPage('products')"><div class="qa-icon">📦</div><div><div class="qa-text" data-i18n="newProduct">নতুন পণ্য</div><div class="qa-sub" data-i18n="newProductSub">পণ্য যোগ</div></div></button>
-          <button class="qa-btn" onclick="gotoPage('customers')"><div class="qa-icon">👥</div><div><div class="qa-text" data-i18n="customers">কাস্টমার</div><div class="qa-sub" data-i18n="customersSub">বাকির হিসাব</div></div></button>
-          <button class="qa-btn" onclick="gotoPage('reports')"><div class="qa-icon">📊</div><div><div class="qa-text" data-i18n="reports">রিপোর্ট</div><div class="qa-sub" data-i18n="reportsSub">বিবরণ</div></div></button>
+          <button class="qa-btn" onclick="gotoPage('sales')">
+            <div class="qa-icon">🛒</div>
+            <div><div class="qa-text" data-i18n="newSale">নতুন বিক্রয়</div><div class="qa-sub" data-i18n="newSaleSub">বিক্রয় করুন</div></div>
+          </button>
+          <button class="qa-btn" onclick="gotoPage('products')">
+            <div class="qa-icon">📦</div>
+            <div><div class="qa-text" data-i18n="newProduct">নতুন পণ্য</div><div class="qa-sub" data-i18n="newProductSub">পণ্য যোগ</div></div>
+          </button>
+          <button class="qa-btn" onclick="gotoPage('customers')">
+            <div class="qa-icon">👥</div>
+            <div><div class="qa-text" data-i18n="customers">কাস্টমার</div><div class="qa-sub" data-i18n="customersSub">বাকির হিসাব</div></div>
+          </button>
+          <button class="qa-btn" onclick="gotoPage('reports')">
+            <div class="qa-icon">📊</div>
+            <div><div class="qa-text" data-i18n="reports">রিপোর্ট</div><div class="qa-sub" data-i18n="reportsSub">বিবরণ</div></div>
+          </button>
         </div>
       </div>
       <div class="card" style="cursor:pointer;" onclick="gotoPage('lowstock')">
-        <div class="card-title"><div class="title-text">⚠️ <span data-i18n="lowStockItems">কম স্টক</span></div><span style="color:var(--muted);font-size:12px;" data-i18n="seeAll">সব দেখুন →</span></div>
+        <div class="card-title">
+          <div class="title-text">⚠️ <span data-i18n="lowStockItems">কম স্টক</span></div>
+          <span style="color:var(--muted);font-size:12px;" data-i18n="seeAll">সব দেখুন →</span>
+        </div>
         <div id="lowStockList"><div class="empty-state"><span class="icon">✅</span><span data-i18n="allGood">সব ঠিক আছে</span></div></div>
       </div>
     </div>
 
-    <!-- LOW STOCK PAGE -->
+    <!-- ============ LOW STOCK PAGE ============ -->
     <div id="page-lowstock" class="page">
       <h2 class="page-title">⚠️ <span data-i18n="lowStockItems">কম স্টক</span></h2>
       <div class="card">
-        <div class="card-title"><div class="title-text">📦 <span data-i18n="lowStockTitle">স্টক কম পণ্যের তালিকা</span></div><button class="btn btn-secondary btn-sm" onclick="gotoPage('dashboard')">← <span data-i18n="back">ফিরে যান</span></button></div>
+        <div class="card-title">
+          <div class="title-text">📦 <span data-i18n="lowStockTitle">স্টক কম পণ্যের তালিকা</span></div>
+          <button class="btn btn-secondary btn-sm" onclick="gotoPage('dashboard')">← <span data-i18n="back">ফিরে যান</span></button>
+        </div>
         <div id="lowStockFullList"></div>
       </div>
     </div>
 
-    <!-- SALES -->
+    <!-- ============ SALES ============ -->
     <div id="page-sales" class="page">
       <h2 class="page-title" data-i18n="sales">বিক্রয়</h2>
-      <div class="card">
+
+      <!-- ⭐ ২টা Tab -->
+      <div class="sales-tabs">
+        <button class="active" onclick="switchSalesTab('new')" id="tabNewSale">🆕 নতুন বিক্রয়</button>
+        <button onclick="switchSalesTab('history')" id="tabSalesHistory">📋 সব বিক্রয়</button>
+      </div>
+
+      <!-- নতুন বিক্রয় card -->
+      <div class="card" id="newSaleCard">
         <div class="card-title"><div class="title-text">🛒 <span data-i18n="newSaleTitle">নতুন বিক্রয়</span></div></div>
-        <div class="form-group"><label data-i18n="selectProduct">পণ্য নির্বাচন</label><select id="saleProductId" onchange="onProductSelect()"></select></div>
+        <div class="form-group">
+          <label data-i18n="selectProduct">পণ্য নির্বাচন</label>
+          <select id="saleProductId" onchange="onProductSelect()"></select>
+        </div>
         <div class="row-2 mb-12">
-          <div><label data-i18n="quantity">পরিমাণ</label><input type="number" id="saleQty" value="1" min="1" style="padding-left:14px;margin-top:6px" oninput="updateSalePreview()"></div>
-          <div><label data-i18n="paymentMethod">পেমেন্ট</label><select id="salePayment" style="margin-top:6px" onchange="onPaymentChange()"><option value="Cash">💵 Cash</option><option value="Bkash">📱 Bkash</option><option value="Nagad">📱 Nagad</option><option value="Due">📝 Due</option></select></div>
+          <div>
+            <label data-i18n="quantity">পরিমাণ</label>
+            <input type="number" id="saleQty" value="1" min="1" style="padding-left:14px;margin-top:6px" oninput="updateSalePreview()">
+          </div>
+          <div>
+            <label data-i18n="paymentMethod">পেমেন্ট</label>
+            <select id="salePayment" style="margin-top:6px" onchange="onPaymentChange()">
+              <option value="Cash">💵 Cash</option>
+              <option value="Bkash">📱 Bkash</option>
+              <option value="Nagad">📱 Nagad</option>
+              <option value="Due">📝 Due</option>
+            </select>
+          </div>
         </div>
         <div id="salePreview" class="hidden" style="background:var(--gradient-soft);border:1.5px solid rgba(79,70,229,0.25);border-radius:14px;padding:16px;margin-bottom:14px;">
-          <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(79,70,229,0.3);"><span style="color:var(--muted);font-weight:500;" data-i18n="totalBill">মোট বিল:</span><b id="previewTotal" style="color:var(--primary);font-size:18px;">৳0</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed rgba(79,70,229,0.3);">
+            <span style="color:var(--muted);font-weight:500;" data-i18n="totalBill">মোট বিল:</span>
+            <b id="previewTotal" style="color:var(--primary);font-size:18px;">৳0</b>
+          </div>
           <div id="dueFields" class="hidden">
-            <div class="form-group" style="margin-bottom:12px;"><label data-i18n="customerName">কাস্টমারের নাম</label><div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="saleCustomerName" autocomplete="off"></div></div>
-            <div class="form-group" style="margin-bottom:12px;"><label data-i18n="customerPhone">📱 ফোন নম্বর (ঐচ্ছিক)</label><div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="saleCustomerPhone" maxlength="11" autocomplete="off"></div></div>
-            <div class="form-group" style="margin-bottom:12px;"><label data-i18n="customerAddress">📍 ঠিকানা (ঐচ্ছিক)</label><div class="input-wrap"><span class="input-icon">📍</span><input type="text" id="saleCustomerAddress" autocomplete="off"></div></div>
-            <div class="form-group" style="margin-bottom:12px;"><label style="color:var(--info);font-weight:600;" data-i18n="howMuchNow">💵 এখন কত টাকা দিচ্ছে?</label><div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="salePaidAmount" placeholder="0" oninput="updateSalePreview()"></div></div>
-            <div style="display:flex;justify-content:space-between;font-size:15px;padding-top:10px;border-top:1px dashed rgba(239,68,68,0.3);"><span style="color:var(--muted);font-weight:500;" data-i18n="remainingDue">বাকি থাকবে:</span><b id="previewDue" style="color:var(--danger);font-size:18px;">৳0</b></div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label data-i18n="customerName">কাস্টমারের নাম</label>
+              <div class="input-wrap"><span class="input-icon">👤</span><input type="text" id="saleCustomerName" autocomplete="off"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label data-i18n="customerPhone">📱 ফোন নম্বর (ঐচ্ছিক)</label>
+              <div class="input-wrap"><span class="input-icon">📱</span><input type="tel" id="saleCustomerPhone" maxlength="11" autocomplete="off"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label data-i18n="customerAddress">📍 ঠিকানা (ঐচ্ছিক)</label>
+              <div class="input-wrap"><span class="input-icon">📍</span><input type="text" id="saleCustomerAddress" autocomplete="off"></div>
+            </div>
+            <div class="form-group" style="margin-bottom:12px;">
+              <label style="color:var(--info);font-weight:600;" data-i18n="howMuchNow">💵 এখন কত টাকা দিচ্ছে?</label>
+              <div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="salePaidAmount" placeholder="0" oninput="updateSalePreview()"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:15px;padding-top:10px;border-top:1px dashed rgba(239,68,68,0.3);">
+              <span style="color:var(--muted);font-weight:500;" data-i18n="remainingDue">বাকি থাকবে:</span>
+              <b id="previewDue" style="color:var(--danger);font-size:18px;">৳0</b>
+            </div>
           </div>
         </div>
         <button class="btn btn-primary" id="saveSaleBtn" data-i18n="saveSale">💾 বিক্রয় সেভ</button>
       </div>
-      <div class="card">
-        <div class="card-title"><div class="title-text">📋 <span data-i18n="todaySalesList">আজকের বিক্রয়</span></div></div>
-        <div id="todaySalesList"></div>
+
+      <!-- সব বিক্রয় card -->
+      <div class="card" id="salesHistoryCard" style="display:none;">
+        <div class="card-title">
+          <div class="title-text">📋 সব বিক্রয়</div>
+          <button class="btn btn-secondary btn-sm" onclick="loadAllSales()">🔄 রিফ্রেশ</button>
+        </div>
+
+        <div class="date-filter">
+          <button class="active" data-filter="today" onclick="filterSalesByDate('today')">আজ</button>
+          <button data-filter="week" onclick="filterSalesByDate('week')">৭ দিন</button>
+          <button data-filter="month" onclick="filterSalesByDate('month')">৩০ দিন</button>
+          <button data-filter="year" onclick="filterSalesByDate('year')">১ বছর</button>
+          <button data-filter="all" onclick="filterSalesByDate('all')">সব</button>
+        </div>
+
+        <div class="search-box" style="margin-bottom:12px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="saleSearch" placeholder="পণ্য বা কাস্টমার খুঁজুন..." oninput="filterSalesList()" autocomplete="off">
+        </div>
+
+        <div id="salesHistoryList"></div>
       </div>
     </div>
 
-    <!-- PRODUCTS -->
+    <!-- ============ PRODUCTS ============ -->
     <div id="page-products" class="page">
       <h2 class="page-title" data-i18n="products">পণ্য</h2>
       <div class="search-box">
@@ -405,8 +611,14 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
       </div>
       <div class="card">
         <div class="card-title"><div class="title-text">📦 <span data-i18n="newProductTitle">নতুন পণ্য</span></div></div>
-        <div class="form-group"><label data-i18n="productName">পণ্যের নাম</label><div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="pName" autocomplete="off"></div></div>
-        <div class="form-group"><label data-i18n="category">ক্যাটাগরি</label><div class="input-wrap"><span class="input-icon">🏷️</span><input type="text" id="pCategory" autocomplete="off"></div></div>
+        <div class="form-group">
+          <label data-i18n="productName">পণ্যের নাম</label>
+          <div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="pName" autocomplete="off"></div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="category">ক্যাটাগরি</label>
+          <div class="input-wrap"><span class="input-icon">🏷️</span><input type="text" id="pCategory" autocomplete="off"></div>
+        </div>
         <div class="row-2 mb-12">
           <div><label data-i18n="purchasePrice">ক্রয়মূল্য</label><input type="number" id="pPurchasePrice" style="padding-left:14px;margin-top:6px"></div>
           <div><label data-i18n="sellingPrice">বিক্রয়মূল্য</label><input type="number" id="pSellingPrice" style="padding-left:14px;margin-top:6px"></div>
@@ -423,7 +635,7 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
       </div>
     </div>
 
-    <!-- CUSTOMERS -->
+    <!-- ============ CUSTOMERS ============ -->
     <div id="page-customers" class="page">
       <h2 class="page-title" data-i18n="customers">কাস্টমার</h2>
       <div class="card">
@@ -431,14 +643,29 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
         <div id="customerList"></div>
       </div>
       <div class="card" id="customerDetailCard" style="display:none;">
-        <div class="card-title"><div class="title-text">👤 <span id="detailCustomerName"></span></div><button class="btn btn-secondary btn-sm" onclick="closeCustomerDetail()">✕</button></div>
-        <div style="margin-bottom:12px;">
-          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><span data-i18n="phoneLabel">📞 ফোন:</span><b id="detailPhone">-</b></div>
-          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);"><span data-i18n="totalDue">💸 মোট বাকি:</span><b id="detailDue" style="color:var(--danger);">৳0</b></div>
-          <div style="display:flex;justify-content:space-between;padding:8px 0;"><span data-i18n="totalPaid">✅ মোট পরিশোধ:</span><b id="detailPaid" style="color:var(--secondary);">৳0</b></div>
+        <div class="card-title">
+          <div class="title-text">👤 <span id="detailCustomerName"></span></div>
+          <button class="btn btn-secondary btn-sm" onclick="closeCustomerDetail()">✕</button>
         </div>
-        <div class="form-group"><label data-i18n="takePayment">💵 কত টাকা নিচ্ছেন?</label><div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="duePaymentAmount" placeholder="0"></div></div>
-        <div class="form-group"><label data-i18n="note">📝 নোট (ঐচ্ছিক)</label><div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="duePaymentNote" autocomplete="off"></div></div>
+        <div style="margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+            <span data-i18n="phoneLabel">📞 ফোন:</span><b id="detailPhone">-</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
+            <span data-i18n="totalDue">💸 মোট বাকি:</span><b id="detailDue" style="color:var(--danger);">৳0</b>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:8px 0;">
+            <span data-i18n="totalPaid">✅ মোট পরিশোধ:</span><b id="detailPaid" style="color:var(--secondary);">৳0</b>
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="takePayment">💵 কত টাকা নিচ্ছেন?</label>
+          <div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="duePaymentAmount" placeholder="0"></div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="note">📝 নোট (ঐচ্ছিক)</label>
+          <div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="duePaymentNote" autocomplete="off"></div>
+        </div>
         <button class="btn btn-primary" onclick="saveDuePayment()" data-i18n="savePayment">💾 Payment সেভ</button>
       </div>
       <div class="card">
@@ -447,7 +674,7 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
       </div>
     </div>
 
-    <!-- REPORTS -->
+    <!-- ============ REPORTS ============ -->
     <div id="page-reports" class="page">
       <h2 class="page-title" data-i18n="reports">রিপোর্ট</h2>
       <div class="card">
@@ -460,8 +687,14 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
         </div>
         <div id="customDateRange" class="hidden" style="background:var(--bg-alt);border-radius:12px;padding:14px;margin-bottom:14px;">
           <div class="row-2 mb-12">
-            <div><label style="font-size:12px;color:var(--muted);">শুরুর তারিখ</label><input type="date" id="reportFromDate" style="padding-left:14px;margin-top:6px;"></div>
-            <div><label style="font-size:12px;color:var(--muted);">শেষ তারিখ</label><input type="date" id="reportToDate" style="padding-left:14px;margin-top:6px;"></div>
+            <div>
+              <label style="font-size:12px;color:var(--muted);">শুরুর তারিখ</label>
+              <input type="date" id="reportFromDate" style="padding-left:14px;margin-top:6px;">
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--muted);">শেষ তারিখ</label>
+              <input type="date" id="reportToDate" style="padding-left:14px;margin-top:6px;">
+            </div>
           </div>
           <button class="btn btn-primary btn-sm" style="width:100%;" onclick="loadCustomReport()">📊 রিপোর্ট দেখাও</button>
         </div>
@@ -469,7 +702,7 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
       </div>
     </div>
 
-    <!-- PROFILE -->
+    <!-- ============ PROFILE ============ -->
     <div id="page-profile" class="page">
       <h2 class="page-title" data-i18n="profile">প্রোফাইল</h2>
       <div class="profile-header">
@@ -477,19 +710,31 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
         <h2 id="profileName">User</h2>
         <p id="profileShop">Shop</p>
         <p style="margin-top:8px;font-size:12px;opacity:0.8" id="profilePhone"></p>
-                <p style="margin-top:4px;font-size:11px;opacity:0.7" id="appVersion">v1.0.0</p>
+        <p style="margin-top:4px;font-size:11px;opacity:0.7" id="appVersion">v1.1.0</p>
       </div>
       <div class="card">
         <div class="card-title"><div class="title-text">⚙️ <span data-i18n="settings">সেটিংস</span></div></div>
         <div class="setting-item">
-          <div class="si-left"><span class="si-icon">🌐</span><div><div class="si-text" data-i18n="language">ভাষা</div><div class="si-sub" data-i18n="languageSub">Language</div></div></div>
-          <div class="lang-switch"><button id="langBn" onclick="setLang('bn')">বাংলা</button><button id="langEn" onclick="setLang('en')">English</button></div>
+          <div class="si-left">
+            <span class="si-icon">🌐</span>
+            <div><div class="si-text" data-i18n="language">ভাষা</div><div class="si-sub" data-i18n="languageSub">Language</div></div>
+          </div>
+          <div class="lang-switch">
+            <button id="langBn" onclick="setLang('bn')">বাংলা</button>
+            <button id="langEn" onclick="setLang('en')">English</button>
+          </div>
         </div>
         <div class="setting-item">
-          <div class="si-left"><span class="si-icon">🎨</span><div><div class="si-text" data-i18n="theme">থিম</div><div class="si-sub">Appearance</div></div></div>
-          <div class="theme-toggle"><button id="themeLight" onclick="setTheme('light')">☀️</button><button id="themeDark" onclick="setTheme('dark')">🌙</button></div>
+          <div class="si-left">
+            <span class="si-icon">🎨</span>
+            <div><div class="si-text" data-i18n="theme">থিম</div><div class="si-sub">Appearance</div></div>
+          </div>
+          <div class="theme-toggle">
+            <button id="themeLight" onclick="setTheme('light')">☀️</button>
+            <button id="themeDark" onclick="setTheme('dark')">🌙</button>
+          </div>
         </div>
-                <div class="setting-item" onclick="checkForUpdate(true)">
+        <div class="setting-item" onclick="checkForUpdate(true)">
           <div class="si-left">
             <span class="si-icon">🔄</span>
             <div><div class="si-text">Update Check</div><div class="si-sub">Check for new version</div></div>
@@ -497,7 +742,10 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
           <span style="color:var(--primary);font-size:14px;" id="updateStatus">Check →</span>
         </div>
         <div class="setting-item" onclick="logout()">
-          <div class="si-left"><span class="si-icon">🚪</span><div><div class="si-text" data-i18n="logout">লগআউট</div><div class="si-sub" data-i18n="logoutSub">Logout</div></div></div>
+          <div class="si-left">
+            <span class="si-icon">🚪</span>
+            <div><div class="si-text" data-i18n="logout">লগআউট</div><div class="si-sub" data-i18n="logoutSub">Logout</div></div>
+          </div>
           <span style="color:var(--danger);font-size:18px">→</span>
         </div>
       </div>
@@ -517,15 +765,28 @@ body.dark .mini-btn.delete { background: rgba(239,68,68,0.2); color: #FCA5A5; }
 <div class="toast" id="toast"></div>
 
 <script>
+// ============================================
+// API URL
+// ============================================
 const API_URL = "https://script.google.com/macros/s/AKfycbyGPzFkamwJckDcHrYoA4AqY6PFvoQvI9_tAURjdCA3SV_cq2WoMJdmrbfiZasHs_MFjw/exec";
+
+const APP_VERSION = "1.1.0";
+const VERSION_URL = "./version.json";
+const VERSION_CHECK_INTERVAL = 30 * 60 * 1000;
 
 let currentUser = null;
 let currentLang = "bn";
 let currentCustomer = null;
 let currentReportRange = "today";
+let currentSalesFilter = "today";
 let cache = { products: [] };
 let allProductsCache = [];
+let allSalesCache = [];
+let updateCheckTimer = null;
 
+// ============================================
+// I18N
+// ============================================
 const I18N = {
   bn: {
     tagline:"দোকানের হিসাব, সহজে",loginTitle:"লগইন",signupTitle:"সাইনআপ",recoveryTitle:"পাসওয়ার্ড রিকভারি",createAccount:"নতুন Account",
@@ -541,7 +802,7 @@ const I18N = {
     allProducts:"সব পণ্য",dueCustomers:"বাকি কাস্টমার",paymentHistory:"Payment History",profile:"প্রোফাইল",settings:"সেটিংস",language:"ভাষা",
     languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",
     todayPaid:"আজকের নগদ",todayDue:"আজকের বাকি",pcs:"পিস",buy:"ক্রয়",sell:"বিক্রয়",profit:"লাভ",due:"বাকি",noPhone:"ফোন নেই",
-    noProducts:"কোনো পণ্য নেই",noSales:"আজ কোনো বিক্রয় নেই",noCustomers:"কোনো কাস্টমার নেই",allPaid:"সব পরিশোধ করেছে",
+    noProducts:"কোনো পণ্য নেই",noSales:"কোনো বিক্রয় নেই",noCustomers:"কোনো কাস্টমার নেই",allPaid:"সব পরিশোধ করেছে",
     totalDue:"মোট বাকি",totalPaid:"মোট পরিশোধ",phoneLabel:"ফোন",takePayment:"কত টাকা নিচ্ছেন?",note:"নোট (ঐচ্ছিক)",savePayment:"💾 Payment সেভ",
     customerPhone:"📱 ফোন নম্বর (ঐচ্ছিক)",customerAddress:"📍 ঠিকানা (ঐচ্ছিক)",seeAll:"সব দেখুন →",back:"ফিরে যান",
     lowStockTitle:"স্টক কম পণ্যের তালিকা",totalBill:"মোট বিল:",howMuchNow:"💵 এখন কত টাকা দিচ্ছে?",remainingDue:"বাকি থাকবে:",
@@ -564,7 +825,7 @@ const I18N = {
     allProducts:"All Products",dueCustomers:"Due Customers",paymentHistory:"Payment History",profile:"Profile",settings:"Settings",language:"Language",
     languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",
     todayPaid:"Today's Cash",todayDue:"Today's Due",pcs:"pcs",buy:"Buy",sell:"Sell",profit:"Profit",due:"Due",noPhone:"No phone",
-    noProducts:"No products",noSales:"No sales today",noCustomers:"No customers",allPaid:"All paid",
+    noProducts:"No products",noSales:"No sales",noCustomers:"No customers",allPaid:"All paid",
     totalDue:"Total Due",totalPaid:"Total Paid",phoneLabel:"Phone",takePayment:"How much to take?",note:"Note (optional)",savePayment:"💾 Save Payment",
     customerPhone:"📱 Phone (optional)",customerAddress:"📍 Address (optional)",seeAll:"See all →",back:"Back",
     lowStockTitle:"Low Stock Products",totalBill:"Total Bill:",howMuchNow:"💵 How much now?",remainingDue:"Remaining Due:",
@@ -589,6 +850,9 @@ function applyLanguage() {
 }
 function setLang(lang) { currentLang = lang; localStorage.setItem("shopmate_lang", lang); applyLanguage(); }
 
+// ============================================
+// THEME
+// ============================================
 function setTheme(theme) {
   if (theme === "dark") document.body.classList.add("dark");
   else document.body.classList.remove("dark");
@@ -607,6 +871,9 @@ function loadTheme() {
   updateThemeUI();
 }
 
+// ============================================
+// API HELPER
+// ============================================
 const apiCache = {};
 const CACHE_DURATION = 8000;
 async function apiGet(action, extra = {}) {
@@ -628,99 +895,10 @@ async function apiPost(body) {
   const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(body) });
   return res.json();
 }
-// AUTO UPDATE SYSTEM
+
 // ============================================
-const APP_VERSION = "1.1.0";
-const VERSION_CHECK_INTERVAL = 30 * 60 * 1000; // 30 মিনিট
-const VERSION_URL = "./version.json";
-
-let updateCheckTimer = null;
-
-async function checkForUpdate(showNotification = false) {
-  try {
-    const res = await fetch(VERSION_URL + "?t=" + Date.now());
-    const data = await res.json();
-    const remoteVersion = data.version;
-    const statusEl = document.getElementById("updateStatus");
-    if (statusEl) statusEl.textContent = "Check →";
-    
-    if (remoteVersion !== APP_VERSION) {
-      if (statusEl) statusEl.textContent = "🎉 " + remoteVersion;
-      showUpdateNotification(remoteVersion, data.notes || "");
-      return true;
-    } else {
-      if (showNotification) {
-        if (typeof showToast === "function") {
-          showToast("✅ আপনি সর্বশেষ version ব্যবহার করছেন (v" + APP_VERSION + ")", "success");
-        } else {
-          alert("✅ আপনি সর্বশেষ version ব্যবহার করছেন (v" + APP_VERSION + ")");
-        }
-      }
-      return false;
-    }
-  } catch (e) {
-    console.error("Update check failed:", e);
-    if (showNotification) {
-      alert("❌ Check ব্যর্থ: " + e.message);
-    }
-    return false;
-  }
-}
-function showUpdateNotification(newVersion, notes) {
-  // Show banner at top
-  if (document.getElementById("updateBanner")) return;
-
-  const banner = document.createElement("div");
-  banner.id = "updateBanner";
-  banner.style.cssText = "position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:white;padding:14px 16px;z-index:9999;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,0.2);animation:slideDown 0.3s ease;";
-  banner.innerHTML =
-    '<div style="flex:1;">' +
-      '<div style="font-size:14px;font-weight:700;">🎉 নতুন version ' + newVersion + ' এসেছে!</div>' +
-      '<div style="font-size:11px;opacity:0.9;margin-top:2px;">' + (notes || "Update করুন আরো ভালো experience পেতে") + '</div>' +
-    '</div>' +
-    '<button id="updateNowBtn" style="background:white;color:#4F46E5;border:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;">Update</button>' +
-    '<button id="closeBannerBtn" style="background:transparent;color:white;border:none;font-size:20px;cursor:pointer;padding:0 4px;">✕</button>';
-  document.body.appendChild(banner);
-
-  document.getElementById("updateNowBtn").onclick = () => forceUpdate();
-  document.getElementById("closeBannerBtn").onclick = () => banner.remove();
-}
-
-async function forceUpdate() {
-  showToast("🔄 Update হচ্ছে...", "success");
-
-  // Clear all caches
-  if ("caches" in window) {
-    const names = await caches.keys();
-    await Promise.all(names.map(n => caches.delete(n)));
-  }
-
-  // Unregister service workers
-  if ("serviceWorker" in navigator) {
-    const regs = await navigator.serviceWorker.getRegistrations();
-    await Promise.all(regs.map(r => r.unregister()));
-  }
-
-  // Force reload
-  setTimeout(() => {
-    window.location.reload(true);
-  }, 800);
-}
-
-function startUpdateChecker() {
-  if (updateCheckTimer) clearInterval(updateCheckTimer);
-  // Check on load (after 5 sec)
-  setTimeout(() => checkForUpdate(false), 5000);
-  // Check every 30 min
-  updateCheckTimer = setInterval(() => checkForUpdate(false), VERSION_CHECK_INTERVAL);
-}
-
-// Service worker update detection
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    console.log("🔄 New SW activated");
-  });
-}
+// UI HELPERS
+// ============================================
 function showToast(msg, type = "success") {
   const toast = document.getElementById("toast");
   toast.textContent = msg;
@@ -757,6 +935,9 @@ function animateStat(id, value, prefix) {
   animateNumber(el, Number(value) || 0, prefix !== undefined ? prefix : "৳");
 }
 
+// ============================================
+// AUTH NAVIGATION
+// ============================================
 function gotoAuth(name) {
   document.querySelectorAll(".auth-wrap").forEach(el => el.classList.add("hidden"));
   const page = document.getElementById(name);
@@ -768,6 +949,9 @@ function gotoAuth(name) {
   document.querySelectorAll(".alert").forEach(el => el.classList.remove("show"));
 }
 
+// ============================================
+// PAGE NAVIGATION
+// ============================================
 function gotoPage(name) {
   document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
   document.querySelectorAll(".bottom-nav a").forEach(a => a.classList.remove("active"));
@@ -777,13 +961,16 @@ function gotoPage(name) {
   if (nav) nav.classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
   if (name === "dashboard") loadDashboard();
-  if (name === "sales") { loadProductsForSale(); loadTodaySales(); }
+  if (name === "sales") { loadProductsForSale(); switchSalesTab("new"); }
   if (name === "products") loadProductList();
   if (name === "customers") { loadCustomerList(); loadPaymentList(); closeCustomerDetail(); }
   if (name === "reports") loadReport();
   if (name === "lowstock") loadLowStockFull();
 }
 
+// ============================================
+// SIGNUP
+// ============================================
 document.getElementById("signupBtn").addEventListener("click", async function() {
   const name = document.getElementById("signupName").value.trim();
   const shopName = document.getElementById("signupShopName").value.trim();
@@ -805,6 +992,9 @@ document.getElementById("signupBtn").addEventListener("click", async function() 
   finally { this.disabled = false; this.textContent = t("signupBtn"); }
 });
 
+// ============================================
+// LOGIN
+// ============================================
 document.getElementById("loginBtn").addEventListener("click", async function() {
   const phone = document.getElementById("loginPhone").value.trim();
   const password = document.getElementById("loginPassword").value;
@@ -851,9 +1041,14 @@ function showMainApp() {
   document.getElementById("profileName").textContent = currentUser.name;
   document.getElementById("profileShop").textContent = currentUser.shopName;
   document.getElementById("profilePhone").textContent = currentUser.phone;
+  const vEl = document.getElementById("appVersion");
+  if (vEl) vEl.textContent = "v" + APP_VERSION;
   gotoPage("dashboard");
 }
 
+// ============================================
+// FORGOT PASSWORD
+// ============================================
 document.getElementById("forgotNextBtn").addEventListener("click", async function() {
   const phone = document.getElementById("forgotPhone").value.trim();
   if (phone.length !== 11) return showAlert("forgotError", t("phoneInvalid"));
@@ -883,6 +1078,9 @@ document.getElementById("forgotResetBtn").addEventListener("click", async functi
   finally { this.disabled = false; }
 });
 
+// ============================================
+// DASHBOARD
+// ============================================
 async function loadDashboard() {
   try {
     const r = await apiGet("getDashboard");
@@ -904,6 +1102,9 @@ async function loadDashboard() {
   } catch (e) { console.error(e); }
 }
 
+// ============================================
+// LOW STOCK PAGE
+// ============================================
 async function loadLowStockFull() {
   const list = document.getElementById("lowStockFullList");
   list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
@@ -918,6 +1119,9 @@ async function loadLowStockFull() {
   } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
 }
 
+// ============================================
+// PRODUCTS
+// ============================================
 async function loadProductList() {
   const list = document.getElementById("productList");
   list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
@@ -982,11 +1186,9 @@ function editProduct(productId) {
   document.getElementById("pSellingPrice").value = p.SellingPrice || "";
   document.getElementById("pStock").value = p.Stock || "";
   document.getElementById("pLowStock").value = p.LowStockAlert || 5;
-
   const btn = document.getElementById("saveProductBtn");
   btn.textContent = "✏️ পণ্য আপডেট করো";
   btn.setAttribute("data-edit-id", productId);
-
   if (!document.getElementById("cancelEditBtn")) {
     const cancelBtn = document.createElement("button");
     cancelBtn.id = "cancelEditBtn";
@@ -1073,6 +1275,9 @@ document.getElementById("saveProductBtn").addEventListener("click", async functi
   }
 });
 
+// ============================================
+// SALES FOR SALE FORM
+// ============================================
 async function loadProductsForSale() {
   const sel = document.getElementById("saleProductId");
   sel.innerHTML = '<option value="">' + t("loading") + '</option>';
@@ -1116,6 +1321,7 @@ function updateSalePreview() {
 }
 
 document.getElementById("saveSaleBtn").addEventListener("click", async function() {
+  const editSaleId = this.getAttribute("data-edit-sale-id");
   const productId = document.getElementById("saleProductId").value;
   const qty = document.getElementById("saleQty").value;
   const paymentMethod = document.getElementById("salePayment").value;
@@ -1125,44 +1331,269 @@ document.getElementById("saveSaleBtn").addEventListener("click", async function(
   const paidAmount = document.getElementById("salePaidAmount").value || 0;
   if (!productId) return showToast(t("selectProductWarn"), "error");
   if (paymentMethod === "Due" && !customerName) return showToast(t("customerNameWarn"), "error");
-  this.disabled = true; this.innerHTML = '<span class="spinner"></span> ' + t("saving");
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> ' + t("saving");
   try {
-    const r = await apiPost({
-      action: "addSale", productId, quantity: qty,
-      paymentMethod, customerName,
-      phone: customerPhone, address: customerAddress,
-      paidAmount: paymentMethod === "Due" ? paidAmount : null
-    });
+    let r;
+    if (editSaleId) {
+      r = await apiPost({
+        action: "updateSale", saleId: editSaleId,
+        quantity: qty, paymentMethod: paymentMethod,
+        customerName: customerName,
+        paidAmount: (paymentMethod === "Due" || paymentMethod === "Partial") ? paidAmount : null
+      });
+    } else {
+      r = await apiPost({
+        action: "addSale", productId, quantity: qty,
+        paymentMethod, customerName,
+        phone: customerPhone, address: customerAddress,
+        paidAmount: paymentMethod === "Due" ? paidAmount : null
+      });
+    }
     if (r.success) {
-      let msg = "✅ ৳" + r.totalSale + " | " + t("profit") + ": ৳" + r.profit;
+      let msg = "✅ " + (editSaleId ? "আপডেট হয়েছে" : "বিক্রয় হয়েছে");
+      if (r.totalSale) msg += " | ৳" + r.totalSale;
+      if (r.profit) msg += " | " + t("profit") + ": ৳" + r.profit;
       if (r.dueAmount > 0) msg += " | " + t("due") + ": ৳" + r.dueAmount;
       showToast(msg);
-      document.getElementById("saleQty").value = 1;
-      document.getElementById("saleCustomerName").value = "";
-      document.getElementById("saleCustomerPhone").value = "";
-      document.getElementById("saleCustomerAddress").value = "";
-      document.getElementById("salePaidAmount").value = 0;
-      document.getElementById("salePreview").classList.add("hidden");
-      loadProductsForSale(); loadTodaySales(); loadDashboard();
+      if (editSaleId) cancelSaleEdit();
+      else {
+        document.getElementById("saleQty").value = 1;
+        document.getElementById("saleCustomerName").value = "";
+        document.getElementById("saleCustomerPhone").value = "";
+        document.getElementById("saleCustomerAddress").value = "";
+        document.getElementById("salePaidAmount").value = 0;
+        document.getElementById("salePreview").classList.add("hidden");
+      }
+      loadProductsForSale();
+      loadDashboard();
+      if (document.getElementById("salesHistoryCard").style.display !== "none") {
+        loadAllSales();
+      }
     } else showToast(r.message || "Error", "error");
   } catch (e) { showToast("Network error", "error"); }
-  finally { this.disabled = false; this.textContent = t("saveSale"); }
+  finally {
+    this.disabled = false;
+    if (editSaleId) this.textContent = "✏️ Sale আপডেট করো";
+    else this.textContent = t("saveSale");
+  }
 });
 
-async function loadTodaySales() {
-  const list = document.getElementById("todaySalesList");
+// ============================================
+// SALES HISTORY
+// ============================================
+function switchSalesTab(tab) {
+  const newCard = document.getElementById("newSaleCard");
+  const historyCard = document.getElementById("salesHistoryCard");
+  const tabNew = document.getElementById("tabNewSale");
+  const tabHist = document.getElementById("tabSalesHistory");
+  if (tab === "new") {
+    newCard.style.display = "block";
+    historyCard.style.display = "none";
+    tabNew.classList.add("active");
+    tabHist.classList.remove("active");
+  } else {
+    newCard.style.display = "none";
+    historyCard.style.display = "block";
+    tabNew.classList.remove("active");
+    tabHist.classList.add("active");
+    loadAllSales();
+  }
+}
+
+async function loadAllSales() {
+  const list = document.getElementById("salesHistoryList");
   list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
   try {
     const r = await apiGet("getSales");
-    if (!r.success || !r.data || r.data.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>'; return; }
-    const today = new Date().toDateString();
-    const todaySales = r.data.filter(s => new Date(s.Date).toDateString() === today);
-    if (todaySales.length === 0) { list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>'; return; }
-    list.innerHTML = todaySales.reverse().map(s => {
-      const badge = getBadge(s.PaymentMethod);
-      return '<div class="list-item sale-item"><div class="left-side"><div class="item-title">' + s.ProductName + ' × ' + s.Quantity + '</div><div class="item-sub">' + badge + ' | ' + t("profit") + ': ৳' + s.Profit + (Number(s.DueAmount) > 0 ? ' | ' + t("due") + ': ৳' + s.DueAmount : '') + '</div></div><div class="item-value">৳' + s.TotalSale + '</div></div>';
-    }).join("");
-  } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+    if (!r.success || !r.data) {
+      allSalesCache = [];
+      list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>';
+      return;
+    }
+    allSalesCache = r.data;
+    filterSalesList();
+  } catch (e) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>';
+  }
+}
+
+function filterSalesByDate(filter) {
+  currentSalesFilter = filter;
+  document.querySelectorAll(".date-filter button").forEach(b => {
+    b.classList.toggle("active", b.dataset.filter === filter);
+  });
+  filterSalesList();
+}
+
+function filterSalesList() {
+  const list = document.getElementById("salesHistoryList");
+  const q = (document.getElementById("saleSearch")?.value || "").trim().toLowerCase();
+  let filtered = [...allSalesCache];
+  if (currentSalesFilter !== "all") {
+    const now = new Date();
+    let from = new Date();
+    if (currentSalesFilter === "today") from.setHours(0, 0, 0, 0);
+    else if (currentSalesFilter === "week") { from.setDate(now.getDate() - 7); from.setHours(0, 0, 0, 0); }
+    else if (currentSalesFilter === "month") { from.setMonth(now.getMonth() - 1); from.setHours(0, 0, 0, 0); }
+    else if (currentSalesFilter === "year") { from.setFullYear(now.getFullYear() - 1); from.setHours(0, 0, 0, 0); }
+    filtered = filtered.filter(s => new Date(s.Date) >= from);
+  }
+  if (q) {
+    filtered = filtered.filter(s =>
+      (s.ProductName || "").toLowerCase().includes(q) ||
+      (s.CustomerName || "").toLowerCase().includes(q) ||
+      (s.PaymentMethod || "").toLowerCase().includes(q)
+    );
+  }
+  filtered.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(s => {
+    const badge = getBadge(s.PaymentMethod);
+    const hasDue = Number(s.DueAmount) > 0;
+    return '<div class="sale-history-item">' +
+      '<div class="top-row">' +
+        '<div class="sale-info">' +
+          '<div class="sale-prod">' + s.ProductName + ' × ' + s.Quantity + '</div>' +
+          '<div class="sale-meta">' + fmtDate(s.Date) + (s.CustomerName ? ' | 👤 ' + s.CustomerName : '') + '</div>' +
+        '</div>' +
+        '<div class="sale-amt">৳' + s.TotalSale + '</div>' +
+      '</div>' +
+      '<div class="bottom-row">' +
+        '<div class="badges">' +
+          badge +
+          (hasDue ? ' <span class="payment-badge badge-due">বাকি: ৳' + s.DueAmount + '</span>' : '') +
+          ' <span class="payment-badge badge-cash">লাভ: ৳' + s.Profit + '</span>' +
+        '</div>' +
+        '<div class="sale-actions">' +
+          '<button class="mini-btn print" onclick="printSaleInvoice(\'' + s.SaleID + '\')" title="Print">🖨️</button>' +
+          '<button class="mini-btn edit" onclick="editSale(\'' + s.SaleID + '\')" title="Edit">✏️</button>' +
+          '<button class="mini-btn delete" onclick="confirmDeleteSale(\'' + s.SaleID + '\', \'' + (s.ProductName || '').replace(/'/g, "\\'") + '\')" title="Delete">🗑️</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+function editSale(saleId) {
+  const s = allSalesCache.find(x => x.SaleID === saleId);
+  if (!s) return;
+  switchSalesTab("new");
+  setTimeout(() => {
+    document.getElementById("saleProductId").value = s.ProductID || "";
+    document.getElementById("saleQty").value = s.Quantity || 1;
+    document.getElementById("salePayment").value = s.PaymentMethod || "Cash";
+    document.getElementById("saleCustomerName").value = s.CustomerName || "";
+    document.getElementById("salePaidAmount").value = s.PaidAmount || 0;
+    if (s.PaymentMethod === "Due" || s.PaymentMethod === "Partial") {
+      document.getElementById("dueFields").classList.remove("hidden");
+    } else {
+      document.getElementById("dueFields").classList.add("hidden");
+    }
+    const btn = document.getElementById("saveSaleBtn");
+    btn.textContent = "✏️ Sale আপডেট করো";
+    btn.setAttribute("data-edit-sale-id", saleId);
+    if (!document.getElementById("cancelSaleEditBtn")) {
+      const cancelBtn = document.createElement("button");
+      cancelBtn.id = "cancelSaleEditBtn";
+      cancelBtn.className = "btn cancel-btn";
+      cancelBtn.style.marginTop = "8px";
+      cancelBtn.textContent = "❌ বাতিল";
+      cancelBtn.onclick = cancelSaleEdit;
+      btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+    }
+    updateSalePreview();
+    document.getElementById("saleProductId").scrollIntoView({ behavior: "smooth", block: "center" });
+    showToast("✏️ Edit mode — form আপডেট করুন", "success");
+  }, 200);
+}
+
+function cancelSaleEdit() {
+  document.getElementById("saleQty").value = 1;
+  document.getElementById("salePayment").value = "Cash";
+  document.getElementById("saleCustomerName").value = "";
+  document.getElementById("saleCustomerPhone").value = "";
+  document.getElementById("saleCustomerAddress").value = "";
+  document.getElementById("salePaidAmount").value = 0;
+  document.getElementById("salePreview").classList.add("hidden");
+  document.getElementById("dueFields").classList.add("hidden");
+  const btn = document.getElementById("saveSaleBtn");
+  btn.textContent = t("saveSale");
+  btn.removeAttribute("data-edit-sale-id");
+  const cancelBtn = document.getElementById("cancelSaleEditBtn");
+  if (cancelBtn) cancelBtn.remove();
+}
+
+function confirmDeleteSale(saleId, productName) {
+  showConfirm(
+    "বিক্রয় মুছে ফেলবেন?",
+    "'" + productName + "' — এই বিক্রয়টি স্থায়ীভাবে মুছে যাবে। Stock ও Due auto adjust হবে।",
+    async () => {
+      try {
+        const r = await apiPost({ action: "deleteSale", saleId: saleId });
+        if (r.success) {
+          showToast("✅ বিক্রয় মুছে ফেলা হয়েছে");
+          loadAllSales();
+          loadDashboard();
+        } else showToast(r.message || "Error", "error");
+      } catch (e) { showToast("Network error", "error"); }
+    }
+  );
+}
+
+function printSaleInvoice(saleId) {
+  const s = allSalesCache.find(x => x.SaleID === saleId);
+  if (!s) return;
+  const invoiceHTML = 
+    '<div class="invoice-modal show" id="invoiceModal">' +
+      '<div class="invoice-box">' +
+        '<div class="invoice-header">' +
+          '<h2>🏪 ' + currentUser.shopName + '</h2>' +
+          '<p>Owner: ' + currentUser.name + ' | ' + (currentUser.phone || '') + '</p>' +
+          '<p style="margin-top:6px;font-size:14px;font-weight:700;color:#4F46E5;">INVOICE</p>' +
+        '</div>' +
+        '<div class="invoice-row"><span class="lbl">Invoice #:</span><span class="val">' + s.SaleID + '</span></div>' +
+        '<div class="invoice-row"><span class="lbl">তারিখ:</span><span class="val">' + fmtDate(s.Date) + '</span></div>' +
+        '<div class="invoice-row"><span class="lbl">পণ্য:</span><span class="val">' + s.ProductName + '</span></div>' +
+        '<div class="invoice-row"><span class="lbl">পরিমাণ:</span><span class="val">' + s.Quantity + ' টি</span></div>' +
+        '<div class="invoice-row"><span class="lbl">একক দাম:</span><span class="val">৳' + s.SellingPrice + '</span></div>' +
+        '<div class="invoice-total"><span>মোট বিল:</span><span>৳' + s.TotalSale + '</span></div>' +
+        (s.CustomerName ? '<div class="invoice-row"><span class="lbl">কাস্টমার:</span><span class="val">' + s.CustomerName + '</span></div>' : '') +
+        '<div class="invoice-row"><span class="lbl">পেমেন্ট পদ্ধতি:</span><span class="val">' + s.PaymentMethod + '</span></div>' +
+        '<div class="invoice-row"><span class="lbl">পরিশোধ:</span><span class="val" style="color:#10B981;">৳' + (s.PaidAmount || 0) + '</span></div>' +
+        (Number(s.DueAmount) > 0 ? '<div class="invoice-row"><span class="lbl">বাকি:</span><span class="val" style="color:#EF4444;">৳' + s.DueAmount + '</span></div>' : '') +
+        '<div class="invoice-footer">' +
+          '<p style="margin-bottom:6px;">ধন্যবাদ! আবার আসবেন 🙏</p>' +
+          '<p>Generated by ShopMate AI | ' + new Date().toLocaleString() + '</p>' +
+        '</div>' +
+        '<div class="invoice-actions">' +
+          '<button class="btn btn-secondary" onclick="closeInvoice()">✕ বন্ধ</button>' +
+          '<button class="btn btn-primary" onclick="doPrintInvoice()">🖨️ Print</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  const oldModal = document.getElementById("invoiceModal");
+  if (oldModal) oldModal.remove();
+  document.body.insertAdjacentHTML("beforeend", invoiceHTML);
+}
+
+function closeInvoice() {
+  const modal = document.getElementById("invoiceModal");
+  if (modal) modal.remove();
+}
+
+function doPrintInvoice() {
+  const box = document.querySelector(".invoice-box");
+  if (!box) return;
+  const w = window.open("", "_blank");
+  w.document.write('<html><head><title>Invoice</title>');
+  w.document.write('<style>@page{size:A4;margin:15mm;}body{font-family:sans-serif;padding:20px;color:#000;}.invoice-box{max-width:500px;margin:0 auto;}.invoice-header{text-align:center;padding-bottom:14px;border-bottom:2px solid #4F46E5;margin-bottom:16px;}.invoice-header h2{color:#4F46E5;margin:0 0 4px 0;}.invoice-header p{font-size:12px;color:#666;margin:2px 0;}.invoice-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px dashed #E5E7EB;}.invoice-row .lbl{color:#666;}.invoice-row .val{font-weight:600;}.invoice-total{background:#F3F4F6;padding:12px;border-radius:8px;margin:14px 0;display:flex;justify-content:space-between;font-weight:700;font-size:16px;}.invoice-footer{text-align:center;margin-top:20px;padding-top:14px;border-top:1px dashed #ccc;font-size:11px;color:#666;}</style>');
+  w.document.write('</head><body>' + box.outerHTML + '</body></html>');
+  w.document.close();
+  setTimeout(() => w.print(), 300);
 }
 
 function getBadge(method) {
@@ -1176,6 +1607,9 @@ function getBadge(method) {
   return map[method] || method;
 }
 
+// ============================================
+// CUSTOMERS
+// ============================================
 async function loadCustomerList() {
   const list = document.getElementById("customerList");
   list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
@@ -1246,6 +1680,9 @@ async function loadPaymentList() {
   } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
 }
 
+// ============================================
+// REPORTS
+// ============================================
 function switchReport(range) {
   currentReportRange = range;
   document.querySelectorAll(".report-tabs button").forEach(b => b.classList.toggle("active", b.dataset.range === range));
@@ -1455,27 +1892,105 @@ function printReport() {
   setTimeout(() => w.print(), 300);
 }
 
-  // ============================================
+// ============================================
+// AUTO UPDATE
+// ============================================
+async function checkForUpdate(showNotification = false) {
+  try {
+    const res = await fetch(VERSION_URL + "?t=" + Date.now());
+    const data = await res.json();
+    const remoteVersion = data.version;
+    const statusEl = document.getElementById("updateStatus");
+    if (statusEl) statusEl.textContent = "Check →";
+    if (remoteVersion !== APP_VERSION) {
+      if (statusEl) statusEl.textContent = "🎉 " + remoteVersion;
+      showUpdateNotification(remoteVersion, data.notes || "");
+      return true;
+    } else {
+      if (showNotification) {
+        if (typeof showToast === "function") {
+          showToast("✅ আপনি সর্বশেষ version ব্যবহার করছেন (v" + APP_VERSION + ")", "success");
+        } else {
+          alert("✅ আপনি সর্বশেষ version ব্যবহার করছেন (v" + APP_VERSION + ")");
+        }
+      }
+      return false;
+    }
+  } catch (e) {
+    console.error("Update check failed:", e);
+    if (showNotification) {
+      alert("❌ Check ব্যর্থ: " + e.message);
+    }
+    return false;
+  }
+}
 
+function showUpdateNotification(newVersion, notes) {
+  if (document.getElementById("updateBanner")) return;
+  const banner = document.createElement("div");
+  banner.id = "updateBanner";
+  banner.style.cssText = "position:fixed;top:0;left:0;right:0;background:linear-gradient(135deg,#4F46E5,#7C3AED);color:white;padding:14px 16px;z-index:9999;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,0.2);";
+  banner.innerHTML =
+    '<div style="flex:1;">' +
+      '<div style="font-size:14px;font-weight:700;">🎉 নতুন version ' + newVersion + ' এসেছে!</div>' +
+      '<div style="font-size:11px;opacity:0.9;margin-top:2px;">' + (notes || "Update করুন") + '</div>' +
+    '</div>' +
+    '<button id="updateNowBtn" style="background:white;color:#4F46E5;border:none;padding:8px 14px;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;">Update</button>' +
+    '<button id="closeBannerBtn" style="background:transparent;color:white;border:none;font-size:20px;cursor:pointer;padding:0 4px;">✕</button>';
+  document.body.appendChild(banner);
+  document.getElementById("updateNowBtn").onclick = () => forceUpdate();
+  document.getElementById("closeBannerBtn").onclick = () => banner.remove();
+}
+
+async function forceUpdate() {
+  const banner = document.getElementById("updateBanner");
+  if (banner) banner.innerHTML = '<div style="text-align:center;width:100%;font-weight:700;">🔄 Update হচ্ছে... অপেক্ষা করুন</div>';
+  if ("caches" in window) {
+    try {
+      const names = await caches.keys();
+      await Promise.all(names.map(n => caches.delete(n)));
+    } catch (e) { console.error(e); }
+  }
+  if ("serviceWorker" in navigator) {
+    try {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister()));
+    } catch (e) { console.error(e); }
+  }
+  setTimeout(() => {
+    window.location.reload(true);
+  }, 800);
+}
+
+function startUpdateChecker() {
+  if (updateCheckTimer) clearInterval(updateCheckTimer);
+  setTimeout(() => checkForUpdate(false), 5000);
+  updateCheckTimer = setInterval(() => checkForUpdate(false), VERSION_CHECK_INTERVAL);
+}
+
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    console.log("🔄 New SW activated");
+  });
+}
+
+// ============================================
+// INIT
+// ============================================
 function init() {
   currentLang = localStorage.getItem("shopmate_lang") || "bn";
   applyLanguage();
   loadTheme();
-  
-  // Set version display
   const versionEl = document.getElementById("appVersion");
   if (versionEl) versionEl.textContent = "v" + APP_VERSION;
-  
   const saved = localStorage.getItem("shopmate_user");
   if (saved) {
     try { currentUser = JSON.parse(saved); showMainApp(); }
     catch (e) { localStorage.removeItem("shopmate_user"); gotoAuth("loginPage"); }
   } else gotoAuth("loginPage");
-  
-  // Start auto update checker
   startUpdateChecker();
 }
-  init();
+init();
 </script>
 <script>
 if ("serviceWorker" in navigator) {
