@@ -796,22 +796,45 @@ body.dark .mini-btn.print { background: rgba(245,158,11,0.2); color: #FCD34D; }
         <div class="card-title"><div class="title-text">👥 <span data-i18n="dueCustomers">বাকি কাস্টমার</span></div></div>
         <div id="customerList"></div>
       </div>
-      <div class="card" id="customerDetailCard" style="display:none;">
+            <div class="card" id="customerDetailCard" style="display:none;">
         <div class="card-title">
           <div class="title-text">👤 <span id="detailCustomerName"></span></div>
           <button class="btn btn-secondary btn-sm" onclick="closeCustomerDetail()">✕</button>
         </div>
-        <div style="margin-bottom:12px;">
-          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
-            <span data-i18n="phoneLabel">📞 ফোন:</span><b id="detailPhone">-</b>
+
+        <!-- 🆕 Customer Info Grid -->
+        <div class="customer-info-grid">
+          <div class="customer-info-item">
+            <div class="ci-label">📞 ফোন</div>
+            <div class="ci-value" id="detailPhone">-</div>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">
-            <span data-i18n="totalDue">💸 মোট বাকি:</span><b id="detailDue" style="color:var(--danger);">৳0</b>
+          <div class="customer-info-item">
+            <div class="ci-label">📍 ঠিকানা</div>
+            <div class="ci-value" id="detailAddress">-</div>
           </div>
-          <div style="display:flex;justify-content:space-between;padding:8px 0;">
-            <span data-i18n="totalPaid">✅ মোট পরিশোধ:</span><b id="detailPaid" style="color:var(--secondary);">৳0</b>
+          <div class="customer-info-item red">
+            <div class="ci-label">💸 মোট বাকি</div>
+            <div class="ci-value" id="detailDue">৳0</div>
+          </div>
+          <div class="customer-info-item green">
+            <div class="ci-label">✅ মোট পরিশোধ</div>
+            <div class="ci-value" id="detailPaid">৳0</div>
+          </div>
+          <div class="customer-info-item blue">
+            <div class="ci-label">🛒 মোট কেনাকাটা</div>
+            <div class="ci-value" id="detailTotalPurchase">৳0</div>
+          </div>
+          <div class="customer-info-item info">
+            <div class="ci-label">📊 মোট লেনদেন</div>
+            <div class="ci-value" id="detailTotalTransactions">0</div>
+          </div>
+          <div class="customer-info-item full">
+            <div class="ci-label">📅 প্রথম ও শেষ কেনাকাটা</div>
+            <div class="ci-value" id="detailDateRange" style="font-size:12px;">-</div>
           </div>
         </div>
+
+        <!-- 💵 Due Payment Form -->
         <div class="form-group">
           <label data-i18n="takePayment">💵 কত টাকা নিচ্ছেন?</label>
           <div class="input-wrap"><span class="input-icon">৳</span><input type="number" id="duePaymentAmount" placeholder="0"></div>
@@ -821,6 +844,14 @@ body.dark .mini-btn.print { background: rgba(245,158,11,0.2); color: #FCD34D; }
           <div class="input-wrap"><span class="input-icon">📝</span><input type="text" id="duePaymentNote" autocomplete="off"></div>
         </div>
         <button class="btn btn-primary" onclick="saveDuePayment()" data-i18n="savePayment">💾 Payment সেভ</button>
+
+        <!-- 🆕 Full History Timeline -->
+        <div class="history-section-title">
+          📜 <span>পুরো লেনদেন History</span>
+        </div>
+        <div id="customerHistoryList">
+          <div class="loading-wrap"><div class="spinner-dark"></div>লোড হচ্ছে...</div>
+        </div>
       </div>
       <div class="card">
         <div class="card-title"><div class="title-text">📜 <span data-i18n="paymentHistory">Payment History</span></div></div>
@@ -1779,18 +1810,111 @@ async function loadCustomerList() {
   } catch (e) { list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
 }
 
-function openCustomerDetail(customerId) {
+async function openCustomerDetail(customerId) {
   const c = (window._customers || []).find(x => x.CustomerID === customerId);
   if (!c) return;
   currentCustomer = c;
+
+  // Show card
   document.getElementById("customerDetailCard").style.display = "block";
+
+  // Fill basic info
   document.getElementById("detailCustomerName").textContent = c.Name;
   document.getElementById("detailPhone").textContent = c.Phone || "-";
+  document.getElementById("detailAddress").textContent = c.Address || "-";
   document.getElementById("detailDue").textContent = fmt(c.TotalDue);
   document.getElementById("detailPaid").textContent = fmt(c.TotalPaid);
+  document.getElementById("detailTotalPurchase").textContent = "৳0";
+  document.getElementById("detailTotalTransactions").textContent = "0";
+  document.getElementById("detailDateRange").textContent = "লোড হচ্ছে...";
+
+  // Reset payment form
   document.getElementById("duePaymentAmount").value = "";
   document.getElementById("duePaymentNote").value = "";
+
+  // Show loading in history
+  document.getElementById("customerHistoryList").innerHTML =
+    '<div class="loading-wrap"><div class="spinner-dark"></div>লোড হচ্ছে...</div>';
+
+  // Scroll to card
   document.getElementById("customerDetailCard").scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // Load history from Apps Script
+  try {
+    const r = await apiGet("getCustomerHistory", { customerName: c.Name });
+    if (!r.success) {
+      document.getElementById("customerHistoryList").innerHTML =
+        '<div class="history-empty">❌ History লোড করা যায়নি</div>';
+      return;
+    }
+
+    const d = r.data;
+
+    // Update stats
+    document.getElementById("detailTotalPurchase").textContent = fmt(d.totalPurchase);
+    document.getElementById("detailTotalTransactions").textContent =
+      (d.totalSales + d.totalPayments) + " টি";
+
+    // Date range
+    if (d.firstSaleDate && d.lastSaleDate) {
+      document.getElementById("detailDateRange").textContent =
+        fmtDate(d.firstSaleDate) + " — " + fmtDate(d.lastSaleDate);
+    } else {
+      document.getElementById("detailDateRange").textContent = "লেনদেন নেই";
+    }
+
+    // Render history timeline
+    renderCustomerHistory(d.history);
+
+  } catch (e) {
+    document.getElementById("customerHistoryList").innerHTML =
+      '<div class="history-empty">❌ Network error: ' + e.message + '</div>';
+  }
+}
+
+function renderCustomerHistory(history) {
+  const container = document.getElementById("customerHistoryList");
+  if (!history || history.length === 0) {
+    container.innerHTML = '<div class="history-empty">📭 কোনো লেনদেন নেই</div>';
+    return;
+  }
+
+  let html = '<div class="history-timeline">';
+  history.forEach(item => {
+    if (item.type === "sale") {
+      const badge = getBadge(item.paymentMethod);
+      html +=
+        '<div class="history-item sale">' +
+          '<div class="h-top">' +
+            '<div class="h-title">🛒 ' + item.productName + ' × ' + item.quantity + '</div>' +
+            '<div class="h-amount">৳' + item.totalSale + '</div>' +
+          '</div>' +
+          '<div class="h-meta">' +
+            '<span>📅 ' + fmtDate(item.date) + '</span>' +
+            '<span>🆔 ' + (item.saleId || '') + '</span>' +
+          '</div>' +
+          '<div class="h-badges">' +
+            badge +
+            (item.dueAmount > 0 ? ' <span class="payment-badge badge-due">বাকি: ৳' + item.dueAmount + '</span>' : '') +
+            (item.paidAmount > 0 ? ' <span class="payment-badge badge-cash">পরিশোধ: ৳' + item.paidAmount + '</span>' : '') +
+          '</div>' +
+        '</div>';
+    } else {
+      html +=
+        '<div class="history-item payment">' +
+          '<div class="h-top">' +
+            '<div class="h-title">💵 Due Payment</div>' +
+            '<div class="h-amount">৳' + item.amount + '</div>' +
+          '</div>' +
+          '<div class="h-meta">' +
+            '<span>📅 ' + fmtDate(item.date) + '</span>' +
+            (item.note ? '<span>📝 ' + item.note + '</span>' : '') +
+          '</div>' +
+        '</div>';
+    }
+  });
+  html += '</div>';
+  container.innerHTML = html;
 }
 function closeCustomerDetail() {
   document.getElementById("customerDetailCard").style.display = "none";
@@ -1800,25 +1924,62 @@ async function saveDuePayment() {
   if (!currentCustomer) return showToast("কাস্টমার select করুন", "error");
   const btn = event.target;
   if (btn.disabled) return;
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Processing...';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Processing...';
+
   const amount = Number(document.getElementById("duePaymentAmount").value);
   const note = document.getElementById("duePaymentNote").value.trim();
-  if (!amount || amount <= 0) { btn.disabled = false; btn.textContent = t("savePayment"); return showToast("টাকার পরিমাণ দিন", "error"); }
-  if (amount > Number(currentCustomer.TotalDue)) { btn.disabled = false; btn.textContent = t("savePayment"); return showToast(t("due") + " ৳" + currentCustomer.TotalDue + " — বেশি নেওয়া যাবে না", "error"); }
+
+  if (!amount || amount <= 0) {
+    btn.disabled = false;
+    btn.textContent = t("savePayment");
+    return showToast("টাকার পরিমাণ দিন", "error");
+  }
+  if (amount > Number(currentCustomer.TotalDue)) {
+    btn.disabled = false;
+    btn.textContent = t("savePayment");
+    return showToast(t("due") + " ৳" + currentCustomer.TotalDue + " — বেশি নেওয়া যাবে না", "error");
+  }
+
   try {
     const r = await apiPost({
-      action: "addDuePayment", customerName: currentCustomer.Name,
-      phone: currentCustomer.Phone || "", amount: amount, note: note, type: "Due Payment"
+      action: "addDuePayment",
+      customerName: currentCustomer.Name,
+      phone: currentCustomer.Phone || "",
+      amount: amount,
+      note: note,
+      type: "Due Payment"
     });
+
     if (r.success) {
       showToast("✅ ৳" + amount + " | " + t("due") + ": ৳" + r.newDue);
+
+      // Update currentCustomer data
+      currentCustomer.TotalDue = r.newDue;
+      currentCustomer.TotalPaid = (Number(currentCustomer.TotalPaid) || 0) + amount;
+
+      // Update UI
+      document.getElementById("detailDue").textContent = fmt(r.newDue);
+      document.getElementById("detailPaid").textContent = fmt(currentCustomer.TotalPaid);
       document.getElementById("duePaymentAmount").value = "";
       document.getElementById("duePaymentNote").value = "";
-      closeCustomerDetail();
-      await loadCustomerList(); await loadPaymentList(); await loadDashboard();
-    } else showToast(r.message || "Error", "error");
-  } catch (e) { showToast("Network error", "error"); }
-  finally { btn.disabled = false; btn.textContent = t("savePayment"); }
+
+      // Reload history
+      await openCustomerDetail(currentCustomer.CustomerID);
+
+      // Reload customers list + dashboard
+      await loadCustomerList();
+      await loadPaymentList();
+      await loadDashboard();
+    } else {
+      showToast(r.message || "Error", "error");
+    }
+  } catch (e) {
+    showToast("Network error", "error");
+  } finally {
+    btn.disabled = false;
+    btn.textContent = t("savePayment");
+  }
 }
 
 async function loadPaymentList() {
