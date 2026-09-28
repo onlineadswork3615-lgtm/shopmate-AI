@@ -1241,7 +1241,7 @@ const I18N = {
     saveSale:"💾 বিক্রয় সেভ",todaySalesList:"আজকের বিক্রয়",products:"পণ্য",newProductTitle:"নতুন পণ্য",productName:"পণ্যের নাম",
     category:"ক্যাটাগরি",purchasePrice:"ক্রয়মূল্য",sellingPrice:"বিক্রয়মূল্য",stock:"স্টক",lowStockAlert:"Low Alert",saveProduct:"💾 পণ্য সেভ",
     allProducts:"সব পণ্য",dueCustomers:"বাকি কাস্টমার",paymentHistory:"Payment History",profile:"প্রোফাইল",settings:"সেটিংস",language:"ভাষা",
-    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",
+    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",last7Days:"শেষ ৭ দিনের বিক্রয়",totalSale:"মোট বিক্রয়",totalProfit:"মোট লাভ",bestDay:"সেরা দিন",lowestDay:"সবচেয়ে কম",chartLoadFailed:"চার্ট লোড করা যায়নি",noChartData:"কোনো data নেই",
     todayPaid:"আজকের নগদ",todayDue:"আজকের বাকি",pcs:"পিস",buy:"ক্রয়",sell:"বিক্রয়",profit:"লাভ",due:"বাকি",noPhone:"ফোন নেই",
     noProducts:"কোনো পণ্য নেই",noSales:"কোনো বিক্রয় নেই",noCustomers:"কোনো কাস্টমার নেই",allPaid:"সব পরিশোধ করেছে",
     totalDue:"মোট বাকি",totalPaid:"মোট পরিশোধ",phoneLabel:"ফোন",takePayment:"কত টাকা নিচ্ছেন?",note:"নোট (ঐচ্ছিক)",savePayment:"💾 Payment সেভ",
@@ -1264,7 +1264,7 @@ const I18N = {
     saveSale:"💾 Save Sale",todaySalesList:"Today's Sales",products:"Products",newProductTitle:"New Product",productName:"Product Name",
     category:"Category",purchasePrice:"Purchase Price",sellingPrice:"Selling Price",stock:"Stock",lowStockAlert:"Low Alert",saveProduct:"💾 Save Product",
     allProducts:"All Products",dueCustomers:"Due Customers",paymentHistory:"Payment History",profile:"Profile",settings:"Settings",language:"Language",
-    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",
+    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",last7Days:"Last 7 Days Sales",totalSale:"Total Sale",totalProfit:"Total Profit",bestDay:"Best Day",lowestDay:"Lowest Day",chartLoadFailed:"Chart load failed",noChartData:"No data",
     todayPaid:"Today's Cash",todayDue:"Today's Due",pcs:"pcs",buy:"Buy",sell:"Sell",profit:"Profit",due:"Due",noPhone:"No phone",
     noProducts:"No products",noSales:"No sales",noCustomers:"No customers",allPaid:"All paid",
     totalDue:"Total Due",totalPaid:"Total Paid",phoneLabel:"Phone",takePayment:"How much to take?",note:"Note (optional)",savePayment:"💾 Save Payment",
@@ -1539,7 +1539,7 @@ async function loadSalesChart() {
   try {
     const r = await apiGet("getSalesChart", { days: 7 });
     if (!r.success || !r.data) {
-      content.innerHTML = '<div class="chart-empty">📊 চার্ট লোড করা যায়নি</div>';
+      content.innerHTML = '<div class="chart-empty">📊 ' + t("chartLoadFailed") + '</div>';
       return;
     }
     
@@ -1564,7 +1564,6 @@ function renderSalesChart(d) {
   const chart = d.chart || [];
   const maxSale = d.maxSale || 1;
   
-  // আজকের তারিখ
   const todayKey = (() => {
     const t = new Date();
     return String(t.getFullYear()) + "-" +
@@ -1572,11 +1571,10 @@ function renderSalesChart(d) {
            String(t.getDate()).padStart(2, "0");
   })();
   
-  // Best day-এর date
   const bestDate = d.bestDay?.date || "";
   
   if (chart.length === 0) {
-    content.innerHTML = '<div class="chart-empty">📊 কোনো data নেই</div>';
+    content.innerHTML = '<div class="chart-empty">📊 ' + t("noChartData") + '</div>';
     return;
   }
   
@@ -1597,7 +1595,6 @@ function renderSalesChart(d) {
     if (isToday) labelClass += " today";
     if (isBest && !isToday) labelClass += " best";
     
-    // Value text (short form)
     let valueText = "";
     if (day.sale > 0) {
       if (day.sale >= 1000) {
@@ -1607,40 +1604,49 @@ function renderSalesChart(d) {
       }
     }
     
-    html += '<div class="chart-bar-wrapper" title="' + day.dayName + ' ' + day.dayNum + ': ৳' + day.sale + '">';
+    let dayName = dayNameForLang(day.dayName);
+    
+    html += '<div class="chart-bar-wrapper" title="' + dayName + ' ' + day.dayNum + ': ৳' + day.sale + '">';
     if (valueText) html += '<div class="chart-value">' + valueText + '</div>';
     html += '<div class="' + barClass + '" style="height: ' + Math.max(heightPercent, isEmpty ? 4 : 8) + '%;"></div>';
-    html += '<div class="' + labelClass + '">' + day.dayName + '<br>' + day.dayNum + '</div>';
+    html += '<div class="' + labelClass + '">' + dayName + '<br>' + day.dayNum + '</div>';
     html += '</div>';
   });
   
   html += '</div>';
   
-  // Stats section
   html += '<div class="chart-stats">';
   html += '<div class="chart-stat">';
-  html += '<div class="chart-stat-label">💰 মোট বিক্রয়</div>';
+  html += '<div class="chart-stat-label">💰 ' + t("totalSale") + '</div>';
   html += '<div class="chart-stat-value green">' + fmt(d.totalSale) + '</div>';
   html += '</div>';
   html += '<div class="chart-stat">';
-  html += '<div class="chart-stat-label">📈 মোট লাভ</div>';
+  html += '<div class="chart-stat-label">📈 ' + t("totalProfit") + '</div>';
   html += '<div class="chart-stat-value blue">' + fmt(d.totalProfit) + '</div>';
   html += '</div>';
   if (d.bestDay && d.bestDay.sale > 0) {
     html += '<div class="chart-stat">';
-    html += '<div class="chart-stat-label">🏆 Best Day</div>';
-    html += '<div class="chart-stat-value orange">' + d.bestDay.dayName + ' ' + d.bestDay.dayNum + ' (' + fmt(d.bestDay.sale) + ')</div>';
+    html += '<div class="chart-stat-label">🏆 ' + t("bestDay") + '</div>';
+    html += '<div class="chart-stat-value orange">' + dayNameForLang(d.bestDay.dayName) + ' ' + d.bestDay.dayNum + ' (' + fmt(d.bestDay.sale) + ')</div>';
     html += '</div>';
   }
   if (d.worstDay && d.worstDay.sale > 0) {
     html += '<div class="chart-stat">';
-    html += '<div class="chart-stat-label">📉 Lowest Day</div>';
-    html += '<div class="chart-stat-value red">' + d.worstDay.dayName + ' ' + d.worstDay.dayNum + ' (' + fmt(d.worstDay.sale) + ')</div>';
+    html += '<div class="chart-stat-label">📉 ' + t("lowestDay") + '</div>';
+    html += '<div class="chart-stat-value red">' + dayNameForLang(d.worstDay.dayName) + ' ' + d.worstDay.dayNum + ' (' + fmt(d.worstDay.sale) + ')</div>';
     html += '</div>';
   }
   html += '</div>';
   
   content.innerHTML = html;
+}
+
+function dayNameForLang(bnDay) {
+  if (currentLang === "bn") return bnDay;
+  const enDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const bnDays = ["রবি", "সোম", "মঙ্গল", "বুধ", "বৃহঃ", "শুক্র", "শনি"];
+  const idx = bnDays.indexOf(bnDay);
+  return idx !== -1 ? enDays[idx] : bnDay;
 }
 
 async function loadDashboard() {
