@@ -547,6 +547,166 @@ body.dark .margin-low {
   font-weight: 700;
   color: var(--secondary);
 }
+  /* ============ SALES CHART ============ */
+.chart-container {
+  background: var(--card);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chart-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  background: var(--gradient);
+  color: white;
+  border-radius: 12px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px;
+  height: 180px;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  position: relative;
+}
+.chart-bars::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--border);
+}
+.chart-bar-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  position: relative;
+  min-width: 0;
+}
+.chart-bar {
+  width: 100%;
+  max-width: 40px;
+  background: linear-gradient(180deg, #4F46E5, #7C3AED);
+  border-radius: 6px 6px 0 0;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  cursor: pointer;
+  min-height: 4px;
+}
+.chart-bar:hover {
+  filter: brightness(1.15);
+  transform: scaleY(1.02);
+}
+.chart-bar.empty {
+  background: linear-gradient(180deg, #E5E7EB, #D1D5DB);
+  opacity: 0.5;
+}
+.chart-bar.today {
+  background: linear-gradient(180deg, #10B981, #34D399);
+  box-shadow: 0 0 12px rgba(16,185,129,0.4);
+}
+.chart-bar.best {
+  background: linear-gradient(180deg, #F59E0B, #FBBF24);
+  box-shadow: 0 0 12px rgba(245,158,11,0.4);
+}
+.chart-value {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.chart-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 6px;
+  text-align: center;
+}
+.chart-label.today {
+  color: var(--secondary);
+}
+.chart-label.best {
+  color: var(--warning);
+}
+
+.chart-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+.chart-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.chart-stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.chart-stat-value {
+  font-size: 13px;
+  font-weight: 700;
+}
+.chart-stat-value.green { color: var(--secondary); }
+.chart-stat-value.blue { color: var(--primary); }
+.chart-stat-value.orange { color: var(--warning); }
+.chart-stat-value.red { color: var(--danger); }
+
+.chart-empty {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 400px) {
+  .chart-bars {
+    height: 140px;
+    gap: 4px;
+  }
+  .chart-value {
+    font-size: 9px;
+  }
+  .chart-label {
+    font-size: 9px;
+  }
+}
 .hidden { display: none !important; }
 .mb-8 { margin-bottom: 8px; }
 .mb-12 { margin-bottom: 12px; }
@@ -734,6 +894,16 @@ body.dark .margin-low {
           </button>
         </div>
       </div>
+            <div class="chart-container" id="salesChartCard">
+        <div class="chart-header">
+          <div class="chart-title">📊 <span data-i18n="last7Days">Last 7 Days Sales</span></div>
+          <div class="chart-badge" id="chartTotal">৳0</div>
+        </div>
+        <div id="chartContent">
+          <div class="loading-wrap"><div class="spinner-dark"></div><span data-i18n="loading">লোড হচ্ছে...</span></div>
+        </div>
+      </div>
+
       <div class="card" style="cursor:pointer;" onclick="gotoPage('lowstock')">
         <div class="card-title">
           <div class="title-text">⚠️ <span data-i18n="lowStockItems">কম স্টক</span></div>
@@ -1359,6 +1529,120 @@ document.getElementById("forgotResetBtn").addEventListener("click", async functi
 // ============================================
 // DASHBOARD
 // ============================================
+  // ============================================
+// SALES CHART
+// ============================================
+async function loadSalesChart() {
+  const content = document.getElementById("chartContent");
+  if (!content) return;
+  
+  try {
+    const r = await apiGet("getSalesChart", { days: 7 });
+    if (!r.success || !r.data) {
+      content.innerHTML = '<div class="chart-empty">📊 চার্ট লোড করা যায়নি</div>';
+      return;
+    }
+    
+    const d = r.data;
+    
+    // Update total badge
+    const totalEl = document.getElementById("chartTotal");
+    if (totalEl) totalEl.textContent = fmt(d.totalSale);
+    
+    // Render chart
+    renderSalesChart(d);
+  } catch (e) {
+    console.error("Chart error:", e);
+    content.innerHTML = '<div class="chart-empty">❌ ' + e.message + '</div>';
+  }
+}
+
+function renderSalesChart(d) {
+  const content = document.getElementById("chartContent");
+  if (!content) return;
+  
+  const chart = d.chart || [];
+  const maxSale = d.maxSale || 1;
+  
+  // আজকের তারিখ
+  const todayKey = (() => {
+    const t = new Date();
+    return String(t.getFullYear()) + "-" +
+           String(t.getMonth() + 1).padStart(2, "0") + "-" +
+           String(t.getDate()).padStart(2, "0");
+  })();
+  
+  // Best day-এর date
+  const bestDate = d.bestDay?.date || "";
+  
+  if (chart.length === 0) {
+    content.innerHTML = '<div class="chart-empty">📊 কোনো data নেই</div>';
+    return;
+  }
+  
+  let html = '<div class="chart-bars">';
+  
+  chart.forEach(day => {
+    const heightPercent = maxSale > 0 ? (day.sale / maxSale) * 100 : 0;
+    const isEmpty = day.sale === 0;
+    const isToday = day.date === todayKey;
+    const isBest = day.date === bestDate && day.sale > 0;
+    
+    let barClass = "chart-bar";
+    if (isEmpty) barClass += " empty";
+    if (isToday) barClass += " today";
+    if (isBest && !isToday) barClass += " best";
+    
+    let labelClass = "chart-label";
+    if (isToday) labelClass += " today";
+    if (isBest && !isToday) labelClass += " best";
+    
+    // Value text (short form)
+    let valueText = "";
+    if (day.sale > 0) {
+      if (day.sale >= 1000) {
+        valueText = "৳" + (day.sale / 1000).toFixed(1) + "k";
+      } else {
+        valueText = "৳" + day.sale;
+      }
+    }
+    
+    html += '<div class="chart-bar-wrapper" title="' + day.dayName + ' ' + day.dayNum + ': ৳' + day.sale + '">';
+    if (valueText) html += '<div class="chart-value">' + valueText + '</div>';
+    html += '<div class="' + barClass + '" style="height: ' + Math.max(heightPercent, isEmpty ? 4 : 8) + '%;"></div>';
+    html += '<div class="' + labelClass + '">' + day.dayName + '<br>' + day.dayNum + '</div>';
+    html += '</div>';
+  });
+  
+  html += '</div>';
+  
+  // Stats section
+  html += '<div class="chart-stats">';
+  html += '<div class="chart-stat">';
+  html += '<div class="chart-stat-label">💰 মোট বিক্রয়</div>';
+  html += '<div class="chart-stat-value green">' + fmt(d.totalSale) + '</div>';
+  html += '</div>';
+  html += '<div class="chart-stat">';
+  html += '<div class="chart-stat-label">📈 মোট লাভ</div>';
+  html += '<div class="chart-stat-value blue">' + fmt(d.totalProfit) + '</div>';
+  html += '</div>';
+  if (d.bestDay && d.bestDay.sale > 0) {
+    html += '<div class="chart-stat">';
+    html += '<div class="chart-stat-label">🏆 Best Day</div>';
+    html += '<div class="chart-stat-value orange">' + d.bestDay.dayName + ' ' + d.bestDay.dayNum + ' (' + fmt(d.bestDay.sale) + ')</div>';
+    html += '</div>';
+  }
+  if (d.worstDay && d.worstDay.sale > 0) {
+    html += '<div class="chart-stat">';
+    html += '<div class="chart-stat-label">📉 Lowest Day</div>';
+    html += '<div class="chart-stat-value red">' + d.worstDay.dayName + ' ' + d.worstDay.dayNum + ' (' + fmt(d.worstDay.sale) + ')</div>';
+    html += '</div>';
+  }
+  html += '</div>';
+  
+  content.innerHTML = html;
+}
+
 async function loadDashboard() {
   try {
     const r = await apiGet("getDashboard");
@@ -1366,11 +1650,15 @@ async function loadDashboard() {
     animateStat("statTodaySales", r.data.todaySales || 0);
     animateStat("statTodayProfit", r.data.todayProfit || 0);
     animateStat("statTodayPaid", r.data.todayPaid || 0);
-        const marginEl = document.getElementById("statTodayMargin");
-    if (marginEl) marginEl.textContent = (r.data.todayMargin || 0) + "%";
     animateStat("statTodayDue", r.data.todayDue || 0);
     animateStat("statTotalProducts", r.data.totalProducts || 0, "");
     animateStat("statLowStock", r.data.lowStockCount || 0, "");
+    
+    // ⭐ Margin update
+    const marginEl = document.getElementById("statTodayMargin");
+    if (marginEl) marginEl.textContent = (r.data.todayMargin || 0) + "%";
+    
+    // Low stock list
     const list = document.getElementById("lowStockList");
     if (!r.data.lowStockItems || r.data.lowStockItems.length === 0) {
       list.innerHTML = '<div class="empty-state"><span class="icon">✅</span>' + t("allGood") + '</div>';
@@ -1379,9 +1667,11 @@ async function loadDashboard() {
         '<div class="list-item warn-item"><div class="left-side"><div class="item-title">' + p.ProductName + '</div><div class="item-sub">' + t("stock") + ': ' + p.Stock + ' ' + t("pcs") + '</div></div><div class="item-value warn">' + p.Stock + '</div></div>'
       ).join("");
     }
+    
+    // ⭐ Sales Chart load করো
+    loadSalesChart();
   } catch (e) { console.error(e); }
 }
-
 // ============================================
 // LOW STOCK PAGE
 // ============================================
