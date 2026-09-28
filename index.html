@@ -465,6 +465,88 @@ body.dark .mini-btn.print { background: rgba(245,158,11,0.2); color: #FCD34D; }
     height: 10px;
   }
 }
+  /* ============ PROFIT MARGIN ============ */
+.margin-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.margin-high {
+  background: #D1FAE5;
+  color: #065F46;
+}
+.margin-medium {
+  background: #FEF3C7;
+  color: #92400E;
+}
+.margin-low {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+body.dark .margin-high {
+  background: rgba(16,185,129,0.2);
+  color: #6EE7B7;
+}
+body.dark .margin-medium {
+  background: rgba(245,158,11,0.2);
+  color: #FCD34D;
+}
+body.dark .margin-low {
+  background: rgba(239,68,68,0.2);
+  color: #FCA5A5;
+}
+
+/* Product list with margin */
+.product-margin {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-top: 2px;
+}
+
+/* Sale history margin */
+.sale-margin {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+/* Reports margin column */
+.prof-table .margin-col {
+  font-weight: 700;
+}
+.prof-table .margin-green { color: #10B981; }
+.prof-table .margin-orange { color: #F59E0B; }
+.prof-table .margin-red { color: #EF4444; }
+
+/* Dashboard margin card */
+.stat-card.purple .value { color: #8B5CF6; }
+
+/* Margin info row */
+.margin-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 12px;
+  border-top: 1px dashed var(--border);
+  margin-top: 6px;
+}
+.margin-row .mr-label {
+  color: var(--muted);
+  font-weight: 500;
+}
+.margin-row .mr-value {
+  font-weight: 700;
+  color: var(--secondary);
+}
 .hidden { display: none !important; }
 .mb-8 { margin-bottom: 8px; }
 .mb-12 { margin-bottom: 12px; }
@@ -613,6 +695,10 @@ body.dark .mini-btn.print { background: rgba(245,158,11,0.2); color: #FCD34D; }
         <div class="stat-card info">
           <div class="label">💵 <span data-i18n="todayPaid">আজকের নগদ</span></div>
           <div class="value" id="statTodayPaid">৳0</div>
+                  <div class="stat-card purple">
+          <div class="label">📊 <span>আজকের Margin</span></div>
+          <div class="value" id="statTodayMargin">0%</div>
+        </div>
         </div>
         <div class="stat-card red">
           <div class="label">📝 <span data-i18n="todayDue">আজকের বাকি</span></div>
@@ -1273,6 +1359,8 @@ async function loadDashboard() {
     animateStat("statTodaySales", r.data.todaySales || 0);
     animateStat("statTodayProfit", r.data.todayProfit || 0);
     animateStat("statTodayPaid", r.data.todayPaid || 0);
+        const marginEl = document.getElementById("statTodayMargin");
+    if (marginEl) marginEl.textContent = (r.data.todayMargin || 0) + "%";
     animateStat("statTodayDue", r.data.todayDue || 0);
     animateStat("statTotalProducts", r.data.totalProducts || 0, "");
     animateStat("statLowStock", r.data.lowStockCount || 0, "");
@@ -1333,10 +1421,21 @@ function renderProductList(products) {
   }
   list.innerHTML = products.map(p => {
     const isLow = Number(p.Stock) <= Number(p.LowStockAlert);
+    // ⭐ Margin calculate
+    const purchase = Number(p.PurchasePrice) || 0;
+    const selling = Number(p.SellingPrice) || 0;
+    const profit = selling - purchase;
+    const margin = selling > 0 ? Math.round((profit / selling) * 1000) / 10 : 0;
+    
+    let marginClass = "margin-low";
+    if (margin >= 30) marginClass = "margin-high";
+    else if (margin >= 15) marginClass = "margin-medium";
+    
     return '<div class="list-item">' +
       '<div class="left-side">' +
         '<div class="item-title">' + p.ProductName + '</div>' +
         '<div class="item-sub">' + t("buy") + ': ৳' + p.PurchasePrice + ' | ' + t("sell") + ': ৳' + p.SellingPrice + '</div>' +
+        '<div class="product-margin">💹 ' + t("profit") + ': ৳' + profit + ' <span class="margin-badge ' + marginClass + '">' + margin + '%</span></div>' +
       '</div>' +
       '<div style="display:flex;align-items:center;">' +
         '<div class="item-value' + (isLow ? ' warn' : '') + '">' + p.Stock + '</div>' +
@@ -1639,6 +1738,7 @@ function filterSalesList() {
   list.innerHTML = filtered.map(s => {
     const badge = getBadge(s.PaymentMethod);
     const hasDue = Number(s.DueAmount) > 0;
+        const margin = Number(s.TotalSale) > 0 ? Math.round((Number(s.Profit) / Number(s.TotalSale)) * 1000) / 10 : 0;
     return '<div class="sale-history-item">' +
       '<div class="top-row">' +
         '<div class="sale-info">' +
@@ -1651,7 +1751,7 @@ function filterSalesList() {
         '<div class="badges">' +
           badge +
           (hasDue ? ' <span class="payment-badge badge-due">বাকি: ৳' + s.DueAmount + '</span>' : '') +
-          ' <span class="payment-badge badge-cash">লাভ: ৳' + s.Profit + '</span>' +
+         ' <span class="payment-badge badge-cash">লাভ: ৳' + s.Profit + ' (' + margin + '%)</span>' +
         '</div>' +
         '<div class="sale-actions">' +
           '<button class="mini-btn print" onclick="printSaleInvoice(\'' + s.SaleID + '\')" title="Print">🖨️</button>' +
