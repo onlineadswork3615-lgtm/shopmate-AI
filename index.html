@@ -1231,6 +1231,10 @@ function gotoPage(name) {
   const nav = document.querySelector('.bottom-nav a[data-page="' + name + '"]');
   if (nav) nav.classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
+  
+  // ⭐ Current page save করো
+  localStorage.setItem("shopmate_current_page", name);
+  
   if (name === "dashboard") loadDashboard();
   if (name === "sales") { loadProductsForSale(); switchSalesTab("new"); }
   if (name === "products") loadProductList();
@@ -1314,7 +1318,10 @@ function showMainApp() {
   document.getElementById("profilePhone").textContent = currentUser.phone;
   const vEl = document.getElementById("appVersion");
   if (vEl) vEl.textContent = "v" + APP_VERSION;
-  gotoPage("dashboard");
+  
+  // ⭐ Last page restore করো
+  const lastPage = localStorage.getItem("shopmate_current_page") || "dashboard";
+  gotoPage(lastPage);
 }
 
 // ============================================
@@ -1637,7 +1644,6 @@ document.getElementById("saveSaleBtn").addEventListener("click", async function(
     if (r.success) {
       let msg = "✅ " + (editSaleId ? "আপডেট হয়েছে" : "বিক্রয় হয়েছে");
             // ⭐ Cache clear
-      for (const k in apiCache) delete apiCache[k];
       if (r.totalSale) msg += " | ৳" + r.totalSale;
       if (r.profit) msg += " | " + t("profit") + ": ৳" + r.profit;
       if (r.dueAmount > 0) msg += " | " + t("due") + ": ৳" + r.dueAmount;
@@ -1650,6 +1656,7 @@ document.getElementById("saveSaleBtn").addEventListener("click", async function(
         document.getElementById("saleCustomerAddress").value = "";
         document.getElementById("salePaidAmount").value = 0;
         document.getElementById("salePreview").classList.add("hidden");
+                clearFormState();
       }
      for (const k in apiCache) delete apiCache[k];
       loadProductsForSale();
@@ -2410,6 +2417,56 @@ if ("serviceWorker" in navigator) {
 // ============================================
 // INIT
 // ============================================
+  // ============================================
+// FORM STATE PERSISTENCE
+// ============================================
+const FORM_FIELDS = [
+  "saleProductId", "saleQty", "salePayment", 
+  "saleCustomerName", "saleCustomerPhone", "saleCustomerAddress", "salePaidAmount",
+  "pName", "pCategory", "pPurchasePrice", "pSellingPrice", "pStock", "pLowStock"
+];
+
+function saveFormState() {
+  const state = {};
+  FORM_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) state[id] = el.value;
+  });
+  localStorage.setItem("shopmate_form_state", JSON.stringify(state));
+}
+
+function restoreFormState() {
+  try {
+    const state = JSON.parse(localStorage.getItem("shopmate_form_state") || "{}");
+    FORM_FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && state[id] !== undefined && state[id] !== "") {
+        el.value = state[id];
+      }
+    });
+    // Preview update করো
+    if (typeof updateSalePreview === "function") {
+      setTimeout(() => updateSalePreview(), 100);
+    }
+  } catch (e) { console.error("Restore form error:", e); }
+}
+
+function clearFormState() {
+  localStorage.removeItem("shopmate_form_state");
+}
+
+// ⭐ Auto-save setup
+function setupFormAutoSave() {
+  FORM_FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && !el.dataset.autosave) {
+      el.dataset.autosave = "1";
+      el.addEventListener("input", saveFormState);
+      el.addEventListener("change", saveFormState);
+    }
+  });
+}
+
 function init() {
   currentLang = localStorage.getItem("shopmate_lang") || "bn";
   applyLanguage();
@@ -2418,7 +2475,15 @@ function init() {
   if (versionEl) versionEl.textContent = "v" + APP_VERSION;
   const saved = localStorage.getItem("shopmate_user");
   if (saved) {
-    try { currentUser = JSON.parse(saved); showMainApp(); }
+    try { 
+      currentUser = JSON.parse(saved); 
+      showMainApp();
+      // ⭐ Form state restore করো
+      setTimeout(() => {
+        restoreFormState();
+        setupFormAutoSave();
+      }, 300);
+    }
     catch (e) { localStorage.removeItem("shopmate_user"); gotoAuth("loginPage"); }
   } else gotoAuth("loginPage");
   startUpdateChecker();
