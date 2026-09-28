@@ -1146,10 +1146,10 @@ function loadTheme() {
 // API HELPER
 // ============================================
 const apiCache = {};
-const CACHE_DURATION = 8000;
+const CACHE_DURATION = 60000;
 async function apiGet(action, extra = {}) {
   const key = action + JSON.stringify(extra) + (currentUser ? currentUser.shopId : "");
-  if (action !== "getSales" && action !== "getPayments" && apiCache[key]) {
+  if (apiCache[key]) {
     const age = Date.now() - apiCache[key].time;
     if (age < CACHE_DURATION) return apiCache[key].data;
   }
@@ -1161,7 +1161,7 @@ async function apiGet(action, extra = {}) {
   apiCache[key] = { data: data, time: Date.now() };
   return data;
 }
-async function apiPost(body) {
+  async function apiPost(body) {
   if (currentUser && !body.shopId) body.shopId = currentUser.shopId;
   const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(body) });
   return res.json();
@@ -1636,6 +1636,8 @@ document.getElementById("saveSaleBtn").addEventListener("click", async function(
     }
     if (r.success) {
       let msg = "✅ " + (editSaleId ? "আপডেট হয়েছে" : "বিক্রয় হয়েছে");
+            // ⭐ Cache clear
+      for (const k in apiCache) delete apiCache[k];
       if (r.totalSale) msg += " | ৳" + r.totalSale;
       if (r.profit) msg += " | " + t("profit") + ": ৳" + r.profit;
       if (r.dueAmount > 0) msg += " | " + t("due") + ": ৳" + r.dueAmount;
@@ -1649,6 +1651,7 @@ document.getElementById("saveSaleBtn").addEventListener("click", async function(
         document.getElementById("salePaidAmount").value = 0;
         document.getElementById("salePreview").classList.add("hidden");
       }
+     for (const k in apiCache) delete apiCache[k];
       loadProductsForSale();
       loadDashboard();
       if (document.getElementById("salesHistoryCard").style.display !== "none") {
@@ -1689,7 +1692,12 @@ async function loadAllSales() {
   const list = document.getElementById("salesHistoryList");
   list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
   try {
-    const r = await apiGet("getSales");
+    let url = API_URL + "?action=getSales";
+    if (currentUser) url += "&shopId=" + encodeURIComponent(currentUser.shopId);
+    
+    const res = await fetch(url);
+    const r = await res.json();
+    
     if (!r.success || !r.data) {
       allSalesCache = [];
       list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>';
@@ -1712,8 +1720,13 @@ function filterSalesByDate(filter) {
 
 function filterSalesList() {
   const list = document.getElementById("salesHistoryList");
-  const q = (document.getElementById("saleSearch")?.value || "").trim().toLowerCase();
+  if (!list) return;
+
+  const searchEl = document.getElementById("saleSearch");
+  const q = (searchEl?.value || "").trim().toLowerCase();
+  
   let filtered = [...allSalesCache];
+
   if (currentSalesFilter !== "all") {
     const now = new Date();
     let from = new Date();
@@ -1723,6 +1736,7 @@ function filterSalesList() {
     else if (currentSalesFilter === "year") { from.setFullYear(now.getFullYear() - 1); from.setHours(0, 0, 0, 0); }
     filtered = filtered.filter(s => new Date(s.Date) >= from);
   }
+
   if (q) {
     filtered = filtered.filter(s =>
       (s.ProductName || "").toLowerCase().includes(q) ||
@@ -1730,15 +1744,18 @@ function filterSalesList() {
       (s.PaymentMethod || "").toLowerCase().includes(q)
     );
   }
+
   filtered.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+
   if (filtered.length === 0) {
     list.innerHTML = '<div class="empty-state"><span class="icon">🛒</span>' + t("noSales") + '</div>';
     return;
   }
+
   list.innerHTML = filtered.map(s => {
     const badge = getBadge(s.PaymentMethod);
     const hasDue = Number(s.DueAmount) > 0;
-        const margin = Number(s.TotalSale) > 0 ? Math.round((Number(s.Profit) / Number(s.TotalSale)) * 1000) / 10 : 0;
+    const margin = Number(s.TotalSale) > 0 ? Math.round((Number(s.Profit) / Number(s.TotalSale)) * 1000) / 10 : 0;
     return '<div class="sale-history-item">' +
       '<div class="top-row">' +
         '<div class="sale-info">' +
@@ -1751,7 +1768,7 @@ function filterSalesList() {
         '<div class="badges">' +
           badge +
           (hasDue ? ' <span class="payment-badge badge-due">বাকি: ৳' + s.DueAmount + '</span>' : '') +
-         ' <span class="payment-badge badge-cash">লাভ: ৳' + s.Profit + ' (' + margin + '%)</span>' +
+          ' <span class="payment-badge badge-cash">লাভ: ৳' + s.Profit + ' (' + margin + '%)</span>' +
         '</div>' +
         '<div class="sale-actions">' +
           '<button class="mini-btn print" onclick="printSaleInvoice(\'' + s.SaleID + '\')" title="Print">🖨️</button>' +
@@ -1820,6 +1837,7 @@ function confirmDeleteSale(saleId, productName) {
       try {
         const r = await apiPost({ action: "deleteSale", saleId: saleId });
         if (r.success) {
+          for (const k in apiCache) delete apiCache[k];
           showToast("✅ বিক্রয় মুছে ফেলা হয়েছে");
           loadAllSales();
           loadDashboard();
