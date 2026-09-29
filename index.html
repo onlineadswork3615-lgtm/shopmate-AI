@@ -707,6 +707,221 @@ body.dark .margin-low {
     font-size: 9px;
   }
 }
+  /* ============ EXPENSES ============ */
+.expense-categories {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.expense-cat-btn {
+  background: var(--bg-alt);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 6px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  transition: all 0.25s;
+  color: var(--text);
+}
+.expense-cat-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.expense-cat-btn.active {
+  background: var(--gradient);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 12px rgba(79,70,229,0.3);
+}
+.expense-cat-btn .ec-icon {
+  font-size: 20px;
+  display: block;
+  margin-bottom: 4px;
+}
+.expense-cat-btn .ec-name {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.expense-summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.expense-summary-item {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--danger);
+}
+.expense-summary-item.today {
+  border-left-color: var(--warning);
+}
+.expense-summary-item.month {
+  border-left-color: var(--info);
+}
+.expense-summary-item.total {
+  border-left-color: var(--danger);
+}
+.expense-summary-item .es-label {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+.expense-summary-item .es-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+}
+.expense-summary-item.today .es-value { color: var(--warning); }
+.expense-summary-item.month .es-value { color: var(--info); }
+.expense-summary-item.total .es-value { color: var(--danger); }
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  transition: all 0.25s;
+}
+.expense-item:hover {
+  background: var(--bg-alt);
+  border-color: var(--primary);
+}
+.expense-item .exp-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.expense-item .exp-icon {
+  font-size: 20px;
+  width: 42px;
+  height: 42px;
+  background: var(--bg-alt);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.expense-item .exp-info {
+  flex: 1;
+  min-width: 0;
+}
+.expense-item .exp-cat {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.expense-item .exp-desc {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.expense-item .exp-date {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.expense-item .exp-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.expense-item .exp-amount {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--danger);
+  white-space: nowrap;
+}
+.expense-item .exp-actions {
+  display: flex;
+  gap: 4px;
+}
+.expense-item .exp-actions .mini-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 12px;
+}
+
+.expense-cat-breakdown {
+  padding: 14px;
+  background: var(--bg-alt);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+.expense-cat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--border);
+  font-size: 13px;
+}
+.expense-cat-row:last-child {
+  border-bottom: none;
+}
+.expense-cat-row .ecr-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.expense-cat-row .ecr-amount {
+  font-weight: 700;
+  color: var(--danger);
+}
+.expense-cat-row .ecr-count {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+/* Net Profit card */
+.net-profit-card {
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: white;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 24px rgba(16,185,129,0.3);
+}
+.net-profit-card .np-label {
+  font-size: 12px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+.net-profit-card .np-value {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 6px;
+  letter-spacing: -0.5px;
+}
+.net-profit-card .np-sub {
+  font-size: 11px;
+  opacity: 0.85;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255,255,255,0.25);
+}
 .hidden { display: none !important; }
 .mb-8 { margin-bottom: 8px; }
 .mb-12 { margin-bottom: 12px; }
@@ -859,6 +1074,10 @@ body.dark .margin-low {
           <div class="label">📊 <span>আজকের Margin</span></div>
           <div class="value" id="statTodayMargin">0%</div>
         </div>
+        </div>
+                <div class="stat-card red">
+          <div class="label">💵 <span data-i18n="todayExpense">আজকের খরচ</span></div>
+          <div class="value" id="statTodayExpense">৳0</div>
         </div>
         <div class="stat-card red">
           <div class="label">📝 <span data-i18n="todayDue">আজকের বাকি</span></div>
@@ -1044,7 +1263,121 @@ body.dark .margin-low {
         <div id="productList"></div>
       </div>
     </div>
+    <!-- ============ EXPENSES ============ -->
+    <div id="page-expenses" class="page">
+      <h2 class="page-title">💵 <span data-i18n="expenseTitle">দোকানের খরচ</span></h2>
 
+      <!-- Summary Grid -->
+      <div class="expense-summary-grid">
+        <div class="expense-summary-item today">
+          <div class="es-label">📅 <span data-i18n="todayExpense">আজকের খরচ</span></div>
+          <div class="es-value" id="expToday">৳0</div>
+        </div>
+        <div class="expense-summary-item month">
+          <div class="es-label">📆 <span data-i18n="monthExpense">এই মাসের খরচ</span></div>
+          <div class="es-value" id="expMonth">৳0</div>
+        </div>
+        <div class="expense-summary-item total">
+          <div class="es-label">💰 <span data-i18n="totalExpense">সর্বমোট খরচ</span></div>
+          <div class="es-value" id="expTotal">৳0</div>
+        </div>
+        <div class="expense-summary-item">
+          <div class="es-label">📊 <span data-i18n="expenseCount">মোট এন্ট্রি</span></div>
+          <div class="es-value" id="expCount">0</div>
+        </div>
+      </div>
+
+      <!-- New Expense Form -->
+      <div class="card">
+        <div class="card-title">
+          <div class="title-text">➕ <span data-i18n="addExpense">নতুন খরচ যোগ</span></div>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="expCategory">ক্যাটাগরি</label>
+          <div class="expense-categories" id="expenseCategories">
+            <button type="button" class="expense-cat-btn active" data-cat="Electricity">
+              <span class="ec-icon">💡</span>
+              <span class="ec-name">বিদ্যুৎ</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Rent">
+              <span class="ec-icon">🏠</span>
+              <span class="ec-name">ভাড়া</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Transport">
+              <span class="ec-icon">🚚</span>
+              <span class="ec-name">পরিবহন</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Salary">
+              <span class="ec-icon">👷</span>
+              <span class="ec-name">বেতন</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Mobile">
+              <span class="ec-icon">📱</span>
+              <span class="ec-name">মোবাইল</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Food">
+              <span class="ec-icon">🍽️</span>
+              <span class="ec-name">খাবার</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Packaging">
+              <span class="ec-icon">📦</span>
+              <span class="ec-name">প্যাকিং</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Repair">
+              <span class="ec-icon">🔧</span>
+              <span class="ec-name">মেরামত</span>
+            </button>
+            <button type="button" class="expense-cat-btn" data-cat="Other">
+              <span class="ec-icon">📝</span>
+              <span class="ec-name">অন্যান্য</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="expAmount">টাকার পরিমাণ</label>
+          <div class="input-wrap">
+            <span class="input-icon">৳</span>
+            <input type="number" id="expAmount" placeholder="0" min="0">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="expDescription">বিবরণ (ঐচ্ছিক)</label>
+          <div class="input-wrap">
+            <span class="input-icon">📝</span>
+            <input type="text" id="expDescription" placeholder="যেমন: সেপ্টেম্বর মাসের বিল" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="expDate">তারিখ</label>
+          <input type="date" id="expDate" style="padding-left:14px;">
+        </div>
+
+        <button class="btn btn-primary" id="saveExpenseBtn">💾 <span data-i18n="saveExpense">খরচ সেভ করো</span></button>
+      </div>
+
+      <!-- Category Breakdown -->
+      <div class="card" id="expenseBreakdownCard" style="display:none;">
+        <div class="card-title">
+          <div class="title-text">📊 <span data-i18n="categoryBreakdown">ক্যাটাগরি অনুযায়ী</span></div>
+        </div>
+        <div id="expenseBreakdown"></div>
+      </div>
+
+      <!-- Expense List -->
+      <div class="card">
+        <div class="card-title">
+          <div class="title-text">📋 <span data-i18n="allExpenses">সব খরচ</span></div>
+          <button class="btn btn-secondary btn-sm" onclick="loadExpenses()">🔄 <span data-i18n="refresh">রিফ্রেশ</span></button>
+        </div>
+        <div id="expenseList"></div>
+      </div>
+    </div>
+
+    
     <!-- ============ CUSTOMERS ============ -->
     <div id="page-customers" class="page">
       <h2 class="page-title" data-i18n="customers">কাস্টমার</h2>
@@ -1199,6 +1532,7 @@ body.dark .margin-low {
     <a onclick="gotoPage('sales')" data-page="sales"><span class="nav-icon">🛒</span><span class="nav-label" data-i18n="navSales">বিক্রয়</span></a>
     <a onclick="gotoPage('products')" data-page="products"><span class="nav-icon">📦</span><span class="nav-label" data-i18n="navProducts">পণ্য</span></a>
     <a onclick="gotoPage('customers')" data-page="customers"><span class="nav-icon">👥</span><span class="nav-label" data-i18n="navCustomers">কাস্টমার</span></a>
+    <a onclick="gotoPage('expenses')" data-page="expenses"><span class="nav-icon">💵</span><span class="nav-label" data-i18n="navExpenses">খরচ</span></a>
     <a onclick="gotoPage('reports')" data-page="reports"><span class="nav-icon">📊</span><span class="nav-label" data-i18n="navReports">রিপোর্ট</span></a>
   </nav>
 </div>
@@ -1241,7 +1575,9 @@ const I18N = {
     saveSale:"💾 বিক্রয় সেভ",todaySalesList:"আজকের বিক্রয়",products:"পণ্য",newProductTitle:"নতুন পণ্য",productName:"পণ্যের নাম",
     category:"ক্যাটাগরি",purchasePrice:"ক্রয়মূল্য",sellingPrice:"বিক্রয়মূল্য",stock:"স্টক",lowStockAlert:"Low Alert",saveProduct:"💾 পণ্য সেভ",
     allProducts:"সব পণ্য",dueCustomers:"বাকি কাস্টমার",paymentHistory:"Payment History",profile:"প্রোফাইল",settings:"সেটিংস",language:"ভাষা",
-    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",last7Days:"শেষ ৭ দিনের বিক্রয়",totalSale:"মোট বিক্রয়",totalProfit:"মোট লাভ",bestDay:"সেরা দিন",lowestDay:"সবচেয়ে কম",chartLoadFailed:"চার্ট লোড করা যায়নি",noChartData:"কোনো data নেই",
+    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",
+    navExpenses:"খরচ",expenseTitle:"দোকানের খরচ",todayExpense:"আজকের খরচ",monthExpense:"এই মাসের খরচ",totalExpense:"সর্বমোট খরচ",expenseCount:"মোট এন্ট্রি",addExpense:"নতুন খরচ যোগ",expCategory:"ক্যাটাগরি",expAmount:"টাকার পরিমাণ",expDescription:"বিবরণ (ঐচ্ছিক)",expDate:"তারিখ",saveExpense:"খরচ সেভ করো",categoryBreakdown:"ক্যাটাগরি অনুযায়ী",allExpenses:"সব খরচ",refresh:"রিফ্রেশ",noExpenses:"কোনো খরচ নেই",,
+    last7Days:"শেষ ৭ দিনের বিক্রয়",totalSale:"মোট বিক্রয়",totalProfit:"মোট লাভ",bestDay:"সেরা দিন",lowestDay:"সবচেয়ে কম",chartLoadFailed:"চার্ট লোড করা যায়নি",noChartData:"কোনো data নেই",
     todayPaid:"আজকের নগদ",todayDue:"আজকের বাকি",pcs:"পিস",buy:"ক্রয়",sell:"বিক্রয়",profit:"লাভ",due:"বাকি",noPhone:"ফোন নেই",
     noProducts:"কোনো পণ্য নেই",noSales:"কোনো বিক্রয় নেই",noCustomers:"কোনো কাস্টমার নেই",allPaid:"সব পরিশোধ করেছে",
     totalDue:"মোট বাকি",totalPaid:"মোট পরিশোধ",phoneLabel:"ফোন",takePayment:"কত টাকা নিচ্ছেন?",note:"নোট (ঐচ্ছিক)",savePayment:"💾 Payment সেভ",
@@ -1264,7 +1600,8 @@ const I18N = {
     saveSale:"💾 Save Sale",todaySalesList:"Today's Sales",products:"Products",newProductTitle:"New Product",productName:"Product Name",
     category:"Category",purchasePrice:"Purchase Price",sellingPrice:"Selling Price",stock:"Stock",lowStockAlert:"Low Alert",saveProduct:"💾 Save Product",
     allProducts:"All Products",dueCustomers:"Due Customers",paymentHistory:"Payment History",profile:"Profile",settings:"Settings",language:"Language",
-    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",last7Days:"Last 7 Days Sales",totalSale:"Total Sale",totalProfit:"Total Profit",bestDay:"Best Day",lowestDay:"Lowest Day",chartLoadFailed:"Chart load failed",noChartData:"No data",
+    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",navExpenses:"Expenses",expenseTitle:"Shop Expenses",todayExpense:"Today's Expense",monthExpense:"This Month",totalExpense:"Total Expense",expenseCount:"Total Entries",addExpense:"Add New Expense",expCategory:"Category",expAmount:"Amount",expDescription:"Description (optional)",expDate:"Date",saveExpense:"Save Expense",categoryBreakdown:"By Category",allExpenses:"All Expenses",refresh:"Refresh",noExpenses:"No expenses yet",
+    last7Days:"Last 7 Days Sales",totalSale:"Total Sale",totalProfit:"Total Profit",bestDay:"Best Day",lowestDay:"Lowest Day",chartLoadFailed:"Chart load failed",noChartData:"No data",
     todayPaid:"Today's Cash",todayDue:"Today's Due",pcs:"pcs",buy:"Buy",sell:"Sell",profit:"Profit",due:"Due",noPhone:"No phone",
     noProducts:"No products",noSales:"No sales",noCustomers:"No customers",allPaid:"All paid",
     totalDue:"Total Due",totalPaid:"Total Paid",phoneLabel:"Phone",takePayment:"How much to take?",note:"Note (optional)",savePayment:"💾 Save Payment",
@@ -1409,6 +1746,7 @@ function gotoPage(name) {
   if (name === "sales") { loadProductsForSale(); switchSalesTab("new"); }
   if (name === "products") loadProductList();
   if (name === "customers") { loadCustomerList(); loadPaymentList(); closeCustomerDetail(); }
+    if (name === "expenses") loadExpenses();
   if (name === "reports") loadReport();
   if (name === "lowstock") loadLowStockFull();
 }
@@ -1663,6 +2001,8 @@ async function loadDashboard() {
     // ⭐ Margin update
     const marginEl = document.getElementById("statTodayMargin");
     if (marginEl) marginEl.textContent = (r.data.todayMargin || 0) + "%";
+        // ⭐ Expense update
+    loadExpenseSummary();
     
     // Low stock list
     const list = document.getElementById("lowStockList");
@@ -1678,6 +2018,18 @@ async function loadDashboard() {
     loadSalesChart();
   } catch (e) { console.error(e); }
 }
+  // ============================================
+// EXPENSE SUMMARY (for Dashboard)
+// ============================================
+async function loadExpenseSummary() {
+  try {
+    const r = await apiGet("getExpenseSummary");
+    if (!r.success || !r.data) return;
+    const el = document.getElementById("statTodayExpense");
+    if (el) el.textContent = fmt(r.data.todayExpense || 0);
+  } catch (e) { console.error(e); }
+}
+
 // ============================================
 // LOW STOCK PAGE
 // ============================================
@@ -2212,7 +2564,270 @@ function getBadge(method) {
   };
   return map[method] || method;
 }
+// ============================================
+// EXPENSES
+// ============================================
+let allExpensesCache = [];
+let currentExpenseCategory = "Electricity";
 
+const EXPENSE_ICONS = {
+  "Electricity": "💡",
+  "Rent": "🏠",
+  "Transport": "🚚",
+  "Salary": "👷",
+  "Mobile": "📱",
+  "Food": "🍽️",
+  "Packaging": "📦",
+  "Repair": "🔧",
+  "Other": "📝"
+};
+
+const EXPENSE_NAMES = {
+  "Electricity": "বিদ্যুৎ",
+  "Rent": "ভাড়া",
+  "Transport": "পরিবহন",
+  "Salary": "বেতন",
+  "Mobile": "মোবাইল",
+  "Food": "খাবার",
+  "Packaging": "প্যাকিং",
+  "Repair": "মেরামত",
+  "Other": "অন্যান্য"
+};
+
+async function loadExpenses() {
+  const list = document.getElementById("expenseList");
+  if (!list) return;
+  list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
+  
+  // Default date = today
+  const dateEl = document.getElementById("expDate");
+  if (dateEl && !dateEl.value) {
+    dateEl.value = new Date().toISOString().split("T")[0];
+  }
+  
+  setupExpenseCategoryButtons();
+  
+  try {
+    // Parallel load: summary + list
+    const [summaryRes, listRes] = await Promise.all([
+      apiGet("getExpenseSummary"),
+      apiGet("getExpenses")
+    ]);
+    
+    // Update summary
+    if (summaryRes.success && summaryRes.data) {
+      const s = summaryRes.data;
+      document.getElementById("expToday").textContent = fmt(s.todayExpense);
+      document.getElementById("expMonth").textContent = fmt(s.monthExpense);
+      document.getElementById("expTotal").textContent = fmt(s.totalExpense);
+      document.getElementById("expCount").textContent = s.totalCount;
+      
+      // Category breakdown
+      const breakdownEl = document.getElementById("expenseBreakdown");
+      const breakdownCard = document.getElementById("expenseBreakdownCard");
+      if (s.categoryBreakdown && s.categoryBreakdown.length > 0) {
+        breakdownCard.style.display = "block";
+        breakdownEl.innerHTML = s.categoryBreakdown.map(c => {
+          const icon = EXPENSE_ICONS[c.category] || "📝";
+          const name = EXPENSE_NAMES[c.category] || c.category;
+          return '<div class="expense-cat-row">' +
+            '<div class="ecr-name">' + icon + ' ' + name + '<span class="ecr-count">(' + c.count + ')</span></div>' +
+            '<div class="ecr-amount">৳' + c.amount + '</div>' +
+          '</div>';
+        }).join("");
+      } else {
+        breakdownCard.style.display = "none";
+      }
+    }
+    
+    // Update list
+    if (!listRes.success || !listRes.data || listRes.data.length === 0) {
+      allExpensesCache = [];
+      list.innerHTML = '<div class="empty-state"><span class="icon">💵</span>' + t("noExpenses") + '</div>';
+      return;
+    }
+    
+    allExpensesCache = listRes.data.sort((a, b) => new Date(b.Date) - new Date(a.Date));
+    renderExpenseList();
+  } catch (e) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>';
+  }
+}
+
+function renderExpenseList() {
+  const list = document.getElementById("expenseList");
+  if (allExpensesCache.length === 0) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">💵</span>' + t("noExpenses") + '</div>';
+    return;
+  }
+  
+  list.innerHTML = allExpensesCache.map(e => {
+    const icon = EXPENSE_ICONS[e.Category] || "📝";
+    const name = EXPENSE_NAMES[e.Category] || e.Category;
+    return '<div class="expense-item">' +
+      '<div class="exp-left">' +
+        '<div class="exp-icon">' + icon + '</div>' +
+        '<div class="exp-info">' +
+          '<div class="exp-cat">' + name + '</div>' +
+          (e.Description ? '<div class="exp-desc">' + e.Description + '</div>' : '') +
+          '<div class="exp-date">📅 ' + fmtDate(e.Date) + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="exp-right">' +
+        '<div class="exp-amount">৳' + e.Amount + '</div>' +
+        '<div class="exp-actions">' +
+          '<button class="mini-btn edit" onclick="editExpense(\'' + e.ExpenseID + '\')" title="Edit">✏️</button>' +
+          '<button class="mini-btn delete" onclick="confirmDeleteExpense(\'' + e.ExpenseID + '\', \'' + (e.Category || '').replace(/'/g, "\\'") + '\')" title="Delete">🗑️</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+function setupExpenseCategoryButtons() {
+  const container = document.getElementById("expenseCategories");
+  if (!container) return;
+  container.querySelectorAll(".expense-cat-btn").forEach(btn => {
+    btn.onclick = () => {
+      container.querySelectorAll(".expense-cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentExpenseCategory = btn.dataset.cat;
+    };
+  });
+}
+
+document.getElementById("saveExpenseBtn")?.addEventListener("click", async function() {
+  const editId = this.getAttribute("data-edit-id");
+  const amount = document.getElementById("expAmount").value;
+  const description = document.getElementById("expDescription").value.trim();
+  const date = document.getElementById("expDate").value;
+  
+  if (!amount || Number(amount) <= 0) {
+    return showToast("টাকার পরিমাণ দিন", "error");
+  }
+  
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> ' + t("saving");
+  
+  try {
+    let r;
+    if (editId) {
+      r = await apiPost({
+        action: "updateExpense",
+        expenseId: editId,
+        category: currentExpenseCategory,
+        description: description,
+        amount: amount,
+        date: date
+      });
+    } else {
+      r = await apiPost({
+        action: "addExpense",
+        category: currentExpenseCategory,
+        description: description,
+        amount: amount,
+        date: date
+      });
+    }
+    
+    if (r.success) {
+      showToast("✅ " + (editId ? "আপডেট হয়েছে" : "খরচ যোগ হয়েছে"));
+      // Clear form
+      document.getElementById("expAmount").value = "";
+      document.getElementById("expDescription").value = "";
+      document.getElementById("expDate").value = new Date().toISOString().split("T")[0];
+      cancelExpenseEdit();
+      // Reload
+      loadExpenses();
+      loadDashboard();
+    } else {
+      showToast(r.message || "Error", "error");
+    }
+  } catch (e) {
+    showToast("Network error", "error");
+  } finally {
+    this.disabled = false;
+    if (editId) this.innerHTML = "✏️ আপডেট করো";
+    else this.innerHTML = '💾 <span data-i18n="saveExpense">খরচ সেভ করো</span>';
+  }
+});
+
+function editExpense(expenseId) {
+  const e = allExpensesCache.find(x => x.ExpenseID === expenseId);
+  if (!e) return;
+  
+  // Set category
+  currentExpenseCategory = e.Category || "Other";
+  const container = document.getElementById("expenseCategories");
+  if (container) {
+    container.querySelectorAll(".expense-cat-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.cat === currentExpenseCategory);
+    });
+  }
+  
+  document.getElementById("expAmount").value = e.Amount || "";
+  document.getElementById("expDescription").value = e.Description || "";
+  document.getElementById("expDate").value = e.Date ? new Date(e.Date).toISOString().split("T")[0] : "";
+  
+  const btn = document.getElementById("saveExpenseBtn");
+  btn.innerHTML = "✏️ আপডেট করো";
+  btn.setAttribute("data-edit-id", expenseId);
+  
+  if (!document.getElementById("cancelExpenseEditBtn")) {
+    const cancelBtn = document.createElement("button");
+    cancelBtn.id = "cancelExpenseEditBtn";
+    cancelBtn.className = "btn cancel-btn";
+    cancelBtn.style.marginTop = "8px";
+    cancelBtn.textContent = "❌ বাতিল";
+    cancelBtn.onclick = cancelExpenseEdit;
+    btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+  }
+  
+  document.getElementById("expAmount").scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("expAmount").focus();
+}
+
+function cancelExpenseEdit() {
+  document.getElementById("expAmount").value = "";
+  document.getElementById("expDescription").value = "";
+  document.getElementById("expDate").value = new Date().toISOString().split("T")[0];
+  
+  currentExpenseCategory = "Electricity";
+  const container = document.getElementById("expenseCategories");
+  if (container) {
+    container.querySelectorAll(".expense-cat-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.cat === "Electricity");
+    });
+  }
+  
+  const btn = document.getElementById("saveExpenseBtn");
+  if (btn) {
+    btn.innerHTML = '💾 <span data-i18n="saveExpense">খরচ সেভ করো</span>';
+    btn.removeAttribute("data-edit-id");
+  }
+  
+  const cancelBtn = document.getElementById("cancelExpenseEditBtn");
+  if (cancelBtn) cancelBtn.remove();
+}
+
+function confirmDeleteExpense(expenseId, category) {
+  const name = EXPENSE_NAMES[category] || category;
+  showConfirm(
+    "খরচ মুছে ফেলবেন?",
+    "'" + name + "' — এই খরচটি স্থায়ীভাবে মুছে যাবে।",
+    async () => {
+      try {
+        const r = await apiPost({ action: "deleteExpense", expenseId: expenseId });
+        if (r.success) {
+          showToast("✅ খরচ মুছে ফেলা হয়েছে");
+          loadExpenses();
+          loadDashboard();
+        } else showToast(r.message || "Error", "error");
+      } catch (e) { showToast("Network error", "error"); }
+    }
+  );
+}
+  
 // ============================================
 // CUSTOMERS
 // ============================================
