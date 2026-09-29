@@ -1092,6 +1092,13 @@ body.dark .margin-low {
           <div class="value" id="statLowStock">0</div>
         </div>
       </div>
+              <div class="stat-card green" style="grid-column: 1 / -1; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: white; border: none;">
+          <div class="label" style="color: rgba(255,255,255,0.9); font-size: 13px;">💎 <span data-i18n="todayNetProfit">আজকের আসল লাভ (Net Profit)</span></div>
+          <div class="value" id="statTodayNetProfit" style="color: white; font-size: 28px;">৳0</div>
+          <div style="font-size: 11px; opacity: 0.85; margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.25);" id="netProfitBreakdown">
+            <span data-i18n="profit">লাভ</span>: ৳0 − <span data-i18n="todayExpense">খরচ</span>: ৳0
+          </div>
+        </div>
       <div class="card">
         <div class="card-title"><div class="title-text">⚡ <span data-i18n="quickActions">দ্রুত কাজ</span></div></div>
         <div class="quick-actions">
@@ -1575,7 +1582,7 @@ const I18N = {
     saveSale:"💾 বিক্রয় সেভ",todaySalesList:"আজকের বিক্রয়",products:"পণ্য",newProductTitle:"নতুন পণ্য",productName:"পণ্যের নাম",
     category:"ক্যাটাগরি",purchasePrice:"ক্রয়মূল্য",sellingPrice:"বিক্রয়মূল্য",stock:"স্টক",lowStockAlert:"Low Alert",saveProduct:"💾 পণ্য সেভ",
     allProducts:"সব পণ্য",dueCustomers:"বাকি কাস্টমার",paymentHistory:"Payment History",profile:"প্রোফাইল",settings:"সেটিংস",language:"ভাষা",
-    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",navExpenses:"খরচ",expenseTitle:"দোকানের খরচ",todayExpense:"আজকের খরচ",monthExpense:"এই মাসের খরচ",totalExpense:"সর্বমোট খরচ",expenseCount:"মোট এন্ট্রি",addExpense:"নতুন খরচ যোগ",expCategory:"ক্যাটাগরি",expAmount:"টাকার পরিমাণ",expDescription:"বিবরণ (ঐচ্ছিক)",expDate:"তারিখ",saveExpense:"খরচ সেভ করো",categoryBreakdown:"ক্যাটাগরি অনুযায়ী",allExpenses:"সব খরচ",refresh:"রিফ্রেশ",noExpenses:"কোনো খরচ নেই",
+    languageSub:"Language",logout:"লগআউট",logoutSub:"Logout",navHome:"হোম",navSales:"বিক্রয়",navProducts:"পণ্য",navCustomers:"কাস্টমার",navReports:"রিপোর্ট",navExpenses:"খরচ",expenseTitle:"দোকানের খরচ",todayExpense:"আজকের খরচ",todayNetProfit:"আজকের আসল লাভ",netProfit:"আসল লাভ",expenseColon:"খরচ",monthExpense:"এই মাসের খরচ",totalExpense:"সর্বমোট খরচ",expenseCount:"মোট এন্ট্রি",addExpense:"নতুন খরচ যোগ",expCategory:"ক্যাটাগরি",expAmount:"টাকার পরিমাণ",expDescription:"বিবরণ (ঐচ্ছিক)",expDate:"তারিখ",saveExpense:"খরচ সেভ করো",categoryBreakdown:"ক্যাটাগরি অনুযায়ী",allExpenses:"সব খরচ",refresh:"রিফ্রেশ",noExpenses:"কোনো খরচ নেই",
     last7Days:"শেষ ৭ দিনের বিক্রয়",totalSale:"মোট বিক্রয়",totalProfit:"মোট লাভ",bestDay:"সেরা দিন",lowestDay:"সবচেয়ে কম",chartLoadFailed:"চার্ট লোড করা যায়নি",noChartData:"কোনো data নেই",
     todayPaid:"আজকের নগদ",todayDue:"আজকের বাকি",pcs:"পিস",buy:"ক্রয়",sell:"বিক্রয়",profit:"লাভ",due:"বাকি",noPhone:"ফোন নেই",
     noProducts:"কোনো পণ্য নেই",noSales:"কোনো বিক্রয় নেই",noCustomers:"কোনো কাস্টমার নেই",allPaid:"সব পরিশোধ করেছে",
@@ -1599,7 +1606,7 @@ const I18N = {
     saveSale:"💾 Save Sale",todaySalesList:"Today's Sales",products:"Products",newProductTitle:"New Product",productName:"Product Name",
     category:"Category",purchasePrice:"Purchase Price",sellingPrice:"Selling Price",stock:"Stock",lowStockAlert:"Low Alert",saveProduct:"💾 Save Product",
     allProducts:"All Products",dueCustomers:"Due Customers",paymentHistory:"Payment History",profile:"Profile",settings:"Settings",language:"Language",
-    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",navExpenses:"Expenses",expenseTitle:"Shop Expenses",todayExpense:"Today's Expense",monthExpense:"This Month",totalExpense:"Total Expense",expenseCount:"Total Entries",addExpense:"Add New Expense",expCategory:"Category",expAmount:"Amount",expDescription:"Description (optional)",expDate:"Date",saveExpense:"Save Expense",categoryBreakdown:"By Category",allExpenses:"All Expenses",refresh:"Refresh",noExpenses:"No expenses yet",
+    languageSub:"Language",logout:"Logout",logoutSub:"Logout",navHome:"Home",navSales:"Sales",navProducts:"Products",navCustomers:"Customers",navReports:"Reports",navExpenses:"Expenses",expenseTitle:"Shop Expenses",todayExpense:"Today's Expense",todayNetProfit:"Net Profit",netProfit:"Net Profit",expenseColon:"Expense",monthExpense:"This Month",totalExpense:"Total Expense",expenseCount:"Total Entries",addExpense:"Add New Expense",expCategory:"Category",expAmount:"Amount",expDescription:"Description (optional)",expDate:"Date",saveExpense:"Save Expense",categoryBreakdown:"By Category",allExpenses:"All Expenses",refresh:"Refresh",noExpenses:"No expenses yet",
     last7Days:"Last 7 Days Sales",totalSale:"Total Sale",totalProfit:"Total Profit",bestDay:"Best Day",lowestDay:"Lowest Day",chartLoadFailed:"Chart load failed",noChartData:"No data",
     todayPaid:"Today's Cash",todayDue:"Today's Due",pcs:"pcs",buy:"Buy",sell:"Sell",profit:"Profit",due:"Due",noPhone:"No phone",
     noProducts:"No products",noSales:"No sales",noCustomers:"No customers",allPaid:"All paid",
@@ -1687,7 +1694,28 @@ function showAlert(id, message, type = "error") {
   el.textContent = message;
   el.className = "alert " + type + " show";
 }
-function fmt(num) { return "৳" + (Number(num) || 0).toLocaleString("en-IN"); }
+// ⭐ Bangla number converter
+function toBn(str) {
+  if (str === null || str === undefined) return "";
+  const en = "0123456789";
+  const bn = "০১২৩৪৫৬৭৮৯";
+  return String(str).split("").map(ch => {
+    const idx = en.indexOf(ch);
+    return idx !== -1 ? bn[idx] : ch;
+  }).join("");
+}
+
+function fmt(num) {
+  const n = Number(num) || 0;
+  const formatted = n.toLocaleString("en-IN");
+  return "৳" + (currentLang === "bn" ? toBn(formatted) : formatted);
+}
+
+function fmtNumOnly(num) {
+  const n = Number(num) || 0;
+  const formatted = n.toLocaleString("en-IN");
+  return currentLang === "bn" ? toBn(formatted) : formatted;
+}
 function fmtDate(d) {
   const dt = new Date(d);
   return String(dt.getDate()).padStart(2,"0") + "/" + String(dt.getMonth()+1).padStart(2,"0") + "/" + dt.getFullYear();
@@ -1700,9 +1728,13 @@ function animateNumber(el, target, prefix = "৳") {
     const progress = Math.min((now - startTime) / duration, 1);
     const eased = 1 - Math.pow(1 - progress, 3);
     const current = Math.floor(target * eased);
-    el.textContent = prefix + current.toLocaleString("en-IN");
+    const formatted = current.toLocaleString("en-IN");
+    el.textContent = prefix + (currentLang === "bn" ? toBn(formatted) : formatted);
     if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = prefix + target.toLocaleString("en-IN");
+    else {
+      const finalFormatted = target.toLocaleString("en-IN");
+      el.textContent = prefix + (currentLang === "bn" ? toBn(finalFormatted) : finalFormatted);
+    }
   }
   requestAnimationFrame(step);
 }
@@ -1935,9 +1967,9 @@ function renderSalesChart(d) {
     let valueText = "";
     if (day.sale > 0) {
       if (day.sale >= 1000) {
-        valueText = "৳" + (day.sale / 1000).toFixed(1) + "k";
+        valueText = "৳" + (currentLang === "bn" ? toBn((day.sale / 1000).toFixed(1)) : (day.sale / 1000).toFixed(1)) + "k";
       } else {
-        valueText = "৳" + day.sale;
+        valueText = "৳" + (currentLang === "bn" ? toBn(day.sale) : day.sale);
       }
     }
     
@@ -1946,7 +1978,7 @@ function renderSalesChart(d) {
     html += '<div class="chart-bar-wrapper" title="' + dayName + ' ' + day.dayNum + ': ৳' + day.sale + '">';
     if (valueText) html += '<div class="chart-value">' + valueText + '</div>';
     html += '<div class="' + barClass + '" style="height: ' + Math.max(heightPercent, isEmpty ? 4 : 8) + '%;"></div>';
-    html += '<div class="' + labelClass + '">' + dayName + '<br>' + day.dayNum + '</div>';
+   html += '<div class="' + labelClass + '">' + dayName + '<br>' + (currentLang === "bn" ? toBn(day.dayNum) : day.dayNum) + '</div>';
     html += '</div>';
   });
   
@@ -1964,13 +1996,13 @@ function renderSalesChart(d) {
   if (d.bestDay && d.bestDay.sale > 0) {
     html += '<div class="chart-stat">';
     html += '<div class="chart-stat-label">🏆 ' + t("bestDay") + '</div>';
-    html += '<div class="chart-stat-value orange">' + dayNameForLang(d.bestDay.dayName) + ' ' + d.bestDay.dayNum + ' (' + fmt(d.bestDay.sale) + ')</div>';
+    html += '<div class="chart-stat-value orange">' + dayNameForLang(d.bestDay.dayName) + ' ' + (currentLang === "bn" ? toBn(d.bestDay.dayNum) : d.bestDay.dayNum) + ' (' + fmt(d.bestDay.sale) + ')</div>';
     html += '</div>';
   }
   if (d.worstDay && d.worstDay.sale > 0) {
     html += '<div class="chart-stat">';
     html += '<div class="chart-stat-label">📉 ' + t("lowestDay") + '</div>';
-    html += '<div class="chart-stat-value red">' + dayNameForLang(d.worstDay.dayName) + ' ' + d.worstDay.dayNum + ' (' + fmt(d.worstDay.sale) + ')</div>';
+    html += '<div class="chart-stat-value red">' + dayNameForLang(d.worstDay.dayName) + ' ' + (currentLang === "bn" ? toBn(d.worstDay.dayNum) : d.worstDay.dayNum) + ' (' + fmt(d.worstDay.sale) + ')</div>';
     html += '</div>';
   }
   html += '</div>';
@@ -1990,18 +2022,33 @@ async function loadDashboard() {
   try {
     const r = await apiGet("getDashboard");
     if (!r.success) return;
+    
+    // Main stats
     animateStat("statTodaySales", r.data.todaySales || 0);
     animateStat("statTodayProfit", r.data.todayProfit || 0);
     animateStat("statTodayPaid", r.data.todayPaid || 0);
     animateStat("statTodayDue", r.data.todayDue || 0);
-    animateStat("statTotalProducts", r.data.totalProducts || 0, "");
+       animateStat("statTotalProducts", r.data.totalProducts || 0, "");
     animateStat("statLowStock", r.data.lowStockCount || 0, "");
+    // ⭐ এটা ঠিক আছে — animateNumber update হবে
     
-    // ⭐ Margin update
+    // Margin
     const marginEl = document.getElementById("statTodayMargin");
-    if (marginEl) marginEl.textContent = (r.data.todayMargin || 0) + "%";
-        // ⭐ Expense update
-    loadExpenseSummary();
+    if (marginEl) {       const m = (r.data.todayMargin || 0).toString();       marginEl.textContent = (currentLang === "bn" ? toBn(m) : m) + "%";     }
+    
+    // 🆕 Expense + Net Profit
+    const expenseEl = document.getElementById("statTodayExpense");
+    if (expenseEl) expenseEl.textContent = fmt(r.data.todayExpense || 0);
+    
+    const netProfitEl = document.getElementById("statTodayNetProfit");
+    if (netProfitEl) netProfitEl.textContent = fmt(r.data.todayNetProfit || 0);
+    
+    const breakdownEl = document.getElementById("netProfitBreakdown");
+    if (breakdownEl) {
+      breakdownEl.innerHTML = 
+        t("profit") + ': ' + fmt(r.data.todayProfit || 0) + ' − ' + 
+        t("todayExpense") + ': ' + fmt(r.data.todayExpense || 0);
+    }
     
     // Low stock list
     const list = document.getElementById("lowStockList");
@@ -2013,19 +2060,8 @@ async function loadDashboard() {
       ).join("");
     }
     
-    // ⭐ Sales Chart load করো
+    // Sales Chart
     loadSalesChart();
-  } catch (e) { console.error(e); }
-}
-  // ============================================
-// EXPENSE SUMMARY (for Dashboard)
-// ============================================
-async function loadExpenseSummary() {
-  try {
-    const r = await apiGet("getExpenseSummary");
-    if (!r.success || !r.data) return;
-    const el = document.getElementById("statTodayExpense");
-    if (el) el.textContent = fmt(r.data.todayExpense || 0);
   } catch (e) { console.error(e); }
 }
 
@@ -2092,7 +2128,7 @@ function renderProductList(products) {
         '<div class="product-margin">💹 ' + t("profit") + ': ৳' + profit + ' <span class="margin-badge ' + marginClass + '">' + margin + '%</span></div>' +
       '</div>' +
       '<div style="display:flex;align-items:center;">' +
-        '<div class="item-value' + (isLow ? ' warn' : '') + '">' + p.Stock + '</div>' +
+        '<div class="item-value' + (isLow ? ' warn' : '') + '">' + (currentLang === "bn" ? toBn(p.Stock) : p.Stock) + '</div>' +
         '<div class="action-btns">' +
           '<button class="mini-btn edit" onclick="editProduct(\'' + p.ProductID + '\')" title="Edit">✏️</button>' +
           '<button class="mini-btn delete" onclick="confirmDeleteProduct(\'' + p.ProductID + '\', \'' + (p.ProductName || '').replace(/'/g, "\\'") + '\')" title="Delete">🗑️</button>' +
@@ -2413,7 +2449,7 @@ function filterSalesList() {
     return '<div class="sale-history-item">' +
       '<div class="top-row">' +
         '<div class="sale-info">' +
-          '<div class="sale-prod">' + s.ProductName + ' × ' + s.Quantity + '</div>' +
+          '<div class="sale-prod">' + s.ProductName + ' × ' + (currentLang === "bn" ? toBn(s.Quantity) : s.Quantity) + '</div>' +
           '<div class="sale-meta">' + fmtDate(s.Date) + (s.CustomerName ? ' | 👤 ' + s.CustomerName : '') + '</div>' +
         '</div>' +
         '<div class="sale-amt">৳' + s.TotalSale + '</div>' +
@@ -2887,8 +2923,9 @@ async function openCustomerDetail(customerId) {
 
     // Update stats
     document.getElementById("detailTotalPurchase").textContent = fmt(d.totalPurchase);
+   const totalTx = d.totalSales + d.totalPayments;
     document.getElementById("detailTotalTransactions").textContent =
-      (d.totalSales + d.totalPayments) + " টি";
+      (currentLang === "bn" ? toBn(totalTx) : totalTx) + " টি";
 
     // Date range
     if (d.firstSaleDate && d.lastSaleDate) {
@@ -3068,83 +3105,217 @@ async function loadReport() {
     const r = await apiGet("getReports", params);
     if (!r.success) { content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>Error</div>'; return; }
     const d = r.data;
-    let rangeLabel = {
+    const isEn = currentLang === "en";
+    
+    let rangeLabel = isEn ? ({
+      "today": "Daily Report",
+      "week": "Weekly Report",
+      "month": "Monthly Report",
+      "year": "Yearly Report",
+      "custom": "Custom Report"
+    }[currentReportRange] || "Report") : ({
       "today": "আজকের রিপোর্ট",
       "week": "সাপ্তাহিক রিপোর্ট",
       "month": "মাসিক রিপোর্ট",
       "year": "বাৎসরিক রিপোর্ট",
       "custom": "কাস্টম রিপোর্ট"
-    }[currentReportRange] || "রিপোর্ট";
+    }[currentReportRange] || "রিপোর্ট");
+    
+    const L = isEn ? {
+      totalSale: "Total Sale", totalProfit: "Total Profit",
+      totalExpense: "Total Expense", netProfit: "Net Profit",
+      totalPaid: "Paid", totalDue: "Due"
+    } : {
+      totalSale: "মোট বিক্রয়", totalProfit: "মোট লাভ",
+      totalExpense: "মোট খরচ", netProfit: "আসল লাভ",
+      totalPaid: "নগদ পেয়েছি", totalDue: "মোট বাকি"
+    };
+    
     let html = '';
+    
+    // Report Header
     html += '<div class="report-header">';
     html += '<div class="rh-shop">🏪 ' + currentUser.shopName + '</div>';
-    html += '<div class="rh-owner">Owner: ' + currentUser.name + '</div>';
+    html += '<div class="rh-owner">' + (isEn ? "Owner" : "মালিক") + ': ' + currentUser.name + '</div>';
     html += '<div class="rh-title"><span>📊 ' + rangeLabel + '</span><span class="rh-badge">' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</span></div>';
     html += '</div>';
+    
+    // KPI Cards (6টা - Sales, Profit, Expense, Net Profit, Paid, Due)
     html += '<div class="report-kpi">';
-    html += '<div class="kpi-card green"><div class="kpi-icon">💰</div><div class="kpi-label">মোট বিক্রয়</div><div class="kpi-value">' + fmt(d.totalSale) + '</div></div>';
-    html += '<div class="kpi-card blue"><div class="kpi-icon">📈</div><div class="kpi-label">মোট লাভ</div><div class="kpi-value">' + fmt(d.totalProfit) + '</div></div>';
-    html += '<div class="kpi-card info"><div class="kpi-icon">💵</div><div class="kpi-label">নগদ পেয়েছি</div><div class="kpi-value">' + fmt(d.totalPaid) + '</div></div>';
-    html += '<div class="kpi-card red"><div class="kpi-icon">📝</div><div class="kpi-label">মোট বাকি</div><div class="kpi-value">' + fmt(d.totalDue) + '</div></div>';
+    html += '<div class="kpi-card green"><div class="kpi-icon">💰</div><div class="kpi-label">' + L.totalSale + '</div><div class="kpi-value">' + fmt(d.totalSale) + '</div></div>';
+    html += '<div class="kpi-card blue"><div class="kpi-icon">📈</div><div class="kpi-label">' + L.totalProfit + '</div><div class="kpi-value">' + fmt(d.totalProfit) + '</div></div>';
+    html += '<div class="kpi-card red"><div class="kpi-icon">💵</div><div class="kpi-label">' + L.totalExpense + '</div><div class="kpi-value">' + fmt(d.totalExpense || 0) + '</div></div>';
+    html += '<div class="kpi-card green" style="border: 2px solid #10B981;"><div class="kpi-icon">💎</div><div class="kpi-label">' + L.netProfit + '</div><div class="kpi-value" style="color: #10B981;">' + fmt(d.netProfit || 0) + '</div></div>';
+    html += '<div class="kpi-card info"><div class="kpi-icon">✅</div><div class="kpi-label">' + L.totalPaid + '</div><div class="kpi-value">' + fmt(d.totalPaid) + '</div></div>';
+    html += '<div class="kpi-card red"><div class="kpi-icon">📝</div><div class="kpi-label">' + L.totalDue + '</div><div class="kpi-value">' + fmt(d.totalDue) + '</div></div>';
     html += '</div>';
+    
+    // Day-wise Statement (with expense + net profit)
     if (d.dayWise && d.dayWise.length > 0) {
       html += '<div class="report-section">';
-      html += '<div class="rs-header"><div class="rs-title">📅 দিন-ভিত্তিক স্টেটমেন্ট</div><div class="rs-count">' + d.dayWise.length + ' দিন</div></div>';
+      html += '<div class="rs-header"><div class="rs-title">📅 ' + (isEn ? "Day-wise Statement" : "দিন-ভিত্তিক স্টেটমেন্ট") + '</div><div class="rs-count">' + (isEn ? d.dayWise.length : toBn(d.dayWise.length)) + ' ' + (isEn ? "days" : "দিন") + '</div></div>';
       html += '<div style="overflow-x:auto;"><table class="prof-table">';
-      html += '<thead><tr><th>তারিখ</th><th class="num">বিক্রয়</th><th class="num">লাভ</th><th class="num">নগদ</th><th class="num">বাকি</th></tr></thead><tbody>';
+      html += '<thead><tr>';
+      html += '<th>' + (isEn ? "Date" : "তারিখ") + '</th>';
+      html += '<th class="num">' + (isEn ? "Sale" : "বিক্রয়") + '</th>';
+      html += '<th class="num">' + (isEn ? "Profit" : "লাভ") + '</th>';
+      html += '<th class="num">' + (isEn ? "Expense" : "খরচ") + '</th>';
+      html += '<th class="num">' + (isEn ? "Net" : "নিট") + '</th>';
+      html += '<th class="num">' + (isEn ? "Due" : "বাকি") + '</th>';
+      html += '</tr></thead><tbody>';
+      
       d.dayWise.forEach(day => {
-        const parts = day.date.split("-");
-        const dateStr = parts[2] + "/" + parts[1] + "/" + parts[0];
+        const dateStr = formatDayKey(day.date);
+        const netDay = (day.profit || 0) - (day.expense || 0);
         html += '<tr>';
-        html += '<td>' + dateStr + '<div style="font-size:10px;color:var(--muted);font-weight:400;margin-top:2px;">' + day.count + ' লেনদেন</div></td>';
-        html += '<td class="num num-green">৳' + day.sale.toLocaleString() + '</td>';
-        html += '<td class="num num-blue">৳' + day.profit.toLocaleString() + '</td>';
-        html += '<td class="num num-info">৳' + day.paid.toLocaleString() + '</td>';
-        html += '<td class="num num-red">৳' + day.due.toLocaleString() + '</td>';
+        html += '<td>' + dateStr + '<div style="font-size:10px;color:var(--muted);font-weight:400;margin-top:2px;">' + day.count + ' ' + (isEn ? "trans" : "লেনদেন") + '</div></td>';
+        html += '<td class="num num-green">' + fmt(day.sale) + '</td>';
+        html += '<td class="num num-blue">' + fmt(day.profit) + '</td>';
+        html += '<td class="num" style="color:#EF4444;">' + fmt(day.expense || 0) + '</td>';
+        html += '<td class="num" style="color:' + (netDay >= 0 ? '#10B981' : '#EF4444') + ';font-weight:700;">' + fmt(netDay) + '</td>';
+        html += '<td class="num num-red">' + fmt(day.due) + '</td>';
         html += '</tr>';
       });
-      html += '</tbody><tfoot><tr><td>মোট</td>';
-      html += '<td class="num" style="color:#10B981;">৳' + d.totalSale.toLocaleString() + '</td>';
-      html += '<td class="num" style="color:#4F46E5;">৳' + d.totalProfit.toLocaleString() + '</td>';
-      html += '<td class="num" style="color:#3B82F6;">৳' + d.totalPaid.toLocaleString() + '</td>';
-      html += '<td class="num" style="color:#EF4444;">৳' + d.totalDue.toLocaleString() + '</td>';
+      
+      html += '</tbody><tfoot><tr><td>' + (isEn ? "TOTAL" : "মোট") + '</td>';
+      html += '<td class="num" style="color:#10B981;">' + fmt(d.totalSale) + '</td>';
+      html += '<td class="num" style="color:#4F46E5;">' + fmt(d.totalProfit) + '</td>';
+      html += '<td class="num" style="color:#EF4444;">' + fmt(d.totalExpense || 0) + '</td>';
+      html += '<td class="num" style="color:#10B981;font-weight:800;">' + fmt(d.netProfit || 0) + '</td>';
+      html += '<td class="num" style="color:#EF4444;">' + fmt(d.totalDue) + '</td>';
       html += '</tr></tfoot></table></div></div>';
     }
+    
+    // ⭐ Expense Category Breakdown
+    if (d.expenseCategoryBreakdown && d.expenseCategoryBreakdown.length > 0) {
+      const catNames = {
+        "Electricity": isEn ? "Electricity" : "বিদ্যুৎ",
+        "Rent": isEn ? "Rent" : "ভাড়া",
+        "Transport": isEn ? "Transport" : "পরিবহন",
+        "Salary": isEn ? "Salary" : "বেতন",
+        "Mobile": isEn ? "Mobile" : "মোবাইল",
+        "Food": isEn ? "Food" : "খাবার",
+        "Packaging": isEn ? "Packaging" : "প্যাকিং",
+        "Repair": isEn ? "Repair" : "মেরামত",
+        "Other": isEn ? "Other" : "অন্যান্য"
+      };
+      const catIcons = {
+        "Electricity": "💡", "Rent": "🏠", "Transport": "🚚", "Salary": "👷",
+        "Mobile": "📱", "Food": "🍽️", "Packaging": "📦", "Repair": "🔧", "Other": "📝"
+      };
+      
+      html += '<div class="report-section">';
+      html += '<div class="rs-header"><div class="rs-title">💵 ' + (isEn ? "Expense Breakdown" : "খরচের বিবরণ") + '</div><div class="rs-count">' + d.expenseCategoryBreakdown.length + ' ' + (isEn ? "types" : "ধরন") + '</div></div>';
+      html += '<div style="overflow-x:auto;"><table class="prof-table">';
+      html += '<thead><tr>';
+      html += '<th>' + (isEn ? "Category" : "ক্যাটাগরি") + '</th>';
+      html += '<th class="num">' + (isEn ? "Count" : "সংখ্যা") + '</th>';
+      html += '<th class="num">' + (isEn ? "Amount" : "টাকা") + '</th>';
+      html += '</tr></thead><tbody>';
+      
+      d.expenseCategoryBreakdown.forEach(c => {
+        const icon = catIcons[c.category] || "📝";
+        const name = catNames[c.category] || c.category;
+        html += '<tr>';
+        html += '<td>' + icon + ' ' + name + '</td>';
+        html += '<td class="num">' + c.count + '</td>';
+        html += '<td class="num" style="color:#EF4444;">' + fmt(c.amount) + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div></div>';
+    }
+    
+    // Top Products
     if (d.topProducts && d.topProducts.length > 0) {
       html += '<div class="report-section">';
-      html += '<div class="rs-header"><div class="rs-title">🔥 বেশি বিক্রি হওয়া পণ্য</div><div class="rs-count">Top ' + d.topProducts.length + '</div></div>';
+      html += '<div class="rs-header"><div class="rs-title">🔥 ' + (isEn ? "Top Products" : "বেশি বিক্রি হওয়া পণ্য") + '</div><div class="rs-count">Top ' + d.topProducts.length + '</div></div>';
       html += '<div style="overflow-x:auto;"><table class="prof-table">';
-      html += '<thead><tr><th>পণ্য</th><th class="num">সংখ্যা</th><th class="num">বিক্রয়</th><th class="num">লাভ</th></tr></thead><tbody>';
+      html += '<thead><tr><th>' + (isEn ? "Product" : "পণ্য") + '</th><th class="num">' + (isEn ? "Qty" : "সংখ্যা") + '</th><th class="num">' + (isEn ? "Sale" : "বিক্রয়") + '</th><th class="num">' + (isEn ? "Profit" : "লাভ") + '</th></tr></thead><tbody>';
       d.topProducts.forEach(p => {
-        html += '<tr><td>' + p.name + '</td><td class="num">' + p.qty + '</td><td class="num num-green">৳' + p.amount.toLocaleString() + '</td><td class="num num-blue">৳' + p.profit.toLocaleString() + '</td></tr>';
+        html += '<tr><td>' + p.name + '</td><td class="num">' + p.qty + '</td><td class="num num-green">' + fmt(p.amount) + '</td><td class="num num-blue">' + fmt(p.profit) + '</td></tr>';
       });
       html += '</tbody></table></div></div>';
     }
+    
+    // Payment Breakdown
     if (d.paymentBreakdown && d.paymentBreakdown.length > 0) {
       html += '<div class="report-section">';
-      html += '<div class="rs-header"><div class="rs-title">💳 পেমেন্ট পদ্ধতি</div><div class="rs-count">' + d.paymentBreakdown.length + ' ধরন</div></div>';
+      html += '<div class="rs-header"><div class="rs-title">💳 ' + (isEn ? "Payment Methods" : "পেমেন্ট পদ্ধতি") + '</div><div class="rs-count">' + d.paymentBreakdown.length + ' ' + (isEn ? "types" : "ধরন") + '</div></div>';
       html += '<div style="overflow-x:auto;"><table class="prof-table">';
-      html += '<thead><tr><th>পদ্ধতি</th><th class="num">লেনদেন</th><th class="num">মোট</th></tr></thead><tbody>';
+      html += '<thead><tr><th>' + (isEn ? "Method" : "পদ্ধতি") + '</th><th class="num">' + (isEn ? "Count" : "লেনদেন") + '</th><th class="num">' + (isEn ? "Amount" : "মোট") + '</th></tr></thead><tbody>';
       d.paymentBreakdown.forEach(p => {
-        html += '<tr><td>' + getBadge(p.method) + '</td><td class="num">' + p.count + '</td><td class="num num-green">৳' + p.amount.toLocaleString() + '</td></tr>';
+        html += '<tr><td>' + getBadge(p.method) + '</td><td class="num">' + p.count + '</td><td class="num num-green">' + fmt(p.amount) + '</td></tr>';
       });
       html += '</tbody></table></div></div>';
     }
+    
+    // All Transactions
     if (d.sales && d.sales.length > 0) {
       html += '<div class="report-section">';
-      html += '<div class="rs-header"><div class="rs-title">📋 সব লেনদেন (বিস্তারিত)</div><div class="rs-count">' + d.sales.length + 'টি</div></div>';
+      html += '<div class="rs-header"><div class="rs-title">📋 ' + (isEn ? "All Transactions" : "সব লেনদেন (বিস্তারিত)") + '</div><div class="rs-count">' + d.sales.length + (isEn ? "" : "টি") + '</div></div>';
       html += '<div style="overflow-x:auto;"><table class="prof-table" style="font-size:11.5px;">';
-      html += '<thead><tr><th>তারিখ</th><th>পণ্য</th><th class="num">সংখ্যা</th><th class="num">মোট</th><th class="num">নগদ</th><th class="num">বাকি</th></tr></thead><tbody>';
+      html += '<thead><tr><th>' + (isEn ? "Date" : "তারিখ") + '</th><th>' + (isEn ? "Product" : "পণ্য") + '</th><th class="num">' + (isEn ? "Qty" : "সংখ্যা") + '</th><th class="num">' + (isEn ? "Total" : "মোট") + '</th><th class="num">' + (isEn ? "Paid" : "নগদ") + '</th><th class="num">' + (isEn ? "Due" : "বাকি") + '</th></tr></thead><tbody>';
       d.sales.slice(0, 100).forEach(s => {
-        html += '<tr><td>' + fmtDate(s.Date) + '</td><td>' + s.ProductName + '</td><td class="num">' + s.Quantity + '</td><td class="num">৳' + s.TotalSale + '</td><td class="num num-info">৳' + (s.PaidAmount || 0) + '</td><td class="num num-red">৳' + (s.DueAmount || 0) + '</td></tr>';
+        html += '<tr><td>' + fmtDate(s.Date) + '</td><td>' + s.ProductName + '</td><td class="num">' + s.Quantity + '</td><td class="num">' + fmt(s.TotalSale) + '</td><td class="num num-info">' + fmt(s.PaidAmount || 0) + '</td><td class="num num-red">' + fmt(s.DueAmount || 0) + '</td></tr>';
       });
       html += '</tbody></table></div></div>';
     }
-    html += '<div class="report-footer">✨ Generated by ShopMate AI | ' + new Date().toLocaleString() + '</div>';
-    html += '<button class="btn btn-primary" style="margin-top:16px;" onclick="printReport()">🖨️ Print / PDF Download</button>';
+    
+    // Footer + Print
+    html += '<div class="report-footer">✨ ' + (isEn ? "Generated by ShopMate AI" : "তৈরি করেছে ShopMate AI") + ' | ' + new Date().toLocaleString() + '</div>';
+    html += '<button class="btn btn-primary" style="margin-top:16px;" onclick="printReport()">🖨️ ' + (isEn ? "Print / PDF" : "প্রিন্ট / PDF") + '</button>';
     html += '<div id="printArea" style="display:none;">' + buildPrintArea(d) + '</div>';
+    
     content.innerHTML = html;
-  } catch (e) { content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; }
+  } catch (e) { 
+    content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; 
+  }
+}
+// ⭐ Bangla number convert
+function toBn(num) {
+  if (num === null || num === undefined) return "";
+  const en = "0123456789";
+  const bn = "০১২৩৪৫৬৭৮৯";
+  return String(num).split("").map(ch => {
+    const idx = en.indexOf(ch);
+    return idx !== -1 ? bn[idx] : ch;
+  }).join("");
+}
+
+// ⭐ Format money based on language
+function fmtNum(num) {
+  const n = Number(num) || 0;
+  const formatted = n.toLocaleString("en-IN");
+  return "৳" + (currentLang === "bn" ? toBn(formatted) : formatted);
+}
+
+// ⭐ Format date based on language
+function fmtDateLang(d) {
+  if (!d) return "";
+  const dt = new Date(d);
+  const dd = String(dt.getDate()).padStart(2, "0");
+  const mm = String(dt.getMonth() + 1).padStart(2, "0");
+  const yyyy = dt.getFullYear();
+  if (currentLang === "bn") {
+    return toBn(dd) + "/" + toBn(mm) + "/" + toBn(yyyy);
+  }
+  return dd + "/" + mm + "/" + yyyy;
+}
+
+// ⭐ Number only (with locale)
+function fmtNumOnly(num) {
+  const n = Number(num) || 0;
+  const formatted = n.toLocaleString("en-IN");
+  return currentLang === "bn" ? toBn(formatted) : formatted;
+}
+
+// ⭐ Date string from dayKey (yyyy-mm-dd)
+function formatDayKey(dayKey) {
+  const parts = dayKey.split("-");
+  if (currentLang === "bn") {
+    return toBn(parts[2]) + "/" + toBn(parts[1]) + "/" + toBn(parts[0]);
+  }
+  return parts[2] + "/" + parts[1] + "/" + parts[0];
 }
 
 function buildPrintArea(d) {
@@ -3165,15 +3336,15 @@ function buildPrintArea(d) {
   }[currentReportRange] || "রিপোর্ট");
   
   const L = isEn ? {
-    owner: "Owner", period: "Period", totalSale: "Total Sale", totalProfit: "Total Profit",
-    totalPaid: "Paid", totalDue: "Due", totalTransactions: "Total Transactions",
+    owner: "Owner", totalSale: "Total Sale", totalProfit: "Total Profit",
+    totalPaid: "Paid", totalDue: "Due",
     dayWise: "Day-wise Statement", date: "Date", sale: "Sale", profit: "Profit",
     paid: "Paid", due: "Due", total: "TOTAL", topProducts: "Top Products",
     product: "Product", qty: "Qty", salesDetails: "Sales Details",
     signature: "Signature", generated: "Generated by"
   } : {
-    owner: "মালিক", period: "সময়কাল", totalSale: "মোট বিক্রয়", totalProfit: "মোট লাভ",
-    totalPaid: "নগদ পেয়েছি", totalDue: "মোট বাকি", totalTransactions: "মোট লেনদেন",
+    owner: "মালিক", totalSale: "মোট বিক্রয়", totalProfit: "মোট লাভ",
+    totalPaid: "নগদ পেয়েছি", totalDue: "মোট বাকি",
     dayWise: "দিন-ভিত্তিক স্টেটমেন্ট", date: "তারিখ", sale: "বিক্রয়", profit: "লাভ",
     paid: "নগদ", due: "বাকি", total: "মোট", topProducts: "বেশি বিক্রি হওয়া পণ্য",
     product: "পণ্য", qty: "সংখ্যা", salesDetails: "সব লেনদেন (বিস্তারিত)",
@@ -3188,16 +3359,66 @@ function buildPrintArea(d) {
   html += '<p style="margin:6px 0 0 0;font-size:13px;opacity:0.9;">' + L.owner + ': ' + currentUser.name + '</p>';
   html += '<div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.3);display:flex;justify-content:space-between;font-size:13px;">';
   html += '<span><b>' + rangeLabel + '</b></span>';
-  html += '<span>' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</span>';
+  html += '<span>' + fmtDateLang(d.fromDate) + ' — ' + fmtDateLang(d.toDate) + '</span>';
   html += '</div></div>';
   
   // Summary cards
   html += '<table style="width:100%;border-collapse:separate;border-spacing:8px;margin-bottom:20px;"><tr>';
-  html += '<td style="background:#ECFDF5;padding:14px;border-radius:8px;border-left:4px solid #10B981;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalSale + '</div><div style="font-size:18px;font-weight:700;color:#10B981;margin-top:4px;">৳' + d.totalSale.toLocaleString() + '</div></td>';
-  html += '<td style="background:#EEF2FF;padding:14px;border-radius:8px;border-left:4px solid #4F46E5;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalProfit + '</div><div style="font-size:18px;font-weight:700;color:#4F46E5;margin-top:4px;">৳' + d.totalProfit.toLocaleString() + '</div></td>';
-  html += '<td style="background:#EFF6FF;padding:14px;border-radius:8px;border-left:4px solid #3B82F6;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalPaid + '</div><div style="font-size:18px;font-weight:700;color:#3B82F6;margin-top:4px;">৳' + d.totalPaid.toLocaleString() + '</div></td>';
-  html += '<td style="background:#FEF2F2;padding:14px;border-radius:8px;border-left:4px solid #EF4444;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalDue + '</div><div style="font-size:18px;font-weight:700;color:#EF4444;margin-top:4px;">৳' + d.totalDue.toLocaleString() + '</div></td>';
+  html += '<td style="background:#ECFDF5;padding:14px;border-radius:8px;border-left:4px solid #10B981;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalSale + '</div><div style="font-size:18px;font-weight:700;color:#10B981;margin-top:4px;">' + fmtNum(d.totalSale) + '</div></td>';
+  html += '<td style="background:#EEF2FF;padding:14px;border-radius:8px;border-left:4px solid #4F46E5;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalProfit + '</div><div style="font-size:18px;font-weight:700;color:#4F46E5;margin-top:4px;">' + fmtNum(d.totalProfit) + '</div></td>';
+  html += '<td style="background:#EFF6FF;padding:14px;border-radius:8px;border-left:4px solid #3B82F6;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalPaid + '</div><div style="font-size:18px;font-weight:700;color:#3B82F6;margin-top:4px;">' + fmtNum(d.totalPaid) + '</div></td>';
+  html += '<td style="background:#FEF2F2;padding:14px;border-radius:8px;border-left:4px solid #EF4444;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalDue + '</div><div style="font-size:18px;font-weight:700;color:#EF4444;margin-top:4px;">' + fmtNum(d.totalDue) + '</div></td>';
   html += '</tr></table>';
+    // ⭐ Net Profit Section
+  html += '<table style="width:100%;border-collapse:separate;border-spacing:8px;margin-bottom:20px;"><tr>';
+  html += '<td style="background:#FEF2F2;padding:14px;border-radius:8px;border-left:4px solid #EF4444;width:33%;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + (isEn ? "Total Expense" : "মোট খরচ") + '</div><div style="font-size:18px;font-weight:700;color:#EF4444;margin-top:4px;">' + fmtNum(d.totalExpense || 0) + '</div></td>';
+  html += '<td style="background:#ECFDF5;padding:14px;border-radius:8px;border-left:4px solid #10B981;width:33%;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + (isEn ? "Net Profit" : "আসল লাভ") + '</div><div style="font-size:18px;font-weight:700;color:#10B981;margin-top:4px;">' + fmtNum(d.netProfit || 0) + '</div></td>';
+  html += '<td style="background:#F0F9FF;padding:14px;border-radius:8px;border-left:4px solid #3B82F6;width:33%;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + (isEn ? "Total Transactions" : "মোট লেনদেন") + '</div><div style="font-size:18px;font-weight:700;color:#3B82F6;margin-top:4px;">' + fmtNumOnly(d.totalTransactions) + '</div></td>';
+  html += '</tr></table>';
+  
+  // ⭐ Expense Breakdown in print
+  if (d.expenseCategoryBreakdown && d.expenseCategoryBreakdown.length > 0) {
+    const catNames = {
+      "Electricity": isEn ? "Electricity" : "বিদ্যুৎ",
+      "Rent": isEn ? "Rent" : "ভাড়া",
+      "Transport": isEn ? "Transport" : "পরিবহন",
+      "Salary": isEn ? "Salary" : "বেতন",
+      "Mobile": isEn ? "Mobile" : "মোবাইল",
+      "Food": isEn ? "Food" : "খাবার",
+      "Packaging": isEn ? "Packaging" : "প্যাকিং",
+      "Repair": isEn ? "Repair" : "মেরামত",
+      "Other": isEn ? "Other" : "অন্যান্য"
+    };
+    const catIcons = {
+      "Electricity": "💡", "Rent": "🏠", "Transport": "🚚", "Salary": "👷",
+      "Mobile": "📱", "Food": "🍽️", "Packaging": "📦", "Repair": "🔧", "Other": "📝"
+    };
+    
+    html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">💵 ' + (isEn ? "Expense Breakdown" : "খরচের বিবরণ") + '</h3>';
+    html += '<table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:20px;">';
+    html += '<thead><tr style="background:#EF4444;color:white;">';
+    html += '<th style="padding:10px;text-align:left;">' + (isEn ? "Category" : "ক্যাটাগরি") + '</th>';
+    html += '<th style="padding:10px;text-align:right;">' + (isEn ? "Count" : "সংখ্যা") + '</th>';
+    html += '<th style="padding:10px;text-align:right;">' + (isEn ? "Amount" : "টাকা") + '</th>';
+    html += '</tr></thead><tbody>';
+    
+    d.expenseCategoryBreakdown.forEach((c, idx) => {
+      const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
+      const icon = catIcons[c.category] || "📝";
+      const name = catNames[c.category] || c.category;
+      html += '<tr style="background:' + bg + ';">';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;">' + icon + ' ' + name + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;">' + fmtNumOnly(c.count) + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;font-weight:600;">' + fmtNum(c.amount) + '</td>';
+      html += '</tr>';
+    });
+    
+    html += '<tr style="background:#F3F4F6;font-weight:700;">';
+    html += '<td style="padding:11px;border-top:2px solid #111;">' + (isEn ? "TOTAL" : "মোট") + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;">' + fmtNumOnly(d.totalExpenseCount || d.expenseCategoryBreakdown.length) + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#EF4444;">' + fmtNum(d.totalExpense || 0) + '</td>';
+    html += '</tr></tbody></table>';
+  }
   
   // Day-wise
   if (d.dayWise && d.dayWise.length > 0) {
@@ -3212,24 +3433,23 @@ function buildPrintArea(d) {
     html += '</tr></thead><tbody>';
     
     d.dayWise.forEach((day, idx) => {
-      const parts = day.date.split("-");
-      const dateStr = parts[2] + "/" + parts[1] + "/" + parts[0];
+      const dateStr = formatDayKey(day.date);
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
       html += '<tr style="background:' + bg + ';">';
       html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;"><b>' + dateStr + '</b></td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#10B981;font-weight:600;">৳' + day.sale.toLocaleString() + '</td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#4F46E5;font-weight:600;">৳' + day.profit.toLocaleString() + '</td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#3B82F6;">৳' + day.paid.toLocaleString() + '</td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">৳' + day.due.toLocaleString() + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#10B981;font-weight:600;">' + fmtNum(day.sale) + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#4F46E5;font-weight:600;">' + fmtNum(day.profit) + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#3B82F6;">' + fmtNum(day.paid) + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">' + fmtNum(day.due) + '</td>';
       html += '</tr>';
     });
     
     html += '<tr style="background:#F3F4F6;font-weight:700;">';
     html += '<td style="padding:11px;border-top:2px solid #111;">' + L.total + '</td>';
-    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#10B981;">৳' + d.totalSale.toLocaleString() + '</td>';
-    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#4F46E5;">৳' + d.totalProfit.toLocaleString() + '</td>';
-    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#3B82F6;">৳' + d.totalPaid.toLocaleString() + '</td>';
-    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#EF4444;">৳' + d.totalDue.toLocaleString() + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#10B981;">' + fmtNum(d.totalSale) + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#4F46E5;">' + fmtNum(d.totalProfit) + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#3B82F6;">' + fmtNum(d.totalPaid) + '</td>';
+    html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#EF4444;">' + fmtNum(d.totalDue) + '</td>';
     html += '</tr></tbody></table>';
   }
   
@@ -3248,9 +3468,9 @@ function buildPrintArea(d) {
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
       html += '<tr style="background:' + bg + ';">';
       html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;">' + p.name + '</td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;">' + p.qty + '</td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#10B981;font-weight:600;">৳' + p.amount.toLocaleString() + '</td>';
-      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#4F46E5;font-weight:600;">৳' + p.profit.toLocaleString() + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;">' + fmtNumOnly(p.qty) + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#10B981;font-weight:600;">' + fmtNum(p.amount) + '</td>';
+      html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#4F46E5;font-weight:600;">' + fmtNum(p.profit) + '</td>';
       html += '</tr>';
     });
     html += '</tbody></table>';
@@ -3272,12 +3492,12 @@ function buildPrintArea(d) {
     d.sales.slice(0, 100).forEach((s, idx) => {
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
       html += '<tr style="background:' + bg + ';">';
-      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;">' + fmtDate(s.Date) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;">' + fmtDateLang(s.Date) + '</td>';
       html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;">' + s.ProductName + '</td>';
-      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;">' + s.Quantity + '</td>';
-      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;font-weight:600;">৳' + s.TotalSale + '</td>';
-      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;color:#3B82F6;">৳' + (s.PaidAmount || 0) + '</td>';
-      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">৳' + (s.DueAmount || 0) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;">' + fmtNumOnly(s.Quantity) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;font-weight:600;">' + fmtNum(s.TotalSale) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;color:#3B82F6;">' + fmtNum(s.PaidAmount || 0) + '</td>';
+      html += '<td style="padding:7px 8px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">' + fmtNum(s.DueAmount || 0) + '</td>';
       html += '</tr>';
     });
     html += '</tbody></table>';
@@ -3286,12 +3506,11 @@ function buildPrintArea(d) {
   // Footer
   html += '<div style="margin-top:50px;padding-top:20px;border-top:2px dashed #ccc;text-align:center;font-size:11px;color:#666;">';
   html += '<p style="margin:0 0 30px 0;text-align:right;">' + L.signature + ': ______________________</p>';
-  html += '<p style="margin:0;">' + L.generated + ' <b>ShopMate AI</b> | ' + new Date().toLocaleString() + '</p>';
+  html += '<p style="margin:0;">' + L.generated + ' <b>ShopMate AI</b> | ' + (currentLang === "bn" ? toBn(new Date().toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" })) : new Date().toLocaleString()) + '</p>';
   html += '</div></div>';
   
   return html;
 }
-
 function printReport() {
   const printArea = document.getElementById("printArea");
   if (!printArea) return;
