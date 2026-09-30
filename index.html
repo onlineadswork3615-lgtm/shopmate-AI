@@ -924,6 +924,74 @@ body.dark .margin-low {
 }
   /* ============ AI CHAT ============ */
   /* ============ CUSTOM CATEGORY ============ */
+  /* ============ PRODUCT REPORT ============ */
+.product-report-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.product-report-filters select,
+.product-report-filters input {
+  padding-left: 14px;
+}
+
+.product-report-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.pr-stat {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--primary);
+}
+.pr-stat.green { border-left-color: var(--secondary); }
+.pr-stat.red { border-left-color: var(--danger); }
+.pr-stat.info { border-left-color: var(--info); }
+.pr-stat.orange { border-left-color: var(--warning); }
+.pr-stat .pr-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 4px;
+}
+.pr-stat .pr-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.pr-stat.green .pr-value { color: var(--secondary); }
+.pr-stat.red .pr-value { color: var(--danger); }
+.pr-stat.info .pr-value { color: var(--info); }
+.pr-stat.orange .pr-value { color: var(--warning); }
+
+.pr-table {
+  width: 100%;
+  font-size: 12px;
+  border-collapse: collapse;
+}
+.pr-table thead th {
+  background: var(--gradient);
+  color: white;
+  padding: 10px 8px;
+  font-weight: 600;
+  font-size: 11px;
+  text-align: left;
+}
+.pr-table tbody td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--border);
+}
+.pr-table tbody tr:hover {
+  background: var(--bg-alt);
+}
+.pr-table .num { text-align: right; font-weight: 600; }
 .expense-cat-btn.add-new {
   background: var(--gradient-soft);
   border: 2px dashed var(--primary);
@@ -1847,6 +1915,57 @@ body.dark .margin-low {
       </div>
     </div>
 
+        <!-- ============ PRODUCT REPORT ============ -->
+    <div id="page-productreport" class="page">
+      <h2 class="page-title">📊 প্রোডাক্ট রিপোর্ট</h2>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="title-text">🔍 রিপোর্ট ফিল্টার</div>
+        </div>
+
+        <div class="product-report-filters">
+          <div>
+            <label style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px;display:block;">পণ্য নির্বাচন</label>
+            <select id="prProduct" style="padding-left:14px;">
+              <option value="">-- সব পণ্য --</option>
+            </select>
+          </div>
+
+          <div class="row-2">
+            <div>
+              <label style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px;display:block;">শুরুর তারিখ</label>
+              <input type="date" id="prFromDate" style="padding-left:14px;">
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:4px;display:block;">শেষ তারিখ</label>
+              <input type="date" id="prToDate" style="padding-left:14px;">
+            </div>
+          </div>
+
+          <div class="row-2">
+            <button class="btn btn-secondary btn-sm" onclick="setPRRange('today')">আজ</button>
+            <button class="btn btn-secondary btn-sm" onclick="setPRRange('week')">৭ দিন</button>
+          </div>
+          <div class="row-2">
+            <button class="btn btn-secondary btn-sm" onclick="setPRRange('month')">৩০ দিন</button>
+            <button class="btn btn-secondary btn-sm" onclick="setPRRange('year')">১ বছর</button>
+          </div>
+
+          <button class="btn btn-primary" onclick="loadProductReport()">📊 রিপোর্ট দেখাও</button>
+        </div>
+      </div>
+
+      <div id="prContent">
+        <div class="card">
+          <div class="empty-state">
+            <span class="icon">📊</span>
+            <p>উপরে filter select করে "রিপোর্ট দেখাও" চাপো</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ============ REPORTS ============ -->
     <div id="page-reports" class="page">
       <h2 class="page-title" data-i18n="reports">রিপোর্ট</h2>
@@ -1932,6 +2051,7 @@ body.dark .margin-low {
     <a onclick="gotoPage('products')" data-page="products"><span class="nav-icon">📦</span><span class="nav-label" data-i18n="navProducts">পণ্য</span></a>
     <a onclick="gotoPage('customers')" data-page="customers"><span class="nav-icon">👥</span><span class="nav-label" data-i18n="navCustomers">কাস্টমার</span></a>
     <a onclick="gotoPage('expenses')" data-page="expenses"><span class="nav-icon">💵</span><span class="nav-label" data-i18n="navExpenses">খরচ</span></a>
+        <a onclick="gotoPage('productreport')" data-page="productreport"><span class="nav-icon">📊</span><span class="nav-label">প্রোডাক্ট রিপোর্ট</span></a>
     <a onclick="gotoPage('reports')" data-page="reports"><span class="nav-icon">📊</span><span class="nav-label" data-i18n="navReports">রিপোর্ট</span></a>
   </nav>
 </div>
@@ -2247,6 +2367,7 @@ function gotoPage(name) {
   if (name === "products") loadProductList();
   if (name === "customers") { loadCustomerList(); loadPaymentList(); closeCustomerDetail(); }
     if (name === "expenses") loadExpenses();
+    if (name === "productreport") { loadPRProducts(); setPRRange("month"); }
   if (name === "reports") loadReport();
   if (name === "lowstock") loadLowStockFull();
 }
@@ -3305,6 +3426,10 @@ function setupExpenseCategoryButtons() {
   const container = document.getElementById("expenseCategories");
   if (!container) return;
   container.querySelectorAll(".expense-cat-btn").forEach(btn => {
+    // Skip the "add-new" button — এটার নিজের onclick আছে
+    if (btn.classList.contains("add-new")) return;
+    if (btn.classList.contains("custom")) return; // custom আগেই handler পেয়েছে
+    
     btn.onclick = () => {
       container.querySelectorAll(".expense-cat-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
@@ -3674,7 +3799,175 @@ async function loadCustomReport() {
   if (!from || !to) return showToast("দুইটা তারিখই দাও", "error");
   loadReport();
 }
+// ============================================
+// PRODUCT REPORT
+// ============================================
+async function loadProductReport() {
+  const content = document.getElementById("prContent");
+  content.innerHTML = '<div class="card"><div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div></div>';
 
+  const productName = document.getElementById("prProduct").value;
+  const fromDate = document.getElementById("prFromDate").value;
+  const toDate = document.getElementById("prToDate").value;
+
+  try {
+    const r = await apiGet("getProductReport", {
+      productName: productName,
+      fromDate: fromDate,
+      toDate: toDate
+    });
+
+    if (!r.success || !r.data) {
+      content.innerHTML = '<div class="card"><div class="empty-state"><span class="icon">❌</span>রিপোর্ট লোড করা যায়নি</div></div>';
+      return;
+    }
+
+    const d = r.data;
+    const fmt = (n) => "৳" + (Number(n) || 0).toLocaleString("en-IN");
+
+    let html = '';
+
+    // Summary Stats
+    html += '<div class="card">';
+    html += '<div class="card-title"><div class="title-text">📊 ' + d.productName + '</div></div>';
+    html += '<div style="font-size:11px;color:var(--muted);margin-bottom:12px;">📅 ' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</div>';
+    html += '<div class="product-report-stats">';
+    html += '<div class="pr-stat green"><div class="pr-label">💰 মোট বিক্রয়</div><div class="pr-value">' + fmt(d.totalSale) + '</div></div>';
+    html += '<div class="pr-stat info"><div class="pr-label">📈 মোট লাভ</div><div class="pr-value">' + fmt(d.totalProfit) + '</div></div>';
+    html += '<div class="pr-stat orange"><div class="pr-label">📦 মোট পরিমাণ</div><div class="pr-value">' + d.totalQty + ' পিস</div></div>';
+    html += '<div class="pr-stat red"><div class="pr-label">💳 বাকি</div><div class="pr-value">' + fmt(d.totalDue) + '</div></div>';
+    html += '<div class="pr-stat"><div class="pr-label">📝 লেনদেন</div><div class="pr-value">' + d.totalProducts + 'টি</div></div>';
+    html += '<div class="pr-stat"><div class="pr-label">📦 পণ্য সংখ্যা</div><div class="pr-value">' + d.totalProducts + '</div></div>';
+    html += '</div>';
+    html += '</div>';
+
+    // Product List
+    if (d.products && d.products.length > 0) {
+      html += '<div class="card">';
+      html += '<div class="card-title"><div class="title-text">📋 পণ্য-ভিত্তিক রিপোর্ট</div></div>';
+      html += '<div style="overflow-x:auto;">';
+      html += '<table class="pr-table">';
+      html += '<thead><tr>';
+      html += '<th>পণ্য</th>';
+      html += '<th class="num">সংখ্যা</th>';
+      html += '<th class="num">বিক্রয়</th>';
+      html += '<th class="num">লাভ</th>';
+      html += '<th class="num">Margin</th>';
+      html += '<th class="num">Stock</th>';
+      html += '</tr></thead><tbody>';
+      d.products.forEach(p => {
+        const marginColor = p.margin >= 30 ? "#10B981" : (p.margin >= 15 ? "#F59E0B" : "#EF4444");
+        html += '<tr>';
+        html += '<td><b>' + p.name + '</b></td>';
+        html += '<td class="num">' + p.qty + '</td>';
+        html += '<td class="num">' + fmt(p.amount) + '</td>';
+        html += '<td class="num" style="color:#10B981;">' + fmt(p.profit) + '</td>';
+        html += '<td class="num" style="color:' + marginColor + ';font-weight:700;">' + p.margin + '%</td>';
+        html += '<td class="num">' + p.currentStock + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      html += '</div>';
+      html += '</div>';
+
+      // Print button
+      html += '<button class="btn btn-primary" style="margin-top:8px;" onclick="printProductReport()">🖨️ প্রিন্ট / PDF</button>';
+      html += '<div id="prPrintArea" style="display:none;">' + buildProductReportPrint(d) + '</div>';
+    } else {
+      html += '<div class="card"><div class="empty-state"><span class="icon">📭</span>এই সময়ে কোনো ডেটা নেই</div></div>';
+    }
+
+    content.innerHTML = html;
+
+  } catch (e) {
+    content.innerHTML = '<div class="card"><div class="empty-state"><span class="icon">❌</span>' + e.message + '</div></div>';
+  }
+}
+
+function setPRRange(range) {
+  const today = new Date();
+  const fromInput = document.getElementById("prFromDate");
+  const toInput = document.getElementById("prToDate");
+
+  toInput.value = today.toISOString().split("T")[0];
+
+  const from = new Date(today);
+  if (range === "today") {
+    from.setDate(today.getDate());
+  } else if (range === "week") {
+    from.setDate(today.getDate() - 7);
+  } else if (range === "month") {
+    from.setMonth(today.getMonth() - 1);
+  } else if (range === "year") {
+    from.setFullYear(today.getFullYear() - 1);
+  }
+
+  fromInput.value = from.toISOString().split("T")[0];
+}
+
+async function loadPRProducts() {
+  const sel = document.getElementById("prProduct");
+  try {
+    const r = await apiGet("getProducts");
+    if (r.success && r.data) {
+      sel.innerHTML = '<option value="">-- সব পণ্য --</option>';
+      r.data.forEach(p => {
+        sel.innerHTML += '<option value="' + p.ProductName + '">' + p.ProductName + '</option>';
+      });
+    }
+  } catch (e) { console.error(e); }
+}
+
+function buildProductReportPrint(d) {
+  const fmtN = (n) => "৳" + (Number(n) || 0).toLocaleString("en-IN");
+  let html = '<div style="padding:20px;font-family:sans-serif;color:#000;">';
+  html += '<h2 style="text-align:center;margin-bottom:4px;">🏪 ' + currentUser.shopName + '</h2>';
+  html += '<p style="text-align:center;font-size:12px;">প্রোডাক্ট রিপোর্ট: <b>' + d.productName + '</b></p>';
+  html += '<p style="text-align:center;font-size:11px;color:#666;">' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</p>';
+  html += '<hr>';
+  html += '<table style="width:100%;font-size:13px;border-collapse:collapse;margin-bottom:20px;">';
+  html += '<tr><td>মোট বিক্রয়:</td><td style="text-align:right;"><b>' + fmtN(d.totalSale) + '</b></td></tr>';
+  html += '<tr><td>মোট লাভ:</td><td style="text-align:right;color:#10B981;"><b>' + fmtN(d.totalProfit) + '</b></td></tr>';
+  html += '<tr><td>মোট পরিমাণ:</td><td style="text-align:right;">' + d.totalQty + ' পিস</td></tr>';
+  html += '<tr><td>বাকি:</td><td style="text-align:right;color:#EF4444;">' + fmtN(d.totalDue) + '</td></tr>';
+  html += '</table>';
+
+  html += '<table style="width:100%;font-size:11px;border-collapse:collapse;border:1px solid #ccc;">';
+  html += '<tr style="background:#4F46E5;color:white;">';
+  html += '<th style="padding:6px;border:1px solid #ccc;">পণ্য</th>';
+  html += '<th style="padding:6px;border:1px solid #ccc;">সংখ্যা</th>';
+  html += '<th style="padding:6px;border:1px solid #ccc;">বিক্রয়</th>';
+  html += '<th style="padding:6px;border:1px solid #ccc;">লাভ</th>';
+  html += '<th style="padding:6px;border:1px solid #ccc;">Margin</th>';
+  html += '</tr>';
+  d.products.forEach(p => {
+    html += '<tr>';
+    html += '<td style="padding:5px;border:1px solid #ccc;">' + p.name + '</td>';
+    html += '<td style="padding:5px;border:1px solid #ccc;text-align:right;">' + p.qty + '</td>';
+    html += '<td style="padding:5px;border:1px solid #ccc;text-align:right;">' + fmtN(p.amount) + '</td>';
+    html += '<td style="padding:5px;border:1px solid #ccc;text-align:right;color:#10B981;">' + fmtN(p.profit) + '</td>';
+    html += '<td style="padding:5px;border:1px solid #ccc;text-align:right;">' + p.margin + '%</td>';
+    html += '</tr>';
+  });
+  html += '</table>';
+
+  html += '<p style="margin-top:40px;text-align:right;">স্বাক্ষর: ______________</p>';
+  html += '<p style="text-align:center;margin-top:10px;font-size:10px;color:#666;">Generated by ShopMate AI | ' + new Date().toLocaleString() + '</p>';
+  html += '</div>';
+  return html;
+}
+
+function printProductReport() {
+  const area = document.getElementById("prPrintArea");
+  if (!area) return;
+  const w = window.open("", "_blank");
+  w.document.write('<html><head><title>Product Report</title>');
+  w.document.write('<style>@page{size:A4;margin:15mm;}body{font-family:sans-serif;padding:20px;}</style>');
+  w.document.write('</head><body>' + area.innerHTML + '</body></html>');
+  w.document.close();
+  setTimeout(() => w.print(), 300);
+}
+  
 async function loadReport() {
   const content = document.getElementById("reportContent");
   content.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
