@@ -923,9 +923,111 @@ body.dark .margin-low {
   border-top: 1px solid rgba(255,255,255,0.25);
 }
   /* ============ AI CHAT ============ */
-  .chat-fab.hidden,
-.chat-overlay.hidden {
+  /* ============ CUSTOM CATEGORY ============ */
+.expense-cat-btn.add-new {
+  background: var(--gradient-soft);
+  border: 2px dashed var(--primary);
+  color: var(--primary);
+}
+.expense-cat-btn.add-new:hover {
+  background: var(--gradient);
+  color: white;
+  border-style: solid;
+}
+.expense-cat-btn.custom {
+  position: relative;
+}
+.expense-cat-btn .delete-cat {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: white;
+  border: 2px solid var(--card);
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.expense-cat-btn.custom:hover .delete-cat {
+  opacity: 1;
+}
+
+.cat-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s;
+}
+.cat-modal-overlay.show {
+  display: flex;
+}
+.cat-modal {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 380px;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.cat-modal h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+  color: var(--text);
+}
+.cat-emoji-picker {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.cat-emoji-picker button {
+  aspect-ratio: 1;
+  border: 1.5px solid var(--border);
+  background: var(--bg-alt);
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.cat-emoji-picker button:hover {
+  transform: scale(1.1);
+}
+.cat-emoji-picker button.active {
+  background: var(--gradient);
+  border-color: transparent;
+  transform: scale(1.08);
+}
+.cat-modal-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.cat-modal-btns .btn {
+  flex: 1;
+}
+  .chat-fab.hidden {
   display: none !important;
+}
+.chat-overlay {
+  display: none !important;
+}
+.chat-overlay.show {
+  display: flex !important;
 }
 .chat-fab {
   position: fixed;
@@ -1625,6 +1727,10 @@ body.dark .margin-low {
               <span class="ec-icon">📝</span>
               <span class="ec-name">অন্যান্য</span>
             </button>
+                        <button type="button" class="expense-cat-btn add-new" onclick="openCategoryModal()">
+              <span class="ec-icon">➕</span>
+              <span class="ec-name">নতুন</span>
+            </button>
           </div>
         </div>
 
@@ -1831,6 +1937,46 @@ body.dark .margin-low {
 </div>
 
 <div class="toast" id="toast"></div>
+  <!-- ============ CATEGORY MODAL ============ -->
+<div class="cat-modal-overlay" id="categoryModal">
+  <div class="cat-modal">
+    <h3>➕ নতুন ক্যাটাগরি</h3>
+    <div style="margin-bottom:12px;">
+      <label style="font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px;display:block;">আইকন বাছাই করো</label>
+      <div class="cat-emoji-picker" id="emojiPicker">
+        <button type="button" onclick="pickEmoji(this)">🛍️</button>
+        <button type="button" onclick="pickEmoji(this)">💼</button>
+        <button type="button" onclick="pickEmoji(this)">🚿</button>
+        <button type="button" onclick="pickEmoji(this)">🧾</button>
+        <button type="button" onclick="pickEmoji(this)">🎁</button>
+        <button type="button" onclick="pickEmoji(this)">🏢</button>
+        <button type="button" onclick="pickEmoji(this)">🔌</button>
+        <button type="button" onclick="pickEmoji(this)">💊</button>
+        <button type="button" onclick="pickEmoji(this)">📚</button>
+        <button type="button" onclick="pickEmoji(this)">🖨️</button>
+        <button type="button" onclick="pickEmoji(this)">✂️</button>
+        <button type="button" onclick="pickEmoji(this)">🧴</button>
+        <button type="button" onclick="pickEmoji(this)">🚗</button>
+        <button type="button" onclick="pickEmoji(this)">🍵</button>
+        <button type="button" onclick="pickEmoji(this)">🎓</button>
+        <button type="button" onclick="pickEmoji(this)">⚽</button>
+        <button type="button" onclick="pickEmoji(this)">🎨</button>
+        <button type="button" onclick="pickEmoji(this)">🛠️</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>ক্যাটাগরির নাম</label>
+      <div class="input-wrap">
+        <span class="input-icon">📝</span>
+        <input type="text" id="newCatName" placeholder="যেমন: ইন্টারনেট বিল" autocomplete="off">
+      </div>
+    </div>
+    <div class="cat-modal-btns">
+      <button class="btn btn-secondary" onclick="closeCategoryModal()">বাতিল</button>
+      <button class="btn btn-primary" onclick="saveCustomCategory()">💾 সেভ</button>
+    </div>
+  </div>
+</div>
   <!-- ============ AI CHAT ============ -->
 <button class="chat-fab hidden" id="chatFab" onclick="openChat()" title="AI Assistant">🤖</button>
 
@@ -2971,6 +3117,7 @@ async function loadExpenses() {
   }
   
   setupExpenseCategoryButtons();
+    loadCustomCategories();
   
   try {
     // Parallel load: summary + list
@@ -3048,7 +3195,112 @@ function renderExpenseList() {
     '</div>';
   }).join("");
 }
+// ============================================
+// CUSTOM CATEGORY
+// ============================================
+let selectedEmoji = "🛍️";
+let customCategories = [];
 
+async function loadCustomCategories() {
+  try {
+    const r = await apiGet("getCustomCategories");
+    if (r.success && r.data) {
+      customCategories = r.data;
+      renderCustomCategories();
+    }
+  } catch (e) { console.error(e); }
+}
+
+function renderCustomCategories() {
+  const container = document.getElementById("expenseCategories");
+  if (!container) return;
+  
+  // Remove old custom buttons
+  container.querySelectorAll(".expense-cat-btn.custom").forEach(b => b.remove());
+  
+  // Find "add-new" button
+  const addNewBtn = container.querySelector(".add-new");
+  
+  // Insert custom categories before "add-new"
+  customCategories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "expense-cat-btn custom";
+    btn.dataset.cat = cat.name;
+    btn.innerHTML = 
+      '<span class="ec-icon">' + (cat.icon || "📝") + '</span>' +
+      '<span class="ec-name">' + cat.name + '</span>' +
+      '<button type="button" class="delete-cat" onclick="event.stopPropagation(); deleteCustomCategory(\'' + cat.name.replace(/'/g, "\\'") + '\')">✕</button>';
+    btn.onclick = () => {
+      container.querySelectorAll(".expense-cat-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentExpenseCategory = cat.name;
+    };
+    container.insertBefore(btn, addNewBtn);
+  });
+}
+
+function openCategoryModal() {
+  document.getElementById("categoryModal").classList.add("show");
+  document.getElementById("newCatName").value = "";
+  document.getElementById("newCatName").focus();
+  selectedEmoji = "🛍️";
+  document.querySelectorAll("#emojiPicker button").forEach((b, i) => {
+    b.classList.toggle("active", i === 0);
+  });
+}
+
+function closeCategoryModal() {
+  document.getElementById("categoryModal").classList.remove("show");
+}
+
+function pickEmoji(btn) {
+  document.querySelectorAll("#emojiPicker button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  selectedEmoji = btn.textContent.trim();
+}
+
+async function saveCustomCategory() {
+  const name = document.getElementById("newCatName").value.trim();
+  if (!name) return showToast("ক্যাটাগরির নাম দিন", "error");
+  
+  try {
+    const r = await apiPost({
+      action: "addCustomCategory",
+      name: name,
+      icon: selectedEmoji
+    });
+    
+    if (r.success) {
+      showToast("✅ ক্যাটাগরি যোগ হয়েছে");
+      closeCategoryModal();
+      await loadCustomCategories();
+    } else {
+      showToast(r.message || "Error", "error");
+    }
+  } catch (e) {
+    showToast("Network error", "error");
+  }
+}
+
+function deleteCustomCategory(name) {
+  showConfirm(
+    "ক্যাটাগরি মুছে ফেলবেন?",
+    "'" + name + "' ক্যাটাগরিটি মুছে যাবে। তবে আগের expense-গুলো থাকবে।",
+    async () => {
+      try {
+        const r = await apiPost({ action: "deleteCustomCategory", name: name });
+        if (r.success) {
+          showToast("✅ মুছে ফেলা হয়েছে");
+          await loadCustomCategories();
+        } else {
+          showToast(r.message || "Error", "error");
+        }
+      } catch (e) { showToast("Network error", "error"); }
+    }
+  );
+}
+  
 function setupExpenseCategoryButtons() {
   const container = document.getElementById("expenseCategories");
   if (!container) return;
