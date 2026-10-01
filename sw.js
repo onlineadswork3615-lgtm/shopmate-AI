@@ -1,5 +1,5 @@
 // ShopMate AI — Service Worker v1.0.0
-const CACHE_NAME = "shopmate-v1.1.0";
+const CACHE_NAME = "shopmate-v1.2.0";
 const urlsToCache = [
   "./",
   "./index.html",
