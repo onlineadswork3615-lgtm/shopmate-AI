@@ -42,8 +42,13 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter','Noto Sans Bengali',sans-serif;
   background: var(--bg); color: var(--text);
-  min-height: 100vh; padding-bottom: 80px; overflow-x: hidden;
+  min-height: 100vh;
+  padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 body.bn { font-family: 'Noto Sans Bengali','Inter',sans-serif; }
 
@@ -150,7 +155,19 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .empty-state .icon { font-size: 48px; display: block; margin-bottom: 12px; opacity: 0.4; }
 
 /* ============ BOTTOM NAV ============ */
-.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; justify-content: space-around; padding: 8px 0 max(8px, env(safe-area-inset-bottom)); box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 100; border-top: 1px solid var(--border); }
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--card);
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 0 max(8px, env(safe-area-inset-bottom));
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+  z-index: 100;
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
 .bottom-nav a { flex: 1; text-decoration: none; color: var(--muted); text-align: center; padding: 6px 4px; cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; align-items: center; gap: 3px; }
 .bottom-nav a.active { color: var(--primary); }
 .bottom-nav a .nav-icon { font-size: 21px; }
@@ -159,7 +176,24 @@ body.dark .list-item.sale-item { background: rgba(16,185,129,0.15); }
 .loading-wrap { text-align: center; padding: 28px; color: var(--muted); font-size: 14px; }
 
 /* ============ TOAST ============ */
-.toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--text); color: var(--bg); padding: 14px 20px; border-radius: 14px; font-size: 14px; font-weight: 500; z-index: 1000; opacity: 0; transition: all 0.4s; max-width: 90%; text-align: center; }
+.toast {
+  position: fixed;
+  bottom: calc(100px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 14px 20px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 .toast.success { background: var(--secondary); color: white; }
 .toast.error { background: var(--danger); color: white; }
@@ -925,6 +959,74 @@ body.dark .margin-low {
   /* ============ AI CHAT ============ */
   /* ============ CUSTOM CATEGORY ============ */
   /* ============ PRODUCT REPORT ============ */
+  /* ============ CUSTOMER EDIT/DELETE ============ */
+.customer-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.customer-actions .btn {
+  flex: 1;
+}
+.customer-actions .btn-edit {
+  background: #DBEAFE;
+  color: #1E40AF;
+  border: 1.5px solid #93C5FD;
+}
+.customer-actions .btn-edit:hover {
+  background: #BFDBFE;
+}
+.customer-actions .btn-delete {
+  background: #FEE2E2;
+  color: #991B1B;
+  border: 1.5px solid #FCA5A5;
+}
+.customer-actions .btn-delete:hover {
+  background: #FECACA;
+}
+body.dark .customer-actions .btn-edit {
+  background: rgba(59,130,246,0.2);
+  color: #93C5FD;
+  border-color: rgba(59,130,246,0.4);
+}
+body.dark .customer-actions .btn-delete {
+  background: rgba(239,68,68,0.2);
+  color: #FCA5A5;
+  border-color: rgba(239,68,68,0.4);
+}
+
+.customer-edit-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s;
+}
+.customer-edit-modal.show { display: flex; }
+.customer-edit-box {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 100%;
+  max-width: 400px;
+  animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.customer-edit-box h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.customer-edit-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+.customer-edit-btns .btn { flex: 1; }
 .product-report-filters {
   display: flex;
   flex-direction: column;
@@ -1099,7 +1201,7 @@ body.dark .margin-low {
 }
 .chat-fab {
   position: fixed;
-  bottom: 90px;
+  bottom: calc(100px + env(safe-area-inset-bottom));
   right: 16px;
   width: 56px;
   height: 56px;
@@ -1526,12 +1628,12 @@ body.dark .margin-low {
         <div class="stat-card info">
           <div class="label">💵 <span data-i18n="todayPaid">আজকের নগদ</span></div>
           <div class="value" id="statTodayPaid">৳0</div>
-                  <div class="stat-card purple">
+        </div>
+        <div class="stat-card purple">
           <div class="label">📊 <span>আজকের Margin</span></div>
           <div class="value" id="statTodayMargin">0%</div>
         </div>
-        </div>
-                <div class="stat-card red">
+        <div class="stat-card red">
           <div class="label">💵 <span data-i18n="todayExpense">আজকের খরচ</span></div>
           <div class="value" id="statTodayExpense">৳0</div>
         </div>
@@ -1555,6 +1657,7 @@ body.dark .margin-low {
             <span data-i18n="profit">লাভ</span>: ৳0 − <span data-i18n="todayExpense">খরচ</span>: ৳0
           </div>
         </div>
+              <div style="height: 4px;"></div>
       <div class="card">
         <div class="card-title"><div class="title-text">⚡ <span data-i18n="quickActions">দ্রুত কাজ</span></div></div>
         <div class="quick-actions">
@@ -1857,6 +1960,10 @@ body.dark .margin-low {
           <div class="title-text">👤 <span id="detailCustomerName"></span></div>
           <button class="btn btn-secondary btn-sm" onclick="closeCustomerDetail()">✕</button>
         </div>
+                      <div class="customer-actions">
+          <button class="btn btn-edit" onclick="openCustomerEdit()">✏️ এডিট</button>
+          <button class="btn btn-delete" onclick="confirmDeleteCustomer()">🗑️ ডিলিট</button>
+        </div>
 
         <!-- 🆕 Customer Info Grid -->
         <div class="customer-info-grid">
@@ -2058,6 +2165,42 @@ body.dark .margin-low {
 
 <div class="toast" id="toast"></div>
   <!-- ============ CATEGORY MODAL ============ -->
+  <!-- ============ CUSTOMER EDIT MODAL ============ -->
+<div class="customer-edit-modal" id="customerEditModal">
+  <div class="customer-edit-box">
+    <h3>✏️ কাস্টমার এডিট</h3>
+
+    <div class="form-group">
+      <label>নাম</label>
+      <div class="input-wrap">
+        <span class="input-icon">👤</span>
+        <input type="text" id="editCustName" placeholder="নাম" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>ফোন নম্বর</label>
+      <div class="input-wrap">
+        <span class="input-icon">📱</span>
+        <input type="tel" id="editCustPhone" maxlength="11" placeholder="01xxxxxxxxx" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>ঠিকানা</label>
+      <div class="input-wrap">
+        <span class="input-icon">📍</span>
+        <input type="text" id="editCustAddress" placeholder="ঠিকানা" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="customer-edit-btns">
+      <button class="btn btn-secondary" onclick="closeCustomerEdit()">বাতিল</button>
+      <button class="btn btn-primary" onclick="saveCustomerEdit()">💾 সেভ</button>
+    </div>
+  </div>
+</div>
+  
 <div class="cat-modal-overlay" id="categoryModal">
   <div class="cat-modal">
     <h3>➕ নতুন ক্যাটাগরি</h3>
@@ -2141,7 +2284,7 @@ body.dark .margin-low {
 // ============================================
 const API_URL = "https://script.google.com/macros/s/AKfycbyGPzFkamwJckDcHrYoA4AqY6PFvoQvI9_tAURjdCA3SV_cq2WoMJdmrbfiZasHs_MFjw/exec";
 
-const APP_VERSION = "1.1.0";
+const APP_VERSION = "1.2.0";
 const VERSION_URL = "./version.json";
 const VERSION_CHECK_INTERVAL = 30 * 60 * 1000;
 
@@ -2221,7 +2364,7 @@ function applyLanguage() {
   if (bn) bn.classList.toggle("active", currentLang === "bn");
   if (en) en.classList.toggle("active", currentLang === "en");
 }
-function setLang(lang) { currentLang = lang; localStorage.setItem("shopmate_lang", lang); applyLanguage(); }
+function setLang(lang) {   currentLang = lang;   localStorage.setItem("shopmate_lang", lang);   applyLanguage();      // ⭐ Refresh current page data   const activePage = document.querySelector(".page.active");   if (activePage) {     const id = activePage.id.replace("page-", "");     if (id === "dashboard") loadDashboard();     if (id === "sales") loadTodaySales();     if (id === "products") loadProductList();     if (id === "customers") loadCustomerList();     if (id === "expenses") loadExpenses();     if (id === "reports") loadReport();     if (id === "productreport") loadProductReport();   } }
 
 // ============================================
 // THEME
@@ -2248,7 +2391,7 @@ function loadTheme() {
 // API HELPER
 // ============================================
 const apiCache = {};
-const CACHE_DURATION = 60000;
+const CACHE_DURATION = 300000;
 async function apiGet(action, extra = {}) {
   const key = action + JSON.stringify(extra) + (currentUser ? currentUser.shopId : "");
   if (apiCache[key]) {
@@ -2452,10 +2595,17 @@ function showMainApp() {
   document.getElementById("profilePhone").textContent = currentUser.phone;
   const vEl = document.getElementById("appVersion");
   if (vEl) vEl.textContent = "v" + APP_VERSION;
-  
+
   // ⭐ Show AI Chat button
   document.getElementById("chatFab").classList.remove("hidden");
-  
+  document.getElementById("chatOverlay").classList.add("hidden");
+
+  // ⭐ Load custom categories
+  setTimeout(() => {
+    if (typeof loadCustomCategories === "function") loadCustomCategories();
+    if (typeof loadTargetInputValue === "function") loadTargetInputValue();
+  }, 500);
+
   const lastPage = localStorage.getItem("shopmate_current_page") || "dashboard";
   gotoPage(lastPage);
 }
@@ -3573,6 +3723,101 @@ function confirmDeleteExpense(expenseId, category) {
 // ============================================
 // CUSTOMERS
 // ============================================
+  // ============================================
+// CUSTOMER EDIT/DELETE
+// ============================================
+function openCustomerEdit() {
+  if (!currentCustomer) return showToast("কাস্টমার সিলেক্ট করুন", "error");
+
+  document.getElementById("editCustName").value = currentCustomer.Name || "";
+  document.getElementById("editCustPhone").value = currentCustomer.Phone || "";
+  document.getElementById("editCustAddress").value = currentCustomer.Address || "";
+
+  document.getElementById("customerEditModal").classList.add("show");
+  setTimeout(() => document.getElementById("editCustName").focus(), 200);
+}
+
+function closeCustomerEdit() {
+  document.getElementById("customerEditModal").classList.remove("show");
+}
+
+async function saveCustomerEdit() {
+  if (!currentCustomer) return;
+
+  const name = document.getElementById("editCustName").value.trim();
+  const phone = document.getElementById("editCustPhone").value.trim();
+  const address = document.getElementById("editCustAddress").value.trim();
+
+  if (!name) return showToast("নাম দিন", "error");
+  if (phone && phone.length !== 11) return showToast("ফোন ১১ digit হতে হবে", "error");
+
+  try {
+    const r = await apiPost({
+      action: "updateCustomer",
+      customerId: currentCustomer.CustomerID,
+      name: name,
+      phone: phone,
+      address: address
+    });
+
+    if (r.success) {
+      showToast("✅ কাস্টমার আপডেট হয়েছে");
+
+      // Update currentCustomer locally
+      currentCustomer.Name = name;
+      currentCustomer.Phone = phone;
+      currentCustomer.Address = address;
+
+      // Update UI
+      document.getElementById("detailCustomerName").textContent = name;
+      document.getElementById("detailPhone").textContent = phone || "-";
+      document.getElementById("detailAddress").textContent = address || "-";
+
+      closeCustomerEdit();
+
+      // Reload list
+      await loadCustomerList();
+    } else {
+      showToast(r.message || "Error", "error");
+    }
+  } catch (e) {
+    showToast("Network error: " + e.message, "error");
+  }
+}
+
+function confirmDeleteCustomer() {
+  if (!currentCustomer) return showToast("কাস্টমার সিলেক্ট করুন", "error");
+
+  const due = Number(currentCustomer.TotalDue) || 0;
+  if (due > 0) {
+    showToast("⚠️ Customer-এর ৳" + due + " বাকি আছে — আগে পরিশোধ করুন", "error");
+    return;
+  }
+
+  showConfirm(
+    "কাস্টমার মুছে ফেলবেন?",
+    "'" + currentCustomer.Name + "' এবং তার পুরো লেনদেন history মুছে যাবে। এটা ফেরানো যাবে না।",
+    async () => {
+      try {
+        const r = await apiPost({
+          action: "deleteCustomer",
+          customerId: currentCustomer.CustomerID
+        });
+
+        if (r.success) {
+          showToast("✅ কাস্টমার মুছে ফেলা হয়েছে");
+          closeCustomerDetail();
+          await loadCustomerList();
+          await loadPaymentList();
+        } else {
+          showToast(r.message || "Error", "error");
+        }
+      } catch (e) {
+        showToast("Network error: " + e.message, "error");
+      }
+    }
+  );
+}
 async function loadCustomerList() {
   const list = document.getElementById("customerList");
   list.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
@@ -4685,6 +4930,9 @@ function init() {
   currentLang = localStorage.getItem("shopmate_lang") || "bn";
   applyLanguage();
   loadTheme();
+    // Version display
+  const versionEl = document.getElementById("appVersion");
+  if (versionEl) versionEl.textContent = "v" + APP_VERSION;
   const versionEl = document.getElementById("appVersion");
   if (versionEl) versionEl.textContent = "v" + APP_VERSION;
   const saved = localStorage.getItem("shopmate_user");
