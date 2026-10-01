@@ -4932,16 +4932,20 @@ function init() {
   loadTheme();
   const saved = localStorage.getItem("shopmate_user");
   if (saved) {
-    try { 
-      currentUser = JSON.parse(saved); 
+    try {
+      currentUser = JSON.parse(saved);
       showMainApp();
       setTimeout(() => {
         restoreFormState();
         setupFormAutoSave();
       }, 300);
+    } catch (e) {
+      localStorage.removeItem("shopmate_user");
+      gotoAuth("loginPage");
     }
-    catch (e) { localStorage.removeItem("shopmate_user"); gotoAuth("loginPage"); }
-  } else gotoAuth("loginPage");
+  } else {
+    gotoAuth("loginPage");
+  }
   startUpdateChecker();
 }
 init();
