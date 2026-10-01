@@ -4930,17 +4930,11 @@ function init() {
   currentLang = localStorage.getItem("shopmate_lang") || "bn";
   applyLanguage();
   loadTheme();
-    // Version display
-  const versionEl = document.getElementById("appVersion");
-  if (versionEl) versionEl.textContent = "v" + APP_VERSION;
-  const versionEl = document.getElementById("appVersion");
-  if (versionEl) versionEl.textContent = "v" + APP_VERSION;
   const saved = localStorage.getItem("shopmate_user");
   if (saved) {
     try { 
       currentUser = JSON.parse(saved); 
       showMainApp();
-      // ⭐ Form state restore করো
       setTimeout(() => {
         restoreFormState();
         setupFormAutoSave();
