@@ -1,5 +1,5 @@
-// ShopMate AI — Service Worker v1.0.0
-const CACHE_NAME = "shopmate-v1.2.0";
+// ShopMate AI — Service Worker v1.3.0
+const CACHE_NAME = "shopmate-v1.3.0";
 const urlsToCache = [
   "./",
   "./index.html",
@@ -8,6 +8,7 @@ const urlsToCache = [
   "./icon-512.png"
 ];
 
+// ---------- Install ----------
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
@@ -15,6 +16,7 @@ self.addEventListener("install", event => {
   self.skipWaiting();
 });
 
+// ---------- Activate ----------
 self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(names => {
@@ -26,12 +28,15 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
+// ---------- Fetch ----------
 self.addEventListener("fetch", event => {
+  // API call bypass (Google Apps Script)
   if (event.request.url.includes("script.google.com")) return;
-  
+
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) {
+        // Background update
         fetch(event.request).then(fresh => {
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, fresh));
         }).catch(() => {});
@@ -48,7 +53,7 @@ self.addEventListener("fetch", event => {
   );
 });
 
-// ⭐ Skip waiting on message
+// ---------- Message (Skip Waiting) ----------
 self.addEventListener("message", event => {
   if (event.data === "skipWaiting") {
     self.skipWaiting();
