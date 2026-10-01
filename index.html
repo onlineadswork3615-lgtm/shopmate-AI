@@ -2498,7 +2498,7 @@ function gotoPage(name) {
   document.querySelectorAll(".bottom-nav a").forEach(a => a.classList.remove("active"));
   const page = document.getElementById("page-" + name);
   if (page) page.classList.add("active");
-  const nav = document.querySelector('.bottom-nav a[data-page="' + name + '"]');
+  const nav = document.querySelector(`.bottom-nav a[data-page="${name}"]`);
   if (nav) nav.classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
   
