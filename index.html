@@ -2100,8 +2100,7 @@ body.dark .customer-actions .btn-delete {
         <div id="reportContent"><div class="loading-wrap"><div class="spinner-dark"></div><span data-i18n="loading">লোড হচ্ছে...</span></div></div>
       </div>
     </div>
-
-    <!-- ============ PROFILE ============ -->
+<!-- ============ PROFILE ============ -->
     <div id="page-profile" class="page">
       <h2 class="page-title" data-i18n="profile">প্রোফাইল</h2>
       <div class="profile-header">
@@ -2158,18 +2157,17 @@ body.dark .customer-actions .btn-delete {
     <a onclick="gotoPage('products')" data-page="products"><span class="nav-icon">📦</span><span class="nav-label" data-i18n="navProducts">পণ্য</span></a>
     <a onclick="gotoPage('customers')" data-page="customers"><span class="nav-icon">👥</span><span class="nav-label" data-i18n="navCustomers">কাস্টমার</span></a>
     <a onclick="gotoPage('expenses')" data-page="expenses"><span class="nav-icon">💵</span><span class="nav-label" data-i18n="navExpenses">খরচ</span></a>
-        <a onclick="gotoPage('productreport')" data-page="productreport"><span class="nav-icon">📊</span><span class="nav-label">প্রোডাক্ট রিপোর্ট</span></a>
+    <a onclick="gotoPage('productreport')" data-page="productreport"><span class="nav-icon">📊</span><span class="nav-label">প্রোডাক্ট রিপোর্ট</span></a>
     <a onclick="gotoPage('reports')" data-page="reports"><span class="nav-icon">📊</span><span class="nav-label" data-i18n="navReports">রিপোর্ট</span></a>
   </nav>
 </div>
 
 <div class="toast" id="toast"></div>
-  <!-- ============ CATEGORY MODAL ============ -->
-  <!-- ============ CUSTOMER EDIT MODAL ============ -->
+
+<!-- ============ CUSTOMER EDIT MODAL ============ -->
 <div class="customer-edit-modal" id="customerEditModal">
   <div class="customer-edit-box">
     <h3>✏️ কাস্টমার এডিট</h3>
-
     <div class="form-group">
       <label>নাম</label>
       <div class="input-wrap">
@@ -2177,7 +2175,6 @@ body.dark .customer-actions .btn-delete {
         <input type="text" id="editCustName" placeholder="নাম" autocomplete="off">
       </div>
     </div>
-
     <div class="form-group">
       <label>ফোন নম্বর</label>
       <div class="input-wrap">
@@ -2185,7 +2182,6 @@ body.dark .customer-actions .btn-delete {
         <input type="tel" id="editCustPhone" maxlength="11" placeholder="01xxxxxxxxx" autocomplete="off">
       </div>
     </div>
-
     <div class="form-group">
       <label>ঠিকানা</label>
       <div class="input-wrap">
@@ -2193,14 +2189,13 @@ body.dark .customer-actions .btn-delete {
         <input type="text" id="editCustAddress" placeholder="ঠিকানা" autocomplete="off">
       </div>
     </div>
-
     <div class="customer-edit-btns">
       <button class="btn btn-secondary" onclick="closeCustomerEdit()">বাতিল</button>
       <button class="btn btn-primary" onclick="saveCustomerEdit()">💾 সেভ</button>
     </div>
   </div>
 </div>
-  
+
 <div class="cat-modal-overlay" id="categoryModal">
   <div class="cat-modal">
     <h3>➕ নতুন ক্যাটাগরি</h3>
@@ -2240,7 +2235,8 @@ body.dark .customer-actions .btn-delete {
     </div>
   </div>
 </div>
-  <!-- ============ AI CHAT ============ -->
+
+<!-- ============ AI CHAT ============ -->
 <button class="chat-fab hidden" id="chatFab" onclick="openChat()" title="AI Assistant">🤖</button>
 
 <div class="chat-overlay hidden" id="chatOverlay">
@@ -2255,14 +2251,12 @@ body.dark .customer-actions .btn-delete {
       </div>
       <button class="chat-close" onclick="closeChat()">✕</button>
     </div>
-
     <div class="chat-body" id="chatBody">
       <div class="msg bot">
         <div class="msg-avatar">🤖</div>
         <div class="msg-bubble">আসসালামু আলাইকুম! 👋<br><br>আমি ShopMate AI। দোকানের হিসাব সম্পর্কে যা জানতে চাও — জিজ্ঞেস করো।</div>
       </div>
     </div>
-
     <div class="chat-suggestions" id="chatSuggestions">
       <button onclick="quickAsk('আজ কত লাভ হয়েছে?')">💰 আজ কত লাভ?</button>
       <button onclick="quickAsk('Last 7 days-এ কত বিক্রয়?')">📅 Last 7 days</button>
@@ -2270,7 +2264,6 @@ body.dark .customer-actions .btn-delete {
       <button onclick="quickAsk('কম স্টক কোনগুলো?')">⚠️ কম স্টক</button>
       <button onclick="quickAsk('কীভাবে লাভ বাড়াব?')">💡 পরামর্শ</button>
     </div>
-
     <div class="chat-input-wrap">
       <textarea id="chatInput" placeholder="প্রশ্ন লিখুন..." rows="1" onkeydown="handleChatKey(event)"></textarea>
       <button class="chat-send-btn" id="chatSendBtn" onclick="sendChat()">➤</button>
@@ -2364,7 +2357,25 @@ function applyLanguage() {
   if (bn) bn.classList.toggle("active", currentLang === "bn");
   if (en) en.classList.toggle("active", currentLang === "en");
 }
-function setLang(lang) {   currentLang = lang;   localStorage.setItem("shopmate_lang", lang);   applyLanguage();      // ⭐ Refresh current page data   const activePage = document.querySelector(".page.active");   if (activePage) {     const id = activePage.id.replace("page-", "");     if (id === "dashboard") loadDashboard();     if (id === "sales") loadTodaySales();     if (id === "products") loadProductList();     if (id === "customers") loadCustomerList();     if (id === "expenses") loadExpenses();     if (id === "reports") loadReport();     if (id === "productreport") loadProductReport();   } }
+
+// ✅ FIXED setLang function
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem("shopmate_lang", lang);
+  applyLanguage();
+
+  const activePage = document.querySelector(".page.active");
+  if (activePage) {
+    const id = activePage.id.replace("page-", "");
+    if (id === "dashboard") loadDashboard();
+    if (id === "sales") { loadProductsForSale(); switchSalesTab("new"); }
+    if (id === "products") loadProductList();
+    if (id === "customers") { loadCustomerList(); loadPaymentList(); }
+    if (id === "expenses") loadExpenses();
+    if (id === "reports") loadReport();
+    if (id === "productreport") { loadPRProducts(); setPRRange("month"); }
+  }
+}
 
 // ============================================
 // THEME
@@ -2406,7 +2417,7 @@ async function apiGet(action, extra = {}) {
   apiCache[key] = { data: data, time: Date.now() };
   return data;
 }
-  async function apiPost(body) {
+async function apiPost(body) {
   if (currentUser && !body.shopId) body.shopId = currentUser.shopId;
   const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(body) });
   return res.json();
@@ -2426,7 +2437,6 @@ function showAlert(id, message, type = "error") {
   el.textContent = message;
   el.className = "alert " + type + " show";
 }
-// ⭐ Bangla number converter
 function toBn(str) {
   if (str === null || str === undefined) return "";
   const en = "0123456789";
@@ -2436,13 +2446,11 @@ function toBn(str) {
     return idx !== -1 ? bn[idx] : ch;
   }).join("");
 }
-
 function fmt(num) {
   const n = Number(num) || 0;
   const formatted = n.toLocaleString("en-IN");
   return "৳" + (currentLang === "bn" ? toBn(formatted) : formatted);
 }
-
 function fmtNumOnly(num) {
   const n = Number(num) || 0;
   const formatted = n.toLocaleString("en-IN");
@@ -2501,16 +2509,13 @@ function gotoPage(name) {
   const nav = document.querySelector(`.bottom-nav a[data-page="${name}"]`);
   if (nav) nav.classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
-  
-  // ⭐ Current page save করো
   localStorage.setItem("shopmate_current_page", name);
-  
   if (name === "dashboard") loadDashboard();
   if (name === "sales") { loadProductsForSale(); switchSalesTab("new"); }
   if (name === "products") loadProductList();
   if (name === "customers") { loadCustomerList(); loadPaymentList(); closeCustomerDetail(); }
-    if (name === "expenses") loadExpenses();
-    if (name === "productreport") { loadPRProducts(); setPRRange("month"); }
+  if (name === "expenses") loadExpenses();
+  if (name === "productreport") { loadPRProducts(); setPRRange("month"); }
   if (name === "reports") loadReport();
   if (name === "lowstock") loadLowStockFull();
 }
@@ -2566,11 +2571,8 @@ function logout() {
     localStorage.removeItem("shopmate_user");
     document.getElementById("mainApp").classList.add("hidden");
     document.getElementById("authScreen").classList.remove("hidden");
-    
-    // ⭐ Hide AI Chat button
     document.getElementById("chatFab").classList.add("hidden");
     document.getElementById("chatOverlay").classList.remove("show");
-    
     gotoAuth("loginPage");
   });
 }
@@ -2595,17 +2597,12 @@ function showMainApp() {
   document.getElementById("profilePhone").textContent = currentUser.phone;
   const vEl = document.getElementById("appVersion");
   if (vEl) vEl.textContent = "v" + APP_VERSION;
-
-  // ⭐ Show AI Chat button
   document.getElementById("chatFab").classList.remove("hidden");
   document.getElementById("chatOverlay").classList.add("hidden");
-
-  // ⭐ Load custom categories
   setTimeout(() => {
     if (typeof loadCustomCategories === "function") loadCustomCategories();
     if (typeof loadTargetInputValue === "function") loadTargetInputValue();
   }, 500);
-
   const lastPage = localStorage.getItem("shopmate_current_page") || "dashboard";
   gotoPage(lastPage);
 }
@@ -2645,27 +2642,18 @@ document.getElementById("forgotResetBtn").addEventListener("click", async functi
 // ============================================
 // DASHBOARD
 // ============================================
-  // ============================================
-// SALES CHART
-// ============================================
 async function loadSalesChart() {
   const content = document.getElementById("chartContent");
   if (!content) return;
-  
   try {
     const r = await apiGet("getSalesChart", { days: 7 });
     if (!r.success || !r.data) {
       content.innerHTML = '<div class="chart-empty">📊 ' + t("chartLoadFailed") + '</div>';
       return;
     }
-    
     const d = r.data;
-    
-    // Update total badge
     const totalEl = document.getElementById("chartTotal");
     if (totalEl) totalEl.textContent = fmt(d.totalSale);
-    
-    // Render chart
     renderSalesChart(d);
   } catch (e) {
     console.error("Chart error:", e);
@@ -2676,41 +2664,30 @@ async function loadSalesChart() {
 function renderSalesChart(d) {
   const content = document.getElementById("chartContent");
   if (!content) return;
-  
   const chart = d.chart || [];
   const maxSale = d.maxSale || 1;
-  
   const todayKey = (() => {
     const t = new Date();
-    return String(t.getFullYear()) + "-" +
-           String(t.getMonth() + 1).padStart(2, "0") + "-" +
-           String(t.getDate()).padStart(2, "0");
+    return String(t.getFullYear()) + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
   })();
-  
   const bestDate = d.bestDay?.date || "";
-  
   if (chart.length === 0) {
     content.innerHTML = '<div class="chart-empty">📊 ' + t("noChartData") + '</div>';
     return;
   }
-  
   let html = '<div class="chart-bars">';
-  
   chart.forEach(day => {
     const heightPercent = maxSale > 0 ? (day.sale / maxSale) * 100 : 0;
     const isEmpty = day.sale === 0;
     const isToday = day.date === todayKey;
     const isBest = day.date === bestDate && day.sale > 0;
-    
     let barClass = "chart-bar";
     if (isEmpty) barClass += " empty";
     if (isToday) barClass += " today";
     if (isBest && !isToday) barClass += " best";
-    
     let labelClass = "chart-label";
     if (isToday) labelClass += " today";
     if (isBest && !isToday) labelClass += " best";
-    
     let valueText = "";
     if (day.sale > 0) {
       if (day.sale >= 1000) {
@@ -2719,18 +2696,14 @@ function renderSalesChart(d) {
         valueText = "৳" + (currentLang === "bn" ? toBn(day.sale) : day.sale);
       }
     }
-    
     let dayName = dayNameForLang(day.dayName);
-    
     html += '<div class="chart-bar-wrapper" title="' + dayName + ' ' + day.dayNum + ': ৳' + day.sale + '">';
     if (valueText) html += '<div class="chart-value">' + valueText + '</div>';
     html += '<div class="' + barClass + '" style="height: ' + Math.max(heightPercent, isEmpty ? 4 : 8) + '%;"></div>';
-   html += '<div class="' + labelClass + '">' + dayName + '<br>' + (currentLang === "bn" ? toBn(day.dayNum) : day.dayNum) + '</div>';
+    html += '<div class="' + labelClass + '">' + dayName + '<br>' + (currentLang === "bn" ? toBn(day.dayNum) : day.dayNum) + '</div>';
     html += '</div>';
   });
-  
   html += '</div>';
-  
   html += '<div class="chart-stats">';
   html += '<div class="chart-stat">';
   html += '<div class="chart-stat-label">💰 ' + t("totalSale") + '</div>';
@@ -2753,7 +2726,6 @@ function renderSalesChart(d) {
     html += '</div>';
   }
   html += '</div>';
-  
   content.innerHTML = html;
 }
 
@@ -2769,35 +2741,25 @@ async function loadDashboard() {
   try {
     const r = await apiGet("getDashboard");
     if (!r.success) return;
-    
-    // Main stats
     animateStat("statTodaySales", r.data.todaySales || 0);
     animateStat("statTodayProfit", r.data.todayProfit || 0);
     animateStat("statTodayPaid", r.data.todayPaid || 0);
     animateStat("statTodayDue", r.data.todayDue || 0);
-       animateStat("statTotalProducts", r.data.totalProducts || 0, "");
+    animateStat("statTotalProducts", r.data.totalProducts || 0, "");
     animateStat("statLowStock", r.data.lowStockCount || 0, "");
-    // ⭐ এটা ঠিক আছে — animateNumber update হবে
-    
-    // Margin
     const marginEl = document.getElementById("statTodayMargin");
-    if (marginEl) {       const m = (r.data.todayMargin || 0).toString();       marginEl.textContent = (currentLang === "bn" ? toBn(m) : m) + "%";     }
-    
-    // 🆕 Expense + Net Profit
+    if (marginEl) {
+      const m = (r.data.todayMargin || 0).toString();
+      marginEl.textContent = (currentLang === "bn" ? toBn(m) : m) + "%";
+    }
     const expenseEl = document.getElementById("statTodayExpense");
     if (expenseEl) expenseEl.textContent = fmt(r.data.todayExpense || 0);
-    
     const netProfitEl = document.getElementById("statTodayNetProfit");
     if (netProfitEl) netProfitEl.textContent = fmt(r.data.todayNetProfit || 0);
-    
     const breakdownEl = document.getElementById("netProfitBreakdown");
     if (breakdownEl) {
-      breakdownEl.innerHTML = 
-        t("profit") + ': ' + fmt(r.data.todayProfit || 0) + ' − ' + 
-        t("todayExpense") + ': ' + fmt(r.data.todayExpense || 0);
+      breakdownEl.innerHTML = t("profit") + ': ' + fmt(r.data.todayProfit || 0) + ' − ' + t("todayExpense") + ': ' + fmt(r.data.todayExpense || 0);
     }
-    
-    // Low stock list
     const list = document.getElementById("lowStockList");
     if (!r.data.lowStockItems || r.data.lowStockItems.length === 0) {
       list.innerHTML = '<div class="empty-state"><span class="icon">✅</span>' + t("allGood") + '</div>';
@@ -2806,8 +2768,6 @@ async function loadDashboard() {
         '<div class="list-item warn-item"><div class="left-side"><div class="item-title">' + p.ProductName + '</div><div class="item-sub">' + t("stock") + ': ' + p.Stock + ' ' + t("pcs") + '</div></div><div class="item-value warn">' + p.Stock + '</div></div>'
       ).join("");
     }
-    
-    // Sales Chart
     loadSalesChart();
   } catch (e) { console.error(e); }
 }
@@ -4201,7 +4161,6 @@ function buildProductReportPrint(d) {
   html += '</div>';
   return html;
 }
-
 function printProductReport() {
   const area = document.getElementById("prPrintArea");
   if (!area) return;
@@ -4212,7 +4171,7 @@ function printProductReport() {
   w.document.close();
   setTimeout(() => w.print(), 300);
 }
-  
+
 async function loadReport() {
   const content = document.getElementById("reportContent");
   content.innerHTML = '<div class="loading-wrap"><div class="spinner-dark"></div>' + t("loading") + '</div>';
@@ -4226,7 +4185,7 @@ async function loadReport() {
     if (!r.success) { content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>Error</div>'; return; }
     const d = r.data;
     const isEn = currentLang === "en";
-    
+
     let rangeLabel = isEn ? ({
       "today": "Daily Report",
       "week": "Weekly Report",
@@ -4240,7 +4199,7 @@ async function loadReport() {
       "year": "বাৎসরিক রিপোর্ট",
       "custom": "কাস্টম রিপোর্ট"
     }[currentReportRange] || "রিপোর্ট");
-    
+
     const L = isEn ? {
       totalSale: "Total Sale", totalProfit: "Total Profit",
       totalExpense: "Total Expense", netProfit: "Net Profit",
@@ -4250,17 +4209,17 @@ async function loadReport() {
       totalExpense: "মোট খরচ", netProfit: "আসল লাভ",
       totalPaid: "নগদ পেয়েছি", totalDue: "মোট বাকি"
     };
-    
+
     let html = '';
-    
+
     // Report Header
     html += '<div class="report-header">';
     html += '<div class="rh-shop">🏪 ' + currentUser.shopName + '</div>';
     html += '<div class="rh-owner">' + (isEn ? "Owner" : "মালিক") + ': ' + currentUser.name + '</div>';
     html += '<div class="rh-title"><span>📊 ' + rangeLabel + '</span><span class="rh-badge">' + fmtDate(d.fromDate) + ' — ' + fmtDate(d.toDate) + '</span></div>';
     html += '</div>';
-    
-    // KPI Cards (6টা - Sales, Profit, Expense, Net Profit, Paid, Due)
+
+    // KPI Cards
     html += '<div class="report-kpi">';
     html += '<div class="kpi-card green"><div class="kpi-icon">💰</div><div class="kpi-label">' + L.totalSale + '</div><div class="kpi-value">' + fmt(d.totalSale) + '</div></div>';
     html += '<div class="kpi-card blue"><div class="kpi-icon">📈</div><div class="kpi-label">' + L.totalProfit + '</div><div class="kpi-value">' + fmt(d.totalProfit) + '</div></div>';
@@ -4269,8 +4228,8 @@ async function loadReport() {
     html += '<div class="kpi-card info"><div class="kpi-icon">✅</div><div class="kpi-label">' + L.totalPaid + '</div><div class="kpi-value">' + fmt(d.totalPaid) + '</div></div>';
     html += '<div class="kpi-card red"><div class="kpi-icon">📝</div><div class="kpi-label">' + L.totalDue + '</div><div class="kpi-value">' + fmt(d.totalDue) + '</div></div>';
     html += '</div>';
-    
-    // Day-wise Statement (with expense + net profit)
+
+    // Day-wise Statement
     if (d.dayWise && d.dayWise.length > 0) {
       html += '<div class="report-section">';
       html += '<div class="rs-header"><div class="rs-title">📅 ' + (isEn ? "Day-wise Statement" : "দিন-ভিত্তিক স্টেটমেন্ট") + '</div><div class="rs-count">' + (isEn ? d.dayWise.length : toBn(d.dayWise.length)) + ' ' + (isEn ? "days" : "দিন") + '</div></div>';
@@ -4283,7 +4242,7 @@ async function loadReport() {
       html += '<th class="num">' + (isEn ? "Net" : "নিট") + '</th>';
       html += '<th class="num">' + (isEn ? "Due" : "বাকি") + '</th>';
       html += '</tr></thead><tbody>';
-      
+
       d.dayWise.forEach(day => {
         const dateStr = formatDayKey(day.date);
         const netDay = (day.profit || 0) - (day.expense || 0);
@@ -4296,7 +4255,7 @@ async function loadReport() {
         html += '<td class="num num-red">' + fmt(day.due) + '</td>';
         html += '</tr>';
       });
-      
+
       html += '</tbody><tfoot><tr><td>' + (isEn ? "TOTAL" : "মোট") + '</td>';
       html += '<td class="num" style="color:#10B981;">' + fmt(d.totalSale) + '</td>';
       html += '<td class="num" style="color:#4F46E5;">' + fmt(d.totalProfit) + '</td>';
@@ -4305,8 +4264,8 @@ async function loadReport() {
       html += '<td class="num" style="color:#EF4444;">' + fmt(d.totalDue) + '</td>';
       html += '</tr></tfoot></table></div></div>';
     }
-    
-    // ⭐ Expense Category Breakdown
+
+    // Expense Category Breakdown
     if (d.expenseCategoryBreakdown && d.expenseCategoryBreakdown.length > 0) {
       const catNames = {
         "Electricity": isEn ? "Electricity" : "বিদ্যুৎ",
@@ -4323,7 +4282,7 @@ async function loadReport() {
         "Electricity": "💡", "Rent": "🏠", "Transport": "🚚", "Salary": "👷",
         "Mobile": "📱", "Food": "🍽️", "Packaging": "📦", "Repair": "🔧", "Other": "📝"
       };
-      
+
       html += '<div class="report-section">';
       html += '<div class="rs-header"><div class="rs-title">💵 ' + (isEn ? "Expense Breakdown" : "খরচের বিবরণ") + '</div><div class="rs-count">' + d.expenseCategoryBreakdown.length + ' ' + (isEn ? "types" : "ধরন") + '</div></div>';
       html += '<div style="overflow-x:auto;"><table class="prof-table">';
@@ -4332,7 +4291,7 @@ async function loadReport() {
       html += '<th class="num">' + (isEn ? "Count" : "সংখ্যা") + '</th>';
       html += '<th class="num">' + (isEn ? "Amount" : "টাকা") + '</th>';
       html += '</tr></thead><tbody>';
-      
+
       d.expenseCategoryBreakdown.forEach(c => {
         const icon = catIcons[c.category] || "📝";
         const name = catNames[c.category] || c.category;
@@ -4344,7 +4303,7 @@ async function loadReport() {
       });
       html += '</tbody></table></div></div>';
     }
-    
+
     // Top Products
     if (d.topProducts && d.topProducts.length > 0) {
       html += '<div class="report-section">';
@@ -4356,7 +4315,7 @@ async function loadReport() {
       });
       html += '</tbody></table></div></div>';
     }
-    
+
     // Payment Breakdown
     if (d.paymentBreakdown && d.paymentBreakdown.length > 0) {
       html += '<div class="report-section">';
@@ -4368,7 +4327,7 @@ async function loadReport() {
       });
       html += '</tbody></table></div></div>';
     }
-    
+
     // All Transactions
     if (d.sales && d.sales.length > 0) {
       html += '<div class="report-section">';
@@ -4380,17 +4339,18 @@ async function loadReport() {
       });
       html += '</tbody></table></div></div>';
     }
-    
+
     // Footer + Print
     html += '<div class="report-footer">✨ ' + (isEn ? "Generated by ShopMate AI" : "তৈরি করেছে ShopMate AI") + ' | ' + new Date().toLocaleString() + '</div>';
     html += '<button class="btn btn-primary" style="margin-top:16px;" onclick="printReport()">🖨️ ' + (isEn ? "Print / PDF" : "প্রিন্ট / PDF") + '</button>';
     html += '<div id="printArea" style="display:none;">' + buildPrintArea(d) + '</div>';
-    
+
     content.innerHTML = html;
-  } catch (e) { 
-    content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>'; 
+  } catch (e) {
+    content.innerHTML = '<div class="empty-state"><span class="icon">❌</span>' + e.message + '</div>';
   }
 }
+
 // ⭐ Bangla number convert
 function toBn(num) {
   if (num === null || num === undefined) return "";
@@ -4440,7 +4400,7 @@ function formatDayKey(dayKey) {
 
 function buildPrintArea(d) {
   const isEn = currentLang === "en";
-  
+
   let rangeLabel = isEn ? ({
     "today": "Daily Report",
     "week": "Weekly Report",
@@ -4454,7 +4414,7 @@ function buildPrintArea(d) {
     "year": "বাৎসরিক রিপোর্ট",
     "custom": "কাস্টম রিপোর্ট"
   }[currentReportRange] || "রিপোর্ট");
-  
+
   const L = isEn ? {
     owner: "Owner", totalSale: "Total Sale", totalProfit: "Total Profit",
     totalPaid: "Paid", totalDue: "Due",
@@ -4470,9 +4430,9 @@ function buildPrintArea(d) {
     product: "পণ্য", qty: "সংখ্যা", salesDetails: "সব লেনদেন (বিস্তারিত)",
     signature: "স্বাক্ষর", generated: "তৈরি করেছে"
   };
-  
+
   let html = '<div style="padding:0;font-family:Arial,sans-serif;color:#000;max-width:800px;margin:0 auto;">';
-  
+
   // Header
   html += '<div style="background:linear-gradient(135deg,#4F46E5,#7C3AED);color:white;padding:24px;border-radius:8px;margin-bottom:20px;">';
   html += '<h1 style="margin:0;font-size:24px;">🏪 ' + currentUser.shopName + '</h1>';
@@ -4481,7 +4441,7 @@ function buildPrintArea(d) {
   html += '<span><b>' + rangeLabel + '</b></span>';
   html += '<span>' + fmtDateLang(d.fromDate) + ' — ' + fmtDateLang(d.toDate) + '</span>';
   html += '</div></div>';
-  
+
   // Summary cards
   html += '<table style="width:100%;border-collapse:separate;border-spacing:8px;margin-bottom:20px;"><tr>';
   html += '<td style="background:#ECFDF5;padding:14px;border-radius:8px;border-left:4px solid #10B981;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalSale + '</div><div style="font-size:18px;font-weight:700;color:#10B981;margin-top:4px;">' + fmtNum(d.totalSale) + '</div></td>';
@@ -4489,14 +4449,15 @@ function buildPrintArea(d) {
   html += '<td style="background:#EFF6FF;padding:14px;border-radius:8px;border-left:4px solid #3B82F6;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalPaid + '</div><div style="font-size:18px;font-weight:700;color:#3B82F6;margin-top:4px;">' + fmtNum(d.totalPaid) + '</div></td>';
   html += '<td style="background:#FEF2F2;padding:14px;border-radius:8px;border-left:4px solid #EF4444;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + L.totalDue + '</div><div style="font-size:18px;font-weight:700;color:#EF4444;margin-top:4px;">' + fmtNum(d.totalDue) + '</div></td>';
   html += '</tr></table>';
-    // ⭐ Net Profit Section
+
+  // Net Profit Section
   html += '<table style="width:100%;border-collapse:separate;border-spacing:8px;margin-bottom:20px;"><tr>';
   html += '<td style="background:#FEF2F2;padding:14px;border-radius:8px;border-left:4px solid #EF4444;width:33%;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + (isEn ? "Total Expense" : "মোট খরচ") + '</div><div style="font-size:18px;font-weight:700;color:#EF4444;margin-top:4px;">' + fmtNum(d.totalExpense || 0) + '</div></td>';
   html += '<td style="background:#ECFDF5;padding:14px;border-radius:8px;border-left:4px solid #10B981;width:33%;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + (isEn ? "Net Profit" : "আসল লাভ") + '</div><div style="font-size:18px;font-weight:700;color:#10B981;margin-top:4px;">' + fmtNum(d.netProfit || 0) + '</div></td>';
   html += '<td style="background:#F0F9FF;padding:14px;border-radius:8px;border-left:4px solid #3B82F6;width:33%;"><div style="font-size:10px;color:#666;text-transform:uppercase;">' + (isEn ? "Total Transactions" : "মোট লেনদেন") + '</div><div style="font-size:18px;font-weight:700;color:#3B82F6;margin-top:4px;">' + fmtNumOnly(d.totalTransactions) + '</div></td>';
   html += '</tr></table>';
-  
-  // ⭐ Expense Breakdown in print
+
+  // Expense Breakdown in print
   if (d.expenseCategoryBreakdown && d.expenseCategoryBreakdown.length > 0) {
     const catNames = {
       "Electricity": isEn ? "Electricity" : "বিদ্যুৎ",
@@ -4513,7 +4474,7 @@ function buildPrintArea(d) {
       "Electricity": "💡", "Rent": "🏠", "Transport": "🚚", "Salary": "👷",
       "Mobile": "📱", "Food": "🍽️", "Packaging": "📦", "Repair": "🔧", "Other": "📝"
     };
-    
+
     html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">💵 ' + (isEn ? "Expense Breakdown" : "খরচের বিবরণ") + '</h3>';
     html += '<table style="width:100%;font-size:12px;border-collapse:collapse;margin-bottom:20px;">';
     html += '<thead><tr style="background:#EF4444;color:white;">';
@@ -4521,7 +4482,7 @@ function buildPrintArea(d) {
     html += '<th style="padding:10px;text-align:right;">' + (isEn ? "Count" : "সংখ্যা") + '</th>';
     html += '<th style="padding:10px;text-align:right;">' + (isEn ? "Amount" : "টাকা") + '</th>';
     html += '</tr></thead><tbody>';
-    
+
     d.expenseCategoryBreakdown.forEach((c, idx) => {
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
       const icon = catIcons[c.category] || "📝";
@@ -4532,14 +4493,14 @@ function buildPrintArea(d) {
       html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;font-weight:600;">' + fmtNum(c.amount) + '</td>';
       html += '</tr>';
     });
-    
+
     html += '<tr style="background:#F3F4F6;font-weight:700;">';
     html += '<td style="padding:11px;border-top:2px solid #111;">' + (isEn ? "TOTAL" : "মোট") + '</td>';
     html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;">' + fmtNumOnly(d.totalExpenseCount || d.expenseCategoryBreakdown.length) + '</td>';
     html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#EF4444;">' + fmtNum(d.totalExpense || 0) + '</td>';
     html += '</tr></tbody></table>';
   }
-  
+
   // Day-wise
   if (d.dayWise && d.dayWise.length > 0) {
     html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">📅 ' + L.dayWise + '</h3>';
@@ -4551,7 +4512,7 @@ function buildPrintArea(d) {
     html += '<th style="padding:10px;text-align:right;">' + L.paid + '</th>';
     html += '<th style="padding:10px;text-align:right;">' + L.due + '</th>';
     html += '</tr></thead><tbody>';
-    
+
     d.dayWise.forEach((day, idx) => {
       const dateStr = formatDayKey(day.date);
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
@@ -4563,7 +4524,7 @@ function buildPrintArea(d) {
       html += '<td style="padding:9px 10px;border-bottom:1px solid #E5E7EB;text-align:right;color:#EF4444;">' + fmtNum(day.due) + '</td>';
       html += '</tr>';
     });
-    
+
     html += '<tr style="background:#F3F4F6;font-weight:700;">';
     html += '<td style="padding:11px;border-top:2px solid #111;">' + L.total + '</td>';
     html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#10B981;">' + fmtNum(d.totalSale) + '</td>';
@@ -4572,7 +4533,7 @@ function buildPrintArea(d) {
     html += '<td style="padding:11px;border-top:2px solid #111;text-align:right;color:#EF4444;">' + fmtNum(d.totalDue) + '</td>';
     html += '</tr></tbody></table>';
   }
-  
+
   // Top Products
   if (d.topProducts && d.topProducts.length > 0) {
     html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">🔥 ' + L.topProducts + '</h3>';
@@ -4583,7 +4544,7 @@ function buildPrintArea(d) {
     html += '<th style="padding:10px;text-align:right;">' + L.sale + '</th>';
     html += '<th style="padding:10px;text-align:right;">' + L.profit + '</th>';
     html += '</tr></thead><tbody>';
-    
+
     d.topProducts.forEach((p, idx) => {
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
       html += '<tr style="background:' + bg + ';">';
@@ -4595,7 +4556,7 @@ function buildPrintArea(d) {
     });
     html += '</tbody></table>';
   }
-  
+
   // Sales Details
   if (d.sales && d.sales.length > 0) {
     html += '<h3 style="border-left:4px solid #4F46E5;padding-left:10px;margin-top:24px;color:#111;">📋 ' + L.salesDetails + '</h3>';
@@ -4608,7 +4569,7 @@ function buildPrintArea(d) {
     html += '<th style="padding:8px;text-align:right;">' + L.paid + '</th>';
     html += '<th style="padding:8px;text-align:right;">' + L.due + '</th>';
     html += '</tr></thead><tbody>';
-    
+
     d.sales.slice(0, 100).forEach((s, idx) => {
       const bg = idx % 2 === 0 ? '#FFFFFF' : '#F9FAFB';
       html += '<tr style="background:' + bg + ';">';
@@ -4622,15 +4583,16 @@ function buildPrintArea(d) {
     });
     html += '</tbody></table>';
   }
-  
+
   // Footer
   html += '<div style="margin-top:50px;padding-top:20px;border-top:2px dashed #ccc;text-align:center;font-size:11px;color:#666;">';
   html += '<p style="margin:0 0 30px 0;text-align:right;">' + L.signature + ': ______________________</p>';
   html += '<p style="margin:0;">' + L.generated + ' <b>ShopMate AI</b> | ' + (currentLang === "bn" ? toBn(new Date().toLocaleString("en-IN", { dateStyle: "short", timeStyle: "short" })) : new Date().toLocaleString()) + '</p>';
   html += '</div></div>';
-  
+
   return html;
 }
+
 function printReport() {
   const printArea = document.getElementById("printArea");
   if (!printArea) return;
@@ -4725,13 +4687,10 @@ if ("serviceWorker" in navigator) {
 }
 
 // ============================================
-// INIT
-// ============================================
-  // ============================================
 // FORM STATE PERSISTENCE
 // ============================================
 const FORM_FIELDS = [
-  "saleProductId", "saleQty", "salePayment", 
+  "saleProductId", "saleQty", "salePayment",
   "saleCustomerName", "saleCustomerPhone", "saleCustomerAddress", "salePaidAmount",
   "pName", "pCategory", "pPurchasePrice", "pSellingPrice", "pStock", "pLowStock"
 ];
@@ -4754,7 +4713,6 @@ function restoreFormState() {
         el.value = state[id];
       }
     });
-    // Preview update করো
     if (typeof updateSalePreview === "function") {
       setTimeout(() => updateSalePreview(), 100);
     }
@@ -4765,7 +4723,6 @@ function clearFormState() {
   localStorage.removeItem("shopmate_form_state");
 }
 
-// ⭐ Auto-save setup
 function setupFormAutoSave() {
   FORM_FIELDS.forEach(id => {
     const el = document.getElementById(id);
@@ -4777,7 +4734,7 @@ function setupFormAutoSave() {
   });
 }
 
-  // ============================================
+// ============================================
 // AI CHAT
 // ============================================
 let chatHistory = [];
@@ -4804,13 +4761,12 @@ function addMessage(text, sender) {
   const msg = document.createElement("div");
   msg.className = "msg " + sender;
   const avatar = sender === "user" ? (currentUser?.name?.charAt(0).toUpperCase() || "U") : "🤖";
-  msg.innerHTML = 
+  msg.innerHTML =
     '<div class="msg-avatar">' + avatar + '</div>' +
     '<div class="msg-bubble">' + escapeHtml(text) + '</div>';
   body.appendChild(msg);
   scrollChatBottom();
-  
-  // Save to history
+
   chatHistory.push({ text: text, sender: sender });
   localStorage.setItem("shopmate_chat", JSON.stringify(chatHistory.slice(-50)));
 }
@@ -4820,7 +4776,7 @@ function showTyping() {
   const typing = document.createElement("div");
   typing.className = "msg bot";
   typing.id = "typingMsg";
-  typing.innerHTML = 
+  typing.innerHTML =
     '<div class="msg-avatar">🤖</div>' +
     '<div class="msg-typing"><span></span><span></span><span></span></div>';
   body.appendChild(typing);
@@ -4849,32 +4805,28 @@ async function sendChat() {
   const input = document.getElementById("chatInput");
   const btn = document.getElementById("chatSendBtn");
   const question = input.value.trim();
-  
+
   if (!question) return;
   if (!currentUser) {
     addMessage("দুঃখিত, আগে login করুন।", "bot");
     return;
   }
-  
-  // Add user message
+
   addMessage(question, "user");
   input.value = "";
   input.style.height = "auto";
-  
-  // Disable send button
+
   btn.disabled = true;
-  
-  // Show typing
   showTyping();
-  
+
   try {
     const r = await apiPost({
       action: "askAI",
       question: question
     });
-    
+
     hideTyping();
-    
+
     if (r.success && r.answer) {
       addMessage(r.answer, "bot");
     } else {
@@ -4903,7 +4855,7 @@ function loadChatHistory() {
         const msg = document.createElement("div");
         msg.className = "msg " + m.sender;
         const avatar = m.sender === "user" ? (currentUser?.name?.charAt(0).toUpperCase() || "U") : "🤖";
-        msg.innerHTML = 
+        msg.innerHTML =
           '<div class="msg-avatar">' + avatar + '</div>' +
           '<div class="msg-bubble">' + escapeHtml(m.text) + '</div>';
         body.appendChild(msg);
@@ -4914,7 +4866,6 @@ function loadChatHistory() {
   } catch (e) { console.error(e); }
 }
 
-// Auto-resize textarea
 document.addEventListener("input", (e) => {
   if (e.target.id === "chatInput") {
     e.target.style.height = "auto";
@@ -4922,10 +4873,10 @@ document.addEventListener("input", (e) => {
   }
 });
 
-// Load chat history on start
 document.addEventListener("DOMContentLoaded", () => {
   setTimeout(loadChatHistory, 500);
 });
+
 function init() {
   currentLang = localStorage.getItem("shopmate_lang") || "bn";
   applyLanguage();
