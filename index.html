@@ -2142,6 +2142,16 @@ body.dark .customer-actions .btn-delete {
         <div class="setting-item" onclick="openBackupModal()">
   <div class="si-left">
     <span class="si-icon">💾</span>
+    <div class="setting-item" onclick="openExportModal()">
+  <div class="si-left">
+    <span class="si-icon">📥</span>
+    <div>
+      <div class="si-text">Excel/CSV Export</div>
+      <div class="si-sub">ডেটা এক্সপোর্ট</div>
+    </div>
+  </div>
+  <span style="color:var(--primary);font-size:18px">→</span>
+</div>
     <div>
       <div class="si-text">Backup & Restore</div>
       <div class="si-sub">ডেটা সেভ ও রিস্টোর</div>
@@ -2249,6 +2259,75 @@ body.dark .customer-actions .btn-delete {
     <div class="cat-modal-btns">
       <button class="btn btn-secondary" onclick="closeCategoryModal()">বাতিল</button>
       <button class="btn btn-primary" onclick="saveCustomCategory()">💾 সেভ</button>
+    </div>
+  </div>
+</div>
+  <!-- ============ EXPORT MODAL ============ -->
+<div class="modal-overlay" id="exportModal" style="display:none;">
+  <div class="modal" style="max-width:500px;">
+    <button class="modal-close" onclick="closeExportModal()">✕</button>
+    <h3 style="margin-bottom:16px;">📥 Excel/CSV Export</h3>
+
+    <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">
+      Data export koro — Excel e kholte parbe
+    </div>
+
+    <!-- Sales Export -->
+    <div style="background:var(--bg-alt);padding:12px;border-radius:10px;margin-bottom:10px;">
+      <div style="font-weight:700;font-size:14px;">🛒 Sales</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Sob bikroy er list</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="exportCSV('sales')">
+        ⬇️ CSV Download
+      </button>
+    </div>
+
+    <!-- Products Export -->
+    <div style="background:var(--bg-alt);padding:12px;border-radius:10px;margin-bottom:10px;">
+      <div style="font-weight:700;font-size:14px;">📦 Products</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Sob ponno + stock</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="exportCSV('products')">
+        ⬇️ CSV Download
+      </button>
+    </div>
+
+    <!-- Customers Export -->
+    <div style="background:var(--bg-alt);padding:12px;border-radius:10px;margin-bottom:10px;">
+      <div style="font-weight:700;font-size:14px;">👥 Customers</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Sob customer + baki</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="exportCSV('customers')">
+        ⬇️ CSV Download
+      </button>
+    </div>
+
+    <!-- Expenses Export -->
+    <div style="background:var(--bg-alt);padding:12px;border-radius:10px;margin-bottom:10px;">
+      <div style="font-weight:700;font-size:14px;">💵 Expenses</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Sob khoroch er list</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="exportCSV('expenses')">
+        ⬇️ CSV Download
+      </button>
+    </div>
+
+    <!-- Payments Export -->
+    <div style="background:var(--bg-alt);padding:12px;border-radius:10px;margin-bottom:10px;">
+      <div style="font-weight:700;font-size:14px;">💰 Payments</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Sob payment history</div>
+      <button class="btn btn-primary btn-sm" style="width:100%;" onclick="exportCSV('payments')">
+        ⬇️ CSV Download
+      </button>
+    </div>
+
+    <!-- Full Backup CSV -->
+    <div style="background:#FEF3C7;padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid #FCD34D;">
+      <div style="font-weight:700;font-size:14px;color:#92400E;">📊 Full Report</div>
+      <div style="font-size:11px;color:#92400E;margin-bottom:8px;">Sob data ek file e (CSV)</div>
+      <button class="btn btn-warning btn-sm" style="width:100%;background:#F59E0B;color:white;" onclick="exportFullReport()">
+        ⬇️ Full Export
+      </button>
+    </div>
+
+    <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px;">
+      File format: <b>.csv</b> (Excel, Google Sheets e kholte parbe)
     </div>
   </div>
 </div>
@@ -4841,6 +4920,181 @@ function setupFormAutoSave() {
     }
   });
 }
+  // ============================================
+// EXPORT — CSV
+// ============================================
+function openExportModal() {
+  document.getElementById("exportModal").style.display = "flex";
+}
+
+function closeExportModal() {
+  document.getElementById("exportModal").style.display = "none";
+}
+
+// ⭐ CSV Export Main Function
+async function exportCSV(type) {
+  const btn = event.target;
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>';
+
+  try {
+    let data = [];
+    let filename = "";
+
+    if (type === "sales") {
+      const r = await apiGet("getSales");
+      data = r.data || [];
+      filename = "Sales";
+    } else if (type === "products") {
+      const r = await apiGet("getProducts");
+      data = r.data || [];
+      filename = "Products";
+    } else if (type === "customers") {
+      const r = await apiGet("getCustomers");
+      data = r.data || [];
+      filename = "Customers";
+    } else if (type === "expenses") {
+      const r = await apiGet("getExpenses");
+      data = r.data || [];
+      filename = "Expenses";
+    } else if (type === "payments") {
+      const r = await apiGet("getPayments");
+      data = r.data || [];
+      filename = "Payments";
+    }
+
+    if (data.length === 0) {
+      showToast("⚠️ Kono data nei", "error");
+      return;
+    }
+
+    // CSV banao
+    const csv = arrayToCSV(data);
+    const date = new Date().toISOString().split("T")[0];
+    downloadCSV(csv, filename + "-" + date + ".csv");
+
+    showToast("✅ " + filename + " export hoyeche");
+  } catch (e) {
+    showToast("Export failed: " + e.message, "error");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
+}
+
+// ⭐ Array → CSV String
+function arrayToCSV(data) {
+  if (!data || data.length === 0) return "";
+
+  const headers = Object.keys(data[0]);
+  const lines = [];
+
+  // Header row
+  lines.push(headers.map(h => escapeCSV(h)).join(","));
+
+  // Data rows
+  data.forEach(row => {
+    const values = headers.map(h => {
+      let val = row[h];
+
+      // Date format
+      if (val instanceof Date) {
+        val = val.toISOString().split("T")[0];
+      }
+
+      // Handle undefined/null
+      if (val === null || val === undefined) val = "";
+
+      return escapeCSV(String(val));
+    });
+    lines.push(values.join(","));
+  });
+
+  // Add BOM for Excel (Bengali unicode)
+  return "\uFEFF" + lines.join("\n");
+}
+
+// ⭐ CSV Escape (comma, quote handle)
+function escapeCSV(str) {
+  if (str === null || str === undefined) return "";
+  str = String(str);
+  if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+    return '"' + str.replace(/"/g, '""') + '"';
+  }
+  return str;
+}
+
+// ⭐ Download CSV File
+function downloadCSV(csv, filename) {
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ⭐ FULL EXPORT — sob data ek file e
+async function exportFullReport() {
+  const btn = event.target;
+  const oldText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Export hocche...';
+
+  try {
+    const [products, sales, customers, payments, expenses] = await Promise.all([
+      apiGet("getProducts"),
+      apiGet("getSales"),
+      apiGet("getCustomers"),
+      apiGet("getPayments"),
+      apiGet("getExpenses")
+    ]);
+
+    let fullCSV = "";
+
+    // Sales section
+    fullCSV += "===== SALES =====\n";
+    fullCSV += arrayToCSV(sales.data || []) + "\n\n";
+
+    // Products section
+    fullCSV += "===== PRODUCTS =====\n";
+    fullCSV += arrayToCSV(products.data || []) + "\n\n";
+
+    // Customers section
+    fullCSV += "===== CUSTOMERS =====\n";
+    fullCSV += arrayToCSV(customers.data || []) + "\n\n";
+
+    // Payments section
+    fullCSV += "===== PAYMENTS =====\n";
+    fullCSV += arrayToCSV(payments.data || []) + "\n\n";
+
+    // Expenses section
+    fullCSV += "===== EXPENSES =====\n";
+    fullCSV += arrayToCSV(expenses.data || []) + "\n\n";
+
+    const date = new Date().toISOString().split("T")[0];
+    downloadCSV(fullCSV, "ShopMate-FullReport-" + date + ".csv");
+
+    showToast("✅ Full Report export hoyeche");
+  } catch (e) {
+    showToast("Export failed: " + e.message, "error");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = oldText;
+  }
+}
+
+// ⭐ Export Modal outside click close
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById("exportModal");
+  if (modal && e.target === modal) {
+    closeExportModal();
+  }
+});
 // ============================================
 // BACKUP & RESTORE
 // ============================================
