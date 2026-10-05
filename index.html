@@ -1546,6 +1546,13 @@ body.dark .customer-actions .btn-delete {
       </div>
       <div class="form-group">
         <label data-i18n="securityQ">সিকিউরিটি প্রশ্ন</label>
+        <div class="form-group">
+  <label>📧 Email (ঐচ্ছিক)</label>
+  <div class="input-wrap">
+    <span class="input-icon">📧</span>
+    <input type="email" id="signupEmail" placeholder="your@gmail.com" autocomplete="off">
+  </div>
+</div>
         <select id="signupSecurityQ">
           <option value="তোমার প্রিয় রঙ?">তোমার প্রিয় রঙ?</option>
           <option value="তোমার প্রথম স্কুলের নাম?">তোমার প্রথম স্কুলের নাম?</option>
@@ -2132,6 +2139,16 @@ body.dark .customer-actions .btn-delete {
             <button id="themeDark" onclick="setTheme('dark')">🌙</button>
           </div>
         </div>
+        <div class="setting-item" onclick="openBackupModal()">
+  <div class="si-left">
+    <span class="si-icon">💾</span>
+    <div>
+      <div class="si-text">Backup & Restore</div>
+      <div class="si-sub">ডেটা সেভ ও রিস্টোর</div>
+    </div>
+  </div>
+  <span style="color:var(--primary);font-size:18px">→</span>
+</div>
         <div class="setting-item" onclick="checkForUpdate(true)">
           <div class="si-left">
             <span class="si-icon">🔄</span>
@@ -2235,7 +2252,51 @@ body.dark .customer-actions .btn-delete {
     </div>
   </div>
 </div>
+<!-- ============ BACKUP MODAL ============ -->
+<div class="modal-overlay" id="backupModal" style="display:none;">
+  <div class="modal" style="max-width:500px;">
+    <button class="modal-close" onclick="closeBackupModal()">✕</button>
+    <h3 style="margin-bottom:16px;">💾 Backup & Restore</h3>
 
+    <!-- Backup Section -->
+    <div style="background:var(--bg-alt);padding:14px;border-radius:12px;margin-bottom:12px;">
+      <div style="font-weight:700;margin-bottom:6px;">📥 ব্যাকআপ নাও</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">
+        তোমার সব ডেটা (Products, Sales, Customers, Expenses) একটা ফাইলে সেভ হবে
+      </div>
+      <button class="btn btn-primary" style="width:100%;" onclick="downloadBackup()">
+        ⬇️ Backup ডাউনলোড করো
+      </button>
+    </div>
+
+    <!-- Restore Section -->
+    <div style="background:var(--bg-alt);padding:14px;border-radius:12px;margin-bottom:12px;">
+      <div style="font-weight:700;margin-bottom:6px;">📤 রিস্টোর করো</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">
+        Backup ফাইল সিলেক্ট করো — সব ডেটা ফিরে আসবে
+      </div>
+      <input type="file" id="restoreFile" accept=".json" style="display:none;" onchange="restoreBackup(event)">
+      <button class="btn btn-secondary" style="width:100%;" onclick="document.getElementById('restoreFile').click()">
+        ⬆️ Backup ফাইল সিলেক্ট করো
+      </button>
+    </div>
+
+    <!-- Delete All Section -->
+    <div style="background:#FEE2E2;padding:14px;border-radius:12px;margin-bottom:12px;">
+      <div style="font-weight:700;margin-bottom:6px;color:#991B1B;">🗑️ সব ডেটা মুছো</div>
+      <div style="font-size:12px;color:#7F1D1D;margin-bottom:10px;">
+        ⚠️ সব Products, Sales, Customers, Expenses মুছে যাবে। এটা ফেরানো যাবে না!
+      </div>
+      <button class="btn btn-danger" style="width:100%;" onclick="confirmDeleteAll()">
+        🗑️ সব ডেটা মুছো
+      </button>
+    </div>
+
+    <div style="text-align:center;font-size:11px;color:var(--muted);margin-top:12px;">
+      Backup ফাইল: <b>ShopMate-Backup-YYYY-MM-DD.json</b>
+    </div>
+  </div>
+</div>
 <!-- ============ AI CHAT ============ -->
 <button class="chat-fab hidden" id="chatFab" onclick="openChat()" title="AI Assistant">🤖</button>
 
@@ -2275,7 +2336,7 @@ body.dark .customer-actions .btn-delete {
 // ============================================
 // API URL
 // ============================================
-const API_URL = "https://script.google.com/macros/s/AKfycbyGPzFkamwJckDcHrYoA4AqY6PFvoQvI9_tAURjdCA3SV_cq2WoMJdmrbfiZasHs_MFjw/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxtHo19OLB8cfTq73TMmjN2tguQ-jjami8BpjiooQlCbuBzblUi3C7kQLme1Atjmx-e/exec";
 
 const APP_VERSION = "1.2.0";
 const VERSION_URL = "./version.json";
@@ -2404,25 +2465,42 @@ function loadTheme() {
 const apiCache = {};
 const CACHE_DURATION = 300000;
 async function apiGet(action, extra = {}) {
-  const key = action + JSON.stringify(extra) + (currentUser ? currentUser.shopId : "");
+  const noShopActions = ["checkUser", "getSecurityQuestion", "getUserCount"];
+  const key = action + JSON.stringify(extra) + (currentUser ? currentUser.sheetId : "");
   if (apiCache[key]) {
     const age = Date.now() - apiCache[key].time;
     if (age < CACHE_DURATION) return apiCache[key].data;
   }
   let url = API_URL + "?action=" + action;
-  if (currentUser) url += "&shopId=" + encodeURIComponent(currentUser.shopId);
+  
+  if (!noShopActions.includes(action)) {
+    if (currentUser && currentUser.sheetId) {
+      url += "&sheetId=" + encodeURIComponent(currentUser.sheetId);
+    }
+  }
+  
   for (const k in extra) url += "&" + k + "=" + encodeURIComponent(extra[k]);
   const res = await fetch(url);
   const data = await res.json();
   apiCache[key] = { data: data, time: Date.now() };
   return data;
 }
+
 async function apiPost(body) {
-  if (currentUser && !body.shopId) body.shopId = currentUser.shopId;
-  const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(body) });
+  const noShopActions = ["login", "register", "recover"];
+  
+  if (!noShopActions.includes(body.action)) {
+    if (currentUser && currentUser.sheetId) {
+      body.sheetId = currentUser.sheetId;
+    }
+  }
+  
+  const res = await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(body)
+  });
   return res.json();
 }
-
 // ============================================
 // UI HELPERS
 // ============================================
@@ -2531,17 +2609,44 @@ document.getElementById("signupBtn").addEventListener("click", async function() 
   const confirm = document.getElementById("signupConfirm").value;
   const securityQ = document.getElementById("signupSecurityQ").value;
   const securityA = document.getElementById("signupSecurityA").value.trim();
-  if (!name || !shopName || !phone || !password || !securityA) return showAlert("signupError", t("fillAll"));
+  const email = document.getElementById("signupEmail")?.value.trim() || "";
+  
+  if (!name || !shopName || !phone || !password || !securityA) {
+    return showAlert("signupError", t("fillAll"));
+  }
   if (phone.length !== 11) return showAlert("signupError", t("phoneInvalid"));
   if (password.length < 6) return showAlert("signupError", t("passwordShort"));
   if (password !== confirm) return showAlert("signupError", t("passwordMismatch"));
-  this.disabled = true; this.innerHTML = '<span class="spinner"></span> ' + t("saving");
+  
+  this.disabled = true;
+  this.innerHTML = '<span class="spinner"></span> অ্যাকাউন্ট তৈরি হচ্ছে...';
+  
   try {
-    const r = await apiPost({ action: "register", name, shopName, phone, password, securityQ, securityA });
-    if (r.success) { showAlert("signupError", r.message, "success"); setTimeout(() => loginUser(r.user), 800); }
-    else { showAlert("signupError", r.message); document.getElementById("signupCard").classList.add("shake"); setTimeout(() => document.getElementById("signupCard").classList.remove("shake"), 500); }
-  } catch (e) { showAlert("signupError", "Network error"); }
-  finally { this.disabled = false; this.textContent = t("signupBtn"); }
+    const r = await apiPost({
+      action: "register",
+      name: name,
+      shopName: shopName,
+      phone: phone,
+      password: password,
+      securityQ: securityQ,
+      securityA: securityA,
+      email: email
+    });
+    
+    if (r.success) {
+      showAlert("signupError", "✅ অ্যাকাউন্ট তৈরি হয়েছে! আপনার Data Sheet তৈরি হয়েছে।", "success");
+      setTimeout(() => loginUser(r.user), 1500);
+    } else {
+      showAlert("signupError", r.message);
+      document.getElementById("signupCard").classList.add("shake");
+      setTimeout(() => document.getElementById("signupCard").classList.remove("shake"), 500);
+    }
+  } catch (e) {
+    showAlert("signupError", "Network error: " + e.message);
+  } finally {
+    this.disabled = false;
+    this.textContent = t("signupBtn");
+  }
 });
 
 // ============================================
@@ -2569,10 +2674,13 @@ function logout() {
   showConfirm("লগআউট করবেন?", "আপনার data নিরাপদ থাকবে", () => {
     currentUser = null;
     localStorage.removeItem("shopmate_user");
+    localStorage.removeItem("shopmate_current_page");
+    
     document.getElementById("mainApp").classList.add("hidden");
     document.getElementById("authScreen").classList.remove("hidden");
     document.getElementById("chatFab").classList.add("hidden");
     document.getElementById("chatOverlay").classList.remove("show");
+    
     gotoAuth("loginPage");
   });
 }
@@ -4733,7 +4841,176 @@ function setupFormAutoSave() {
     }
   });
 }
+// ============================================
+// BACKUP & RESTORE
+// ============================================
+function openBackupModal() {
+  document.getElementById("backupModal").style.display = "flex";
+}
 
+function closeBackupModal() {
+  document.getElementById("backupModal").style.display = "none";
+}
+
+// ⭐ BACKUP — sob data JSON file hishebe download
+async function downloadBackup() {
+  const btn = event.target;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> ব্যাকআপ নেওয়া হচ্ছে...';
+
+  try {
+    const [products, sales, customers, payments, expenses, settings] = await Promise.all([
+      apiGet("getProducts"),
+      apiGet("getSales"),
+      apiGet("getCustomers"),
+      apiGet("getPayments"),
+      apiGet("getExpenses"),
+      apiGet("getSettings")
+    ]);
+
+    const backup = {
+      app: "ShopMate AI",
+      version: APP_VERSION,
+      exportedAt: new Date().toISOString(),
+      shop: {
+        name: currentUser.shopName,
+        owner: currentUser.name,
+        phone: currentUser.phone,
+        shopId: currentUser.shopId,
+        sheetId: currentUser.sheetId
+      },
+      data: {
+        products: products.data || [],
+        sales: sales.data || [],
+        customers: customers.data || [],
+        payments: payments.data || [],
+        expenses: expenses.data || [],
+        settings: settings.data || {}
+      }
+    };
+
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const date = new Date().toISOString().split("T")[0];
+    a.href = url;
+    a.download = "ShopMate-Backup-" + date + ".json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showToast("✅ Backup ডাউনলোড হয়েছে");
+  } catch (e) {
+    showToast("Backup ব্যর্থ: " + e.message, "error");
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = "⬇️ Backup ডাউনলোড করো";
+  }
+}
+
+// ⭐ RESTORE — JSON file upload kore data ferot
+async function restoreBackup(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const backup = JSON.parse(e.target.result);
+
+      // Validate
+      if (!backup.data || !backup.app) {
+        showToast("❌ Invalid backup file", "error");
+        return;
+      }
+
+      const products = backup.data.products?.length || 0;
+      const sales = backup.data.sales?.length || 0;
+      const customers = backup.data.customers?.length || 0;
+      const expenses = backup.data.expenses?.length || 0;
+
+      showConfirm(
+        "⚠️ Restore করবেন?",
+        "Ei backup theke: " + products + " Products, " + sales + " Sales, " +
+        customers + " Customers, " + expenses + " Expenses ferot asbe।\n\n" +
+        "⚠️ Tomar current data replace hobe!",
+        async () => {
+          await performRestore(backup);
+        }
+      );
+    } catch (e) {
+      showToast("❌ File পড়া যায়নি: " + e.message, "error");
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = "";
+}
+
+async function performRestore(backup) {
+  const btn = document.querySelector("#backupModal .btn-secondary");
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span> রিস্টোর হচ্ছে...';
+  }
+
+  try {
+    const r = await apiPost({
+      action: "restoreBackup",
+      backupData: backup.data
+    });
+
+    if (r.success) {
+      showToast("✅ Restore সফল! " + (r.message || ""), "success");
+      closeBackupModal();
+
+      // Reload sob data
+      for (const k in apiCache) delete apiCache[k];
+      await loadDashboard();
+      await loadProductList();
+      await loadCustomerList();
+      await loadPaymentList();
+      await loadExpenses();
+    } else {
+      showToast("❌ Restore ব্যর্থ: " + r.message, "error");
+    }
+  } catch (e) {
+    showToast("Network error: " + e.message, "error");
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = "⬆️ Backup ফাইল সিলেক্ট করো";
+    }
+  }
+}
+
+// ⭐ DELETE ALL
+function confirmDeleteAll() {
+  showConfirm(
+    "⚠️ সব ডেটা মুছবেন?",
+    "Ei kaj ta permanently sob data মুছে ফেলবে। Backup ছাড়া ফেরানো যাবে না!",
+    async () => {
+      try {
+        const r = await apiPost({ action: "deleteAllData" });
+        if (r.success) {
+          showToast("✅ সব ডেটা মুছে ফেলা হয়েছে");
+          closeBackupModal();
+
+          for (const k in apiCache) delete apiCache[k];
+          await loadDashboard();
+          await loadProductList();
+          await loadCustomerList();
+          await loadPaymentList();
+          await loadExpenses();
+        } else {
+          showToast("❌ " + r.message, "error");
+        }
+      } catch (e) {
+        showToast("Network error: " + e.message, "error");
+      }
+    }
+  );
+}
 // ============================================
 // AI CHAT
 // ============================================
@@ -4870,6 +5147,13 @@ document.addEventListener("input", (e) => {
   if (e.target.id === "chatInput") {
     e.target.style.height = "auto";
     e.target.style.height = Math.min(e.target.scrollHeight, 100) + "px";
+  }
+});
+  // Backup Modal outside click close
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById("backupModal");
+  if (modal && e.target === modal) {
+    closeBackupModal();
   }
 });
 
